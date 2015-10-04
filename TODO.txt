@@ -1,0 +1,19 @@
+TODO
+1. Implement Async LCR --> This will require some modification to the infrastructure because right now, in_channel[i] can only contain one message at a time, and if it is not received before another one comes in, it will be overriden.
+1.1 #Current bug is that when a process, p, declares itself non-leader, halt_i(p) evaluates to True, so it stops sending data. May need to have leader declare itself.
+2. Make it possible to effectively chain algorithms.
+2.1. Algorithm.__add__()
+2.2. (?) class Phase
+3. Define simple helper Algorithm/Phase that simply sets some p.state['field'] = 'val' of a Process, p, (simplest form would therefore apply it to all processes, but this function should accept an optional lambda function named condition).
+    class CHANGE_STATE(Synchronous_Algorithm):
+        pass
+    CHANGE_STATE().run(network, field, value, condition)
+
+    msgs_i and trans_i may need to accept another argument *args
+3.1 Allow execution specifications for LCR algorithm. For example, 'status' and 'leader' as input variables to run() instead of constants.
+
+4. Algorithm.to_formal_description(format="LATEX")
+
+====
+DONE
+====
