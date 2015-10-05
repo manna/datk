@@ -14,6 +14,8 @@ TODO
 
 4. Algorithm.to_formal_description(format="LATEX")
 
+5. class Unidirectional_Line(Network) and class Bidirectional_Line(Network)
+
 ====
 DONE
 ====
