@@ -1,6 +1,4 @@
 TODO
-1. Implement Async LCR --> This will require some modification to the infrastructure because right now, in_channel[i] can only contain one message at a time, and if it is not received before another one comes in, it will be overriden.
-1.1 #Current bug is that when a process, p, declares itself non-leader, halt_i(p) evaluates to True, so it stops sending data. May need to have leader declare itself.
 2. Make it possible to effectively chain algorithms.
 2.1. Algorithm.__add__()
 2.2. (?) class Phase
@@ -19,3 +17,5 @@ TODO
 ====
 DONE
 ====
+1. Implement Async LCR --> This will require some modification to the infrastructure because right now, in_channel[i] can only contain one message at a time, and if it is not received before another one comes in, it will be overriden.
+1.1 #Current bug is that when a process, p, declares itself non-leader, halt_i(p) evaluates to True, so it stops sending data. May need to have leader declare itself.
