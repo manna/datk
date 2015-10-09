@@ -12,9 +12,13 @@ def test(f, timeout=TIMEOUT, precision = PRECISION):
     while timer < timeout:
         sleep(precision)
         if not t.isAlive():
-            print f.__name__ + " RAN IN " +str(timer) + "s"
+            result = f.__name__ + " RAN IN " +str(timer) + "s"
+            print result
+            print "#"*len(result)
             break
         timer+=precision
 
     if t.isAlive():
-        print f.__name__ + " TIMED OUT AFTER " + str(timeout) + "s"
+        result = f.__name__ + " TIMED OUT AFTER " + str(timeout) + "s"
+        print result
+        print "#"*len(result)

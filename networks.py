@@ -51,3 +51,14 @@ class Bidirectional_Line(Network):
         self[n-1].in_nbrs.append(self[n-2])
         self[n-1].out_nbrs.append(self[n-2])
 
+class Complete_Graph(Network):
+    """A Network of n Processes arranged at the vertices of a Complete undirected
+    graph of size n."""
+    def __init__(self, n, index_to_UID = None):
+        Network.__init__(self, n, index_to_UID)
+        for i in range(n-1):
+            for j in range(i+1,n):
+                self[i].out_nbrs.append(self[j])
+                self[j].in_nbrs.append(self[i])
+                self[j].out_nbrs.append(self[i])
+                self[i].in_nbrs.append(self[j])
