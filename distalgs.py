@@ -164,22 +164,22 @@ class Asynchronous_Algorithm(Algorithm):
         network.add(self)
         round_number = 1
 
-        def run_process(process):
-            while True:
-                sleep((random.random()+1.)/5.)
-                self.msgs_i(process)
-                if self.halt_i(process):
-                    break
-                self.trans_i(process)
-                if self.halt_i(process):
-                    break
-
         threads = []
         for process in network.processes:
-            thread = Thread(target = run_process, args = (process,))
+            thread = Thread(target = self.run_process, args = (process,))
             threads.append(thread)
             thread.start()
 
         for thread in threads: thread.join()
         self.halt()
-        
+    
+    def run_process(self, process):
+        while True:
+            sleep((random.random()+1.)/5.)
+            self.msgs_i(process)
+            if self.halt_i(process):
+                break
+            self.trans_i(process)
+            if self.halt_i(process):
+                break
+    
