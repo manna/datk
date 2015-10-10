@@ -29,6 +29,10 @@ class Process:
         self.in_channel = {}
         self.algs = set()
 
+    def linkTo(self, new_out_nbr):
+        self.out_nbrs.append(new_out_nbr)
+        new_out_nbr.in_nbrs.append(self)
+
     def output(self, status):
         if "status" in self.state.keys():
             return
