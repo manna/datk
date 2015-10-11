@@ -16,19 +16,23 @@ class LCR(Synchronous_Algorithm):
             if msg is None:
                 return
             p.state["send"] = None
-            for nbr in p.out_nbrs:
-                nbr.in_channel[nbr.in_nbrs.index(p)] = msg
+            p.send_to_all_neighbors(msg)
+
         def LCR_trans(p, verbose=False):
             for pos in p.in_channel.keys():
-                if p.in_channel[pos] == p.UID:
-                    p.output("leader")
-                    p.terminate(self)
-                elif p.in_channel[pos] > p.UID:
-                    p.state["send"] = p.in_channel[pos]
-                    p.output("non-leader")
-                    p.terminate(self)
-                else:
+                if len(p.in_channel[pos]) == 0:
                     p.state["send"] = None
+                else:
+                    msg = p.in_channel[pos].pop()
+                    if msg == p.UID:
+                        p.output("leader")
+                        p.terminate(self)
+                    elif msg > p.UID:
+                        p.state["send"] = msg
+                        p.output("non-leader")
+                        p.terminate(self)
+                    else:
+                        p.state["send"] = None
             if verbose:
                 print str(p) + " received " + str(p.in_channel)
                 print "state: " + str(p.state)
