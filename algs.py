@@ -19,20 +19,20 @@ class LCR(Synchronous_Algorithm):
             p.send_to_all_neighbors(msg)
 
         def LCR_trans(p, verbose=False):
-            for pos in p.in_channel.keys():
-                if len(p.in_channel[pos]) == 0:
-                    p.state["send"] = None
+            msgs = p.get_msgs()
+            if len(msgs) == 0:
+                p.state["send"] = None
+            else:
+                msg = msgs.pop()
+                if msg == p.UID:
+                    p.output("leader")
+                    p.terminate(self)
+                elif msg > p.UID:
+                    p.state["send"] = msg
+                    p.output("non-leader")
+                    p.terminate(self)
                 else:
-                    msg = p.in_channel[pos].pop()
-                    if msg == p.UID:
-                        p.output("leader")
-                        p.terminate(self)
-                    elif msg > p.UID:
-                        p.state["send"] = msg
-                        p.output("non-leader")
-                        p.terminate(self)
-                    else:
-                        p.state["send"] = None
+                    p.state["send"] = None
             if verbose:
                 print str(p) + " received " + str(p.in_channel)
                 print "state: " + str(p.state)
@@ -60,19 +60,19 @@ class AsyncLCR(Asynchronous_Algorithm):
         def LCR_trans(p, verbose=False):
             if verbose:
                 print str(p) + " received " + str(p.in_channel)
-            for pos in p.in_channel.keys():
-                while len(p.in_channel[pos]) > 0:
-                    msg = p.in_channel[pos].pop()
-                    if isinstance(msg, AsyncLCR.Leader_Declaration):
-                        p.send_to_all_neighbors(msg)
-                        if verbose:
-                            print str(p) + " sends " + str(msg)
-                        p.terminate(self)
-                        return
-                    if msg == p.UID:
-                        p.output("leader")
-                    elif msg > p.UID:
-                        p.state["sends"].append(msg)
-                        p.output("non-leader")
+            msgs = p.get_msgs()
+            while len(msgs) > 0:
+                msg = msgs.pop()
+                if isinstance(msg, AsyncLCR.Leader_Declaration):
+                    p.send_to_all_neighbors(msg)
+                    if verbose:
+                        print str(p) + " sends " + str(msg)
+                    p.terminate(self)
+                    return
+                if msg == p.UID:
+                    p.output("leader")
+                elif msg > p.UID:
+                    p.state["sends"].append(msg)
+                    p.output("non-leader")
 
         Asynchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network)

@@ -8,21 +8,19 @@ def LCR_UNIDIR_RING():
     r = Unidirectional_Ring(3)
     LCR(r)
 
-# @test(precision = 1e-3)
+@test(precision = 1e-3)
 def ASYNC_LCR_UNIDIR_RING():
     r = Unidirectional_Ring(6)
     AsyncLCR(r)
 
-# @test
-def LCR_COMPLETE():
-    x = Complete_Graph(7)
-    LCR(x)
-
-# @test
-def ASYNC_LCR_COMPLETE():
-    x = Complete_Graph(10)
-    AsyncLCR(x)
-
-
-#LCR failed at :
-#[P6 -> {P3, P1, P5, P4, P2, P0}, P3 -> {P6, P1, P5, P4, P2, P0}, P1 -> {P6, P3, P5, P4, P2, P0}, P5 -> {P6, P3, P1, P4, P2, P0}, P4 -> {P6, P3, P1, P5, P2, P0}, P2 -> {P6, P3, P1, P5, P4, P0}, P0 -> {P6, P3, P1, P5, P4, P2}]
+@test
+def send_receive_msgs():
+    x = Bidirectional_Ring(4, lambda p:p)
+    assert x[0].get_msgs() == []
+    x[0].send_to_all_neighbors("hi")
+    x[0].send_to_all_neighbors("hey")
+    x[2].send_to_all_neighbors("yo")
+    assert x[1].get_msgs(x[0]) == ["hi", "hey"]
+    assert x[1].get_msgs(x[0]) == []
+    assert x[1].get_msgs() == ["yo"]
+    assert x[1].get_msgs() == []

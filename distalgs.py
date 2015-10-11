@@ -46,6 +46,22 @@ class Process:
             else:
                 nbr.in_channel[nbr.in_nbrs.index(self)] = [msg]
 
+    def get_msgs(self, in_nbrs = None):
+        if in_nbrs is None:
+            in_nbrs = self.in_nbrs[:]
+        elif isinstance(in_nbrs, Process):
+            in_nbrs = [in_nbrs]
+        if isinstance(in_nbrs, list):
+            msgs = []
+            for in_nbr in in_nbrs:
+                idx = self.in_nbrs.index(in_nbr)
+                if idx in self.in_channel:
+                    msgs.extend(self.in_channel[idx])
+                    self.in_channel[self.in_nbrs.index(in_nbr)] = []
+            return msgs
+        else:
+            raise Exception("incorrect type for in_nbrs argument of Process.get_msgs()")
+
     def add(self, algorithm):
         self.algs.add(algorithm)
 
