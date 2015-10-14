@@ -32,3 +32,7 @@ def DRAW_UNIDIRECTIONAL_RING():
 @test(main_thread=True)
 def DRAW_COMPLETE_GRAPH():
     Complete_Graph(10).draw()
+
+@test(main_thread=True)
+def DRAW_UNIDIRECTIONAL_LINE():
+    Unidirectional_Line(4).draw()
