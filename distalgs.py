@@ -96,6 +96,8 @@ class Network:
         return len(self.processes)
     def __repr__(self):
         return str(self.processes)
+    def index(self, p):
+        return self.processes.index(p)    
     def add(self, algorithm):
         for process in self.processes:
             process.add(algorithm)
