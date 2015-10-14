@@ -103,6 +103,27 @@ class Network:
             process.add(algorithm)
     def run(self, algorithm):
         algorithm(self)
+    def draw(self):
+        import math
+        from matplotlib import pyplot as plt
+        n = len(self)
+
+        vals = []
+
+        for k in range(n):
+            vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
+            
+            plt.xlim([-1.2, 1.2]) 
+            plt.ylim([-1.2, 1.2]) 
+        plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+
+        def line(v1, v2):
+            plt.plot( (v1[0], v2[0]), (v1[1], v2[1] ))
+        for i in range(n):
+            for nbr in self[i].out_nbrs:
+                line(vals[i], vals[self.index(nbr)])
+        plt.show()
+
 
 class Algorithm:
 
