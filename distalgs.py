@@ -8,6 +8,7 @@ Author: Amin Manna <manna@mit.edu>
 
 import random
 from random import shuffle
+import threading
 from threading import Thread
 from time import sleep
 import pdb
@@ -124,13 +125,12 @@ class Network:
                 line(vals[i], vals[self.index(nbr)])
         plt.show()
 
-
 class Algorithm:
 
     """
     Abstract superclass for a distributed algorithm.
     """
-    def __init__(self, msgs_i, trans_i, halt_i = None, network = None, name = None):
+    def __init__(self, msgs_i, trans_i, halt_i = None, network = None, draw=True, name = None):
         self.msgs_i = msgs_i
         self.trans_i = trans_i
         
@@ -140,20 +140,23 @@ class Algorithm:
         self.name = name
         if name is None:
             self.name = self.__class__.__name__
-
-        #If the network is specified, run the algorithm.
         if network is not None:
-            self(network)
+            self(network, draw)
 
     def halt_i(self, p):
         if self.halt_i_ is not None:
             return self.halt_i_(p)
         return self not in p.algs
 
-    def __call__(self, network, *args):
-        self.run(network, *args)
-    def run(self, network, *args):
-        raise NotImplementedError
+    def __call__(self, network, draw=False):
+        self.run(network, draw)
+    def run(self, network, draw=False):
+        header = "Running " + self.name + " on"
+        print len(header)*"-"
+        print header
+        if draw:
+            network.draw()
+        print str(network)
 
     def halt(self):
         if sum([self.halt_i(process) for process in self.network]) == len(self.network):
@@ -166,16 +169,13 @@ class Synchronous_Algorithm(Algorithm):
     We assume that Processes take steps simultaneously,
     that is, that execution proceeds in synchronous rounds.
     """
-    def run(self, network, *args):
-        header = "Running " + self.name + " on"
-        print len(header)*"-"
-        print header
-        print str(network)
-        self.network = network
+    def run(self, network, draw=False):
+        Algorithm.run(self, network, draw)
 
-        self.halted = False
+        self.network = network
         network.add(self)
 
+        self.halted = False
         round_number = 1
         while not self.halted:
             print "Round "+str(round_number)
@@ -197,15 +197,11 @@ class Asynchronous_Algorithm(Algorithm):
     We assume that the separate Processes take steps
     in an arbitrary order, at arbitrary relative speeds.
     """
-    def run(self, network, *args):
-        header = "Running " + self.name + " on"
-        print len(header)*"-"
-        print header
-        print str(network)
+    def run(self, network, draw=False):
+        Algorithm.run(self, network, draw)
 
         self.network = network
         network.add(self)
-        round_number = 1
 
         threads = []
         for process in network.processes:

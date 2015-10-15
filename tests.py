@@ -6,12 +6,12 @@ from tester import *
 @test(precision = 1e-7)
 def LCR_UNIDIR_RING():
     r = Unidirectional_Ring(3)
-    LCR(r)
+    LCR(r, draw=False)
 
 @test(precision = 1e-3)
 def ASYNC_LCR_UNIDIR_RING():
     r = Unidirectional_Ring(6)
-    AsyncLCR(r)
+    AsyncLCR(r, draw=False)
 
 @test
 def send_receive_msgs():

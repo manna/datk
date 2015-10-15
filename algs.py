@@ -10,7 +10,7 @@ class LCR(Synchronous_Algorithm):
     if it is less than its own, it discards the incoming identifier;
     if it is equal to its own, the Process declares itself the leader.
     """
-    def __init__(self, network = None):
+    def __init__(self, network = None, draw = False):
         def LCR_msgs(p):
             msg = p.state["send"]
             if msg is None:
@@ -36,13 +36,13 @@ class LCR(Synchronous_Algorithm):
             if verbose:
                 print str(p) + " received " + str(p.in_channel)
                 print "state: " + str(p.state)
-        Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network )
+        Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network, draw=draw )
 
 class AsyncLCR(Asynchronous_Algorithm):
     class Leader_Declaration(Message):
         def __str__(self):
             return "LD"
-    def __init__(self, network = None):
+    def __init__(self, network = None, draw = False):
         def LCR_msgs(p, verbose=False):
             if "status" in p.state and p.state["status"] == "leader":
                 msg = AsyncLCR.Leader_Declaration()
@@ -75,4 +75,4 @@ class AsyncLCR(Asynchronous_Algorithm):
                     p.state["sends"].append(msg)
                     p.output("non-leader")
 
-        Asynchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network)
+        Asynchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network, draw= False)
