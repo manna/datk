@@ -7,21 +7,25 @@ from tester import *
 def LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     LCR(r, draw=False)
+    testLeaderElection(r)
 
 @test(precision = 1e-7)
 def LCR_BI_RING():
     r = Bidirectional_Ring(6)
     LCR(r, draw=False)
+    testLeaderElection(r)
 
 @test(precision = 1e-3)
 def ASYNC_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     AsyncLCR(r, draw=False)
+    testLeaderElection(r)
 
 @test(precision = 1e-3)
 def ASYNC_LCR_BI_RING():
     r = Bidirectional_Ring(6)
     AsyncLCR(r)
+    testLeaderElection(r)
 
 @test
 def send_receive_msgs():
