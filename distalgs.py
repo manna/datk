@@ -123,7 +123,11 @@ class Network:
         for i in range(n):
             for nbr in self[i].out_nbrs:
                 line(vals[i], vals[self.index(nbr)])
+        frame = plt.gca()
+        frame.axes.get_xaxis().set_visible(False)
+        frame.axes.get_yaxis().set_visible(False)
         plt.show()
+
 
 class Algorithm:
 
