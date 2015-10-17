@@ -22,7 +22,7 @@ class Process:
     Processes are identical except for their UID"""
     def __init__(self, UID, state = None, in_nbrs = [], out_nbrs = []):
         self.UID = UID
-        self.state = state or {"send" : self.UID, "sends": [self.UID], "halted" : False} #TODO generalize
+        self.state = state or {"send" : self.UID, "sends": [self.UID], "halted" : False, "diam" : 4} #TODO generalize
         
         self.in_nbrs = in_nbrs or []   # Don't remove or []
         self.out_nbrs = out_nbrs or [] # Don't remove or []
@@ -189,12 +189,12 @@ class Synchronous_Algorithm(Algorithm):
         network.add(self)
 
         self.halted = False
-        round_number = 1
+        self.r = 1
         while not self.halted:
-            print "Round "+str(round_number)
+            print "Round "+str(self.r)
             self.round()
             self.halt()
-            round_number+=1
+            self.r+=1
     def round(self):
         self.msgs()
         self.trans()

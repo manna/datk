@@ -1,5 +1,7 @@
 from distalgs import *
 
+#Leader Election Algorithms for Ring networks:
+
 class LCR(Synchronous_Algorithm):
     """
     The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Unidirectional_Ring. 
@@ -76,3 +78,39 @@ class AsyncLCR(Asynchronous_Algorithm):
                     p.output("non-leader")
 
         Asynchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network, draw= False)
+
+
+#Leader Election Algorithms for general Networks:
+
+class FloodMax(Synchronous_Algorithm):
+    """
+    Every process maintains a record of the maximum UID it has seen so far
+    (initially its own). At each round, each process propagates this maximum
+    on all of its outgoing edges. After diam rounds, if the maximum value seen
+    is the process's own UID, the process elects itself the leader; otherwise,
+    it is a non-leader.
+
+    Assumes, for every process, p, p.state["diam"] == the diameter of the network.
+    """
+    def __init__(self, network = None, draw = False):
+        def LCR_msgs(p):
+            if self.r < p.state["diam"]:
+                msg = p.state["send"]
+                p.send_msg(msg)
+
+        def LCR_trans(p, verbose=False):
+            if verbose:
+                print "state: " + str(p.state)
+                print str(p) + " received " + str(p.in_channel)
+            seen_uids = p.get_msgs()+[p.state["send"]]
+            p.state["send"] = max(seen_uids)
+
+            if self.r == p.state["diam"]:
+                if p.state["send"] == p.UID:
+                    p.output("leader")
+                    p.terminate(self)
+                else:
+                    p.output("non-leader")
+                    p.terminate(self)
+
+        Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network, draw=draw )

@@ -27,6 +27,30 @@ def ASYNC_LCR_BI_RING():
     AsyncLCR(r)
     testLeaderElection(r)
 
+@test(precision=1e-7)
+def FLOODMAX_UNI_RING():
+    r = Unidirectional_Ring(4)
+    FloodMax(r)
+    testLeaderElection(r)
+
+@test(precision=1e-7)
+def FLOODMAX_BI_RING():
+    r = Bidirectional_Ring(4)
+    FloodMax(r)
+    testLeaderElection(r)
+
+@test(precision=1e-7)
+def FLOODMAX_BI_LINE():
+    l = Bidirectional_Line(4)
+    FloodMax(l)
+    testLeaderElection(l)
+
+@test(precision=1e-7)
+def FLOODMAX_COMPLETE_GRAPH():
+    g = Complete_Graph(10)
+    FloodMax(g)
+    testLeaderElection(g)
+
 @test
 def send_receive_msgs():
     x = Bidirectional_Ring(4, lambda p:p)

@@ -41,5 +41,5 @@ def test(f=None, timeout=TIMEOUT, precision = PRECISION, main_thread=False):
         test_decorator(f)
 
 def testLeaderElection(network, isLeader = lambda p: "status" in p.state and p.state["status"]=="leader", isNonleader = lambda p: "status" in p.state and p.state["status"]=="non-leader"):
-    assert sum([isLeader(p) for p in network]) == 1
-    assert sum([isNonleader(p) for p in network]) == len(network)-1
+    assert sum([isLeader(p) for p in network]) == 1 , "Leader Election Failed"
+    assert sum([isNonleader(p) for p in network]) == len(network)-1, "Leader Election Failed"
