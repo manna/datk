@@ -4,14 +4,24 @@ from algs import *
 from tester import *
 
 @test(precision = 1e-7)
-def LCR_UNIDIR_RING():
-    r = Unidirectional_Ring(3)
+def LCR_UNI_RING():
+    r = Unidirectional_Ring(6)
+    LCR(r, draw=False)
+
+@test(precision = 1e-7)
+def LCR_BI_RING():
+    r = Bidirectional_Ring(6)
     LCR(r, draw=False)
 
 @test(precision = 1e-3)
-def ASYNC_LCR_UNIDIR_RING():
+def ASYNC_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     AsyncLCR(r, draw=False)
+
+@test(precision = 1e-3)
+def ASYNC_LCR_BI_RING():
+    r = Bidirectional_Ring(6)
+    AsyncLCR(r)
 
 @test
 def send_receive_msgs():
@@ -26,7 +36,7 @@ def send_receive_msgs():
     assert x[1].get_msgs() == []
 
 @test(main_thread=True)
-def DRAW_UNIDIRECTIONAL_RING():
+def DRAW_UNI_RING():
     Unidirectional_Ring(4).draw()
 
 @test(main_thread=True)
@@ -34,5 +44,5 @@ def DRAW_COMPLETE_GRAPH():
     Complete_Graph(10).draw()
 
 @test(main_thread=True)
-def DRAW_UNIDIRECTIONAL_LINE():
+def DRAW_UNI_LINE():
     Unidirectional_Line(4).draw()

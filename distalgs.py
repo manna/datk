@@ -41,11 +41,21 @@ class Process:
         print str(self) +  " is " +status
 
     def send_to_all_neighbors(self, msg):
-        for nbr in self.out_nbrs:
-            if nbr.in_nbrs.index(self) in nbr.in_channel:
-                nbr.in_channel[nbr.in_nbrs.index(self)].append(msg)
-            else:
-                nbr.in_channel[nbr.in_nbrs.index(self)] = [msg]
+        self.send_msg(msg)
+
+    def send_msg(self, msg, out_nbrs=None):
+        if out_nbrs is None:
+            out_nbrs = self.out_nbrs
+        elif isinstance(out_nbrs, Process):
+            out_nbrs = [out_nbrs]
+        if isinstance(out_nbrs, list):
+            for nbr in out_nbrs:
+                if nbr.in_nbrs.index(self) in nbr.in_channel:
+                    nbr.in_channel[nbr.in_nbrs.index(self)].append(msg)
+                else:
+                    nbr.in_channel[nbr.in_nbrs.index(self)] = [msg]
+        else:
+            raise Exception("incorrect type for out_nbrs argument of Process.send_msg()")
 
     def get_msgs(self, in_nbrs = None):
         if in_nbrs is None:
@@ -127,7 +137,6 @@ class Network:
         frame.axes.get_xaxis().set_visible(False)
         frame.axes.get_yaxis().set_visible(False)
         plt.show()
-
 
 class Algorithm:
 

@@ -16,7 +16,7 @@ class LCR(Synchronous_Algorithm):
             if msg is None:
                 return
             p.state["send"] = None
-            p.send_to_all_neighbors(msg)
+            p.send_msg(msg, p.out_nbrs[-1])
 
         def LCR_trans(p, verbose=False):
             msgs = p.get_msgs()
@@ -46,14 +46,14 @@ class AsyncLCR(Asynchronous_Algorithm):
         def LCR_msgs(p, verbose=False):
             if "status" in p.state and p.state["status"] == "leader":
                 msg = AsyncLCR.Leader_Declaration()
-                p.send_to_all_neighbors(msg)
+                p.send_msg(msg, p.out_nbrs[-1])
                 if verbose:
                     print str(p) + " sends " + str(msg)
                 p.terminate(self)
                 return
             while len(p.state["sends"]) > 0:
                 msg = p.state["sends"].pop()
-                p.send_to_all_neighbors(msg)
+                p.send_msg(msg, p.out_nbrs[-1])
                 if verbose:
                     print str(p) + " sends " + str(msg)
 
@@ -64,7 +64,7 @@ class AsyncLCR(Asynchronous_Algorithm):
             while len(msgs) > 0:
                 msg = msgs.pop()
                 if isinstance(msg, AsyncLCR.Leader_Declaration):
-                    p.send_to_all_neighbors(msg)
+                    p.send_msg(msg, p.out_nbrs[-1])
                     if verbose:
                         print str(p) + " sends " + str(msg)
                     p.terminate(self)
