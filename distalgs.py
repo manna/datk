@@ -34,21 +34,23 @@ class Process:
         self.out_nbrs.append(new_out_nbr)
         new_out_nbr.in_nbrs.append(self)
 
-    def output(self, status):
+    def output(self, status, silent=False):
         if "status" in self.state.keys():
             return
         self.state["status"] =  status
-        print str(self) +  " is " +status
+        if not silent:
+            print str(self) +  " is " +status
 
-    def send_to_all_neighbors(self, msg):
-        self.send_msg(msg)
+    def send_to_all_neighbors(self, algorithm, msg):
+        self.send_msg(algorithm, msg)
 
-    def send_msg(self, msg, out_nbrs=None):
+    def send_msg(self, algorithm, msg, out_nbrs=None):
         if out_nbrs is None:
             out_nbrs = self.out_nbrs
         elif isinstance(out_nbrs, Process):
             out_nbrs = [out_nbrs]
         if isinstance(out_nbrs, list):
+            algorithm.count_msg(len(out_nbrs))
             for nbr in out_nbrs:
                 if nbr.in_nbrs.index(self) in nbr.in_channel:
                     nbr.in_channel[nbr.in_nbrs.index(self)].append(msg)
@@ -143,7 +145,7 @@ class Algorithm:
     """
     Abstract superclass for a distributed algorithm.
     """
-    def __init__(self, msgs_i, trans_i, halt_i = None, network = None, draw=True, name = None):
+    def __init__(self, msgs_i, trans_i, halt_i = None, network = None, draw=False, silent=False, name = None):
         self.msgs_i = msgs_i
         self.trans_i = trans_i
         
@@ -154,16 +156,20 @@ class Algorithm:
         if name is None:
             self.name = self.__class__.__name__
         if network is not None:
-            self(network, draw)
+            self(network, draw=draw, silent=silent)
+
+        self.message_count = 0
 
     def halt_i(self, p):
         if self.halt_i_ is not None:
             return self.halt_i_(p)
         return self not in p.algs
 
-    def __call__(self, network, draw=False):
-        self.run(network, draw)
-    def run(self, network, draw=False):
+    def __call__(self, network, draw=False, silent=False):
+        self.run(network, draw, silent)
+
+    def run(self, network, draw=False, silent=False):
+        self.message_count = 0
         header = "Running " + self.name + " on"
         print len(header)*"-"
         print header
@@ -177,12 +183,15 @@ class Algorithm:
             print "Algorithm Terminated"
             print "--------------------"
 
+    def count_msg(self, message_count):
+        self.message_count += message_count
+
 class Synchronous_Algorithm(Algorithm):
     """
     We assume that Processes take steps simultaneously,
     that is, that execution proceeds in synchronous rounds.
     """
-    def run(self, network, draw=False):
+    def run(self, network, draw=False, silent= False):
         Algorithm.run(self, network, draw)
 
         self.network = network
@@ -191,7 +200,8 @@ class Synchronous_Algorithm(Algorithm):
         self.halted = False
         self.r = 1
         while not self.halted:
-            print "Round "+str(self.r)
+            if not silent:
+                print "Round "+str(self.r)
             self.round()
             self.halt()
             self.r+=1
@@ -210,7 +220,7 @@ class Asynchronous_Algorithm(Algorithm):
     We assume that the separate Processes take steps
     in an arbitrary order, at arbitrary relative speeds.
     """
-    def run(self, network, draw=False):
+    def run(self, network, draw=False, silent=False):
         Algorithm.run(self, network, draw)
 
         self.network = network

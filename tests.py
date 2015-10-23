@@ -6,58 +6,60 @@ from tester import *
 @test(precision = 1e-7)
 def LCR_UNI_RING():
     r = Unidirectional_Ring(6)
-    LCR(r, draw=False)
+    lcr = LCR()
+    lcr(r, draw=False, silent=True)
+    print "Message Complexity: " + str(lcr.message_count)
     testLeaderElection(r)
 
 @test(precision = 1e-7)
 def LCR_BI_RING():
     r = Bidirectional_Ring(6)
-    LCR(r, draw=False)
+    LCR(r, silent=True)
     testLeaderElection(r)
 
 @test(precision = 1e-3)
 def ASYNC_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
-    AsyncLCR(r, draw=False)
+    AsyncLCR(r, silent=True)
     testLeaderElection(r)
 
 @test(precision = 1e-3)
 def ASYNC_LCR_BI_RING():
     r = Bidirectional_Ring(6)
-    AsyncLCR(r)
+    AsyncLCR(r, silent = True)
     testLeaderElection(r)
 
 @test(precision=1e-7)
 def FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
-    FloodMax(r)
+    FloodMax(r, silent=True)
     testLeaderElection(r)
 
 @test(precision=1e-7)
 def FLOODMAX_BI_RING():
     r = Bidirectional_Ring(4)
-    FloodMax(r)
+    FloodMax(r, silent=True)
     testLeaderElection(r)
 
 @test(precision=1e-7)
 def FLOODMAX_BI_LINE():
     l = Bidirectional_Line(4)
-    FloodMax(l)
+    FloodMax(l, silent=True)
     testLeaderElection(l)
 
 @test(precision=1e-7)
 def FLOODMAX_COMPLETE_GRAPH():
     g = Complete_Graph(10)
-    FloodMax(g)
+    FloodMax(g, silent=True)
     testLeaderElection(g)
 
 @test
 def send_receive_msgs():
     x = Bidirectional_Ring(4, lambda p:p)
     assert x[0].get_msgs() == []
-    x[0].send_to_all_neighbors("hi")
-    x[0].send_to_all_neighbors("hey")
-    x[2].send_to_all_neighbors("yo")
+    x[0].send_to_all_neighbors(LCR(),"hi")
+    x[0].send_to_all_neighbors(LCR(),"hey")
+    x[2].send_to_all_neighbors(LCR(),"yo")
     assert x[1].get_msgs(x[0]) == ["hi", "hey"]
     assert x[1].get_msgs(x[0]) == []
     assert x[1].get_msgs() == ["yo"]
