@@ -3,54 +3,72 @@ from networks import *
 from algs import *
 from tester import *
 
+def configure_ipython():
+  """
+  Convenient helper function to determine if environment is ipython.
+  Note that drawing is only safe in ipython qtconsole with matplotlib inline
+  If environment is IPython, returns True and configures IPython.
+  Else returns False.
+  """
+  try:
+    __IPYTHON__
+    ip = get_ipython()
+    ip.magic("%matplotlib inline") 
+  except NameError:
+    return False
+  else:
+    return True
+
+in_ipython = configure_ipython()    
+
+test_params = {"draw":in_ipython, "silent" : True}
+
 @test(precision = 1e-7)
 def LCR_UNI_RING():
     r = Unidirectional_Ring(6)
-    lcr = LCR()
-    lcr(r, draw=False, silent=True)
-    print "Message Complexity: " + str(lcr.message_count)
+    LCR(r, test_params)
     testLeaderElection(r)
 
 @test(precision = 1e-7)
 def LCR_BI_RING():
     r = Bidirectional_Ring(6)
-    LCR(r, silent=True)
+    LCR(r, params = test_params)
     testLeaderElection(r)
 
 @test(precision = 1e-3)
 def ASYNC_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
-    AsyncLCR(r, silent=True)
+    AsyncLCR(r, params = test_params)
     testLeaderElection(r)
 
 @test(precision = 1e-3)
 def ASYNC_LCR_BI_RING():
     r = Bidirectional_Ring(6)
-    AsyncLCR(r, silent = True)
+    AsyncLCR(r, params = test_params)
     testLeaderElection(r)
 
 @test(precision=1e-7)
 def FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
-    FloodMax(r, silent=True)
+    FloodMax(r, params = test_params)
     testLeaderElection(r)
 
 @test(precision=1e-7)
 def FLOODMAX_BI_RING():
     r = Bidirectional_Ring(4)
-    FloodMax(r, silent=True)
+    FloodMax(r, params = test_params)
     testLeaderElection(r)
 
 @test(precision=1e-7)
 def FLOODMAX_BI_LINE():
     l = Bidirectional_Line(4)
-    FloodMax(l, silent=True)
+    FloodMax(l, params = test_params)
     testLeaderElection(l)
 
 @test(precision=1e-7)
 def FLOODMAX_COMPLETE_GRAPH():
     g = Complete_Graph(10)
-    FloodMax(g, silent=True)
+    FloodMax(g, params = test_params)
     testLeaderElection(g)
 
 @test

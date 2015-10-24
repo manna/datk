@@ -12,7 +12,7 @@ class LCR(Synchronous_Algorithm):
     if it is less than its own, it discards the incoming identifier;
     if it is equal to its own, the Process declares itself the leader.
     """
-    def __init__(self, network = None, draw = False, silent=False):
+    def __init__(self, network = None, params = {"draw": False, "silent": False}):
         def LCR_msgs(p):
             msg = p.state["send"]
             if msg is None:
@@ -20,31 +20,31 @@ class LCR(Synchronous_Algorithm):
             p.state["send"] = None
             p.send_msg(self, msg, p.out_nbrs[-1])
 
-        def LCR_trans(p, verbose=False):
+        def LCR_trans(p, verbose=False): #TODO replace params['silent'] with verbosity levels.
             msgs = p.get_msgs()
             if len(msgs) == 0:
                 p.state["send"] = None
             else:
                 msg = msgs.pop()
                 if msg == p.UID:
-                    p.output("leader", silent)
+                    p.output("leader", params["silent"])
                     p.terminate(self)
                 elif msg > p.UID:
                     p.state["send"] = msg
-                    p.output("non-leader", silent)
+                    p.output("non-leader", params["silent"])
                     p.terminate(self)
                 else:
                     p.state["send"] = None
             if verbose:
                 print str(p) + " received " + str(p.in_channel)
                 print "state: " + str(p.state)
-        Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network, draw=draw, silent=silent)
+        Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network=network, params=params)
 
 class AsyncLCR(Asynchronous_Algorithm):
     class Leader_Declaration(Message):
         def __str__(self):
             return "LD"
-    def __init__(self, network = None, draw = False, silent=False):
+    def __init__(self, network = None, params= {"draw":False, "silent":False}):
         def LCR_msgs(p, verbose=False):
             if "status" in p.state and p.state["status"] == "leader":
                 msg = AsyncLCR.Leader_Declaration()
@@ -72,12 +72,12 @@ class AsyncLCR(Asynchronous_Algorithm):
                     p.terminate(self)
                     return
                 if msg == p.UID:
-                    p.output("leader", silent)
+                    p.output("leader", params["silent"])
                 elif msg > p.UID:
                     p.state["sends"].append(msg)
-                    p.output("non-leader", silent)
+                    p.output("non-leader", params["silent"])
 
-        Asynchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network, draw=draw, silent=silent )
+        Asynchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network, params=params )
 
 
 #Leader Election Algorithms for general Networks:
@@ -92,7 +92,7 @@ class FloodMax(Synchronous_Algorithm):
 
     Assumes, for every process, p, p.state["diam"] == the diameter of the network.
     """
-    def __init__(self, network = None, draw = False, silent=False):
+    def __init__(self, network = None, params = {"draw": False, "silent": False}):
         def LCR_msgs(p):
             if self.r < p.state["diam"]:
                 msg = p.state["send"]
@@ -107,10 +107,10 @@ class FloodMax(Synchronous_Algorithm):
 
             if self.r == p.state["diam"]:
                 if p.state["send"] == p.UID:
-                    p.output("leader", silent)
+                    p.output("leader", params["silent"])
                     p.terminate(self)
                 else:
-                    p.output("non-leader", silent)
+                    p.output("non-leader", params["silent"])
                     p.terminate(self)
 
-        Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network, draw=draw, silent=silent )
+        Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network = network, params = params)

@@ -144,8 +144,11 @@ class Algorithm:
 
     """
     Abstract superclass for a distributed algorithm.
+
+    @param params: Optional run() parameters.
     """
-    def __init__(self, msgs_i, trans_i, halt_i = None, network = None, draw=False, silent=False, name = None):
+    def __init__(self, msgs_i, trans_i, halt_i = None, network = None, params = {"draw": False, "silent": False}, name = None):
+
         self.msgs_i = msgs_i
         self.trans_i = trans_i
         
@@ -156,7 +159,7 @@ class Algorithm:
         if name is None:
             self.name = self.__class__.__name__
         if network is not None:
-            self(network, draw=draw, silent=silent)
+            self(network, params)
 
         self.message_count = 0
 
@@ -165,15 +168,15 @@ class Algorithm:
             return self.halt_i_(p)
         return self not in p.algs
 
-    def __call__(self, network, draw=False, silent=False):
-        self.run(network, draw, silent)
+    def __call__(self, network, params = {}):
+        self.run(network, params)
 
-    def run(self, network, draw=False, silent=False):
+    def run(self, network, params = {"draw":False, "silent":False}):
         self.message_count = 0
         header = "Running " + self.name + " on"
         print len(header)*"-"
         print header
-        if draw:
+        if params['draw']:
             network.draw()
         print str(network)
 
@@ -181,7 +184,9 @@ class Algorithm:
         if sum([self.halt_i(process) for process in self.network]) == len(self.network):
             self.halted = True
             print "Algorithm Terminated"
-            print "--------------------"
+            msg_complexity = "Message Complexity: " + str(self.message_count)
+            print msg_complexity
+            print "-"*len(msg_complexity)
 
     def count_msg(self, message_count):
         self.message_count += message_count
@@ -191,8 +196,8 @@ class Synchronous_Algorithm(Algorithm):
     We assume that Processes take steps simultaneously,
     that is, that execution proceeds in synchronous rounds.
     """
-    def run(self, network, draw=False, silent= False):
-        Algorithm.run(self, network, draw)
+    def run(self, network, params = {}):
+        Algorithm.run(self, network, params)
 
         self.network = network
         network.add(self)
@@ -200,7 +205,7 @@ class Synchronous_Algorithm(Algorithm):
         self.halted = False
         self.r = 1
         while not self.halted:
-            if not silent:
+            if not params['silent']:
                 print "Round "+str(self.r)
             self.round()
             self.halt()
@@ -220,8 +225,8 @@ class Asynchronous_Algorithm(Algorithm):
     We assume that the separate Processes take steps
     in an arbitrary order, at arbitrary relative speeds.
     """
-    def run(self, network, draw=False, silent=False):
-        Algorithm.run(self, network, draw)
+    def run(self, network, params = {"draw" : False, "silent" : False}):
+        Algorithm.run(self, network, params)
 
         self.network = network
         network.add(self)
