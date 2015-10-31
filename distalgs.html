@@ -12,7 +12,8 @@
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/amin/Dropbox (MIT)/Junior/Fall/6.852/datk/distalgs.py">/Users/amin/Dropbox (MIT)/Junior/Fall/6.852/datk/distalgs.py</a></font></td></tr></table>
     <p><tt>A&nbsp;Python&nbsp;Toolkit&nbsp;for&nbsp;Distributed&nbsp;Algorithms<br>
 &nbsp;<br>
-Author:&nbsp;Amin&nbsp;Manna&nbsp;&lt;manna@mit.edu&gt;</tt></p>
+Author:&nbsp;Amin&nbsp;Manna&nbsp;&lt;manna@mit.edu&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mayuri&nbsp;Sridhar&nbsp;&lt;mayuri@mit.edu&gt;</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -22,7 +23,8 @@ Author:&nbsp;Amin&nbsp;Manna&nbsp;&lt;manna@mit.edu&gt;</tt></p>
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="pdb.html">pdb</a><br>
 </td><td width="25%" valign=top><a href="random.html">random</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top><a href="threading.html">threading</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -34,28 +36,12 @@ Author:&nbsp;Amin&nbsp;Manna&nbsp;&lt;manna@mit.edu&gt;</tt></p>
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="distalgs.html#Asynchronous_Algorithm">Asynchronous_Algorithm</a>
-</font></dt><dd>
-<dl>
-<dt><font face="helvetica, arial"><a href="distalgs.html#AsyncLCR">AsyncLCR</a>
+</font></dt><dt><font face="helvetica, arial"><a href="distalgs.html#Synchronous_Algorithm">Synchronous_Algorithm</a>
 </font></dt></dl>
-</dd>
-<dt><font face="helvetica, arial"><a href="distalgs.html#Synchronous_Algorithm">Synchronous_Algorithm</a>
-</font></dt><dd>
-<dl>
-<dt><font face="helvetica, arial"><a href="distalgs.html#LCR">LCR</a>
-</font></dt></dl>
-</dd>
-</dl>
 </dd>
 <dt><font face="helvetica, arial"><a href="distalgs.html#Message">Message</a>
 </font></dt><dt><font face="helvetica, arial"><a href="distalgs.html#Network">Network</a>
-</font></dt><dd>
-<dl>
-<dt><font face="helvetica, arial"><a href="distalgs.html#Bidirectional_Ring">Bidirectional_Ring</a>
-</font></dt><dt><font face="helvetica, arial"><a href="distalgs.html#Unidirectional_Ring">Unidirectional_Ring</a>
-</font></dt></dl>
-</dd>
-<dt><font face="helvetica, arial"><a href="distalgs.html#Process">Process</a>
+</font></dt><dt><font face="helvetica, arial"><a href="distalgs.html#Process">Process</a>
 </font></dt></dl>
  <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -64,42 +50,22 @@ Author:&nbsp;Amin&nbsp;Manna&nbsp;&lt;manna@mit.edu&gt;</tt></p>
 <font color="#000000" face="helvetica, arial"><a name="Algorithm">class <strong>Algorithm</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Abstract&nbsp;superclass&nbsp;for&nbsp;a&nbsp;distributed&nbsp;algorithm.<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Abstract&nbsp;superclass&nbsp;for&nbsp;a&nbsp;distributed&nbsp;algorithm.<br>
+&nbsp;<br>
+@param&nbsp;params:&nbsp;Optional&nbsp;<a href="#Algorithm-run">run</a>()&nbsp;parameters.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="Algorithm-__call__"><strong>__call__</strong></a>(self, network, *args)</dt></dl>
+<dl><dt><a name="Algorithm-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
 
-<dl><dt><a name="Algorithm-__init__"><strong>__init__</strong></a>(self, msgs_i, trans_i, halt_i, network<font color="#909090">=None</font>, name<font color="#909090">=None</font>)</dt></dl>
+<dl><dt><a name="Algorithm-__init__"><strong>__init__</strong></a>(self, msgs_i, trans_i, halt_i<font color="#909090">=None</font>, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
 
-<dl><dt><a name="Algorithm-run"><strong>run</strong></a>(self, network, *args)</dt></dl>
+<dl><dt><a name="Algorithm-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
 
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="AsyncLCR">class <strong>AsyncLCR</strong></a>(<a href="distalgs.html#Asynchronous_Algorithm">Asynchronous_Algorithm</a>)</font></td></tr>
-    
-<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="distalgs.html#AsyncLCR">AsyncLCR</a></dd>
-<dd><a href="distalgs.html#Asynchronous_Algorithm">Asynchronous_Algorithm</a></dd>
-<dd><a href="distalgs.html#Algorithm">Algorithm</a></dd>
-</dl>
-<hr>
-Methods defined here:<br>
-<dl><dt><a name="AsyncLCR-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>)</dt></dl>
+<dl><dt><a name="Algorithm-halt"><strong>halt</strong></a>(self)</dt></dl>
 
-<hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>Leader_Declaration</strong> = &lt;class distalgs.Leader_Declaration&gt;</dl>
+<dl><dt><a name="Algorithm-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
 
-<hr>
-Methods inherited from <a href="distalgs.html#Asynchronous_Algorithm">Asynchronous_Algorithm</a>:<br>
-<dl><dt><a name="AsyncLCR-run"><strong>run</strong></a>(self, network, *args)</dt></dl>
-
-<hr>
-Methods inherited from <a href="distalgs.html#Algorithm">Algorithm</a>:<br>
-<dl><dt><a name="AsyncLCR-__call__"><strong>__call__</strong></a>(self, network, *args)</dt></dl>
+<dl><dt><a name="Algorithm-run"><strong>run</strong></a>(self, network, params<font color="#909090">={'draw': False, 'silent': False}</font>)</dt></dl>
 
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -112,77 +78,21 @@ Methods inherited from <a href="distalgs.html#Algorithm">Algorithm</a>:<br>
 in&nbsp;an&nbsp;arbitrary&nbsp;order,&nbsp;at&nbsp;arbitrary&nbsp;relative&nbsp;speeds.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="Asynchronous_Algorithm-run"><strong>run</strong></a>(self, network, *args)</dt></dl>
+<dl><dt><a name="Asynchronous_Algorithm-run"><strong>run</strong></a>(self, network, params<font color="#909090">={'draw': False, 'silent': False}</font>)</dt></dl>
+
+<dl><dt><a name="Asynchronous_Algorithm-run_process"><strong>run_process</strong></a>(self, process)</dt></dl>
 
 <hr>
 Methods inherited from <a href="distalgs.html#Algorithm">Algorithm</a>:<br>
-<dl><dt><a name="Asynchronous_Algorithm-__call__"><strong>__call__</strong></a>(self, network, *args)</dt></dl>
+<dl><dt><a name="Asynchronous_Algorithm-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
 
-<dl><dt><a name="Asynchronous_Algorithm-__init__"><strong>__init__</strong></a>(self, msgs_i, trans_i, halt_i, network<font color="#909090">=None</font>, name<font color="#909090">=None</font>)</dt></dl>
+<dl><dt><a name="Asynchronous_Algorithm-__init__"><strong>__init__</strong></a>(self, msgs_i, trans_i, halt_i<font color="#909090">=None</font>, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
 
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Bidirectional_Ring">class <strong>Bidirectional_Ring</strong></a>(<a href="distalgs.html#Network">Network</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>A&nbsp;<a href="#Network">Network</a>&nbsp;of&nbsp;n&nbsp;Processes&nbsp;arranged&nbsp;in&nbsp;a&nbsp;ring.&nbsp;Each&nbsp;edge&nbsp;between&nbsp;a&nbsp;<a href="#Process">Process</a><br>
-and&nbsp;its&nbsp;neighbor&nbsp;is&nbsp;undirected,&nbsp;that&nbsp;is,&nbsp;messages&nbsp;can&nbsp;be&nbsp;sent&nbsp;in&nbsp;both<br>
-the&nbsp;clockwise&nbsp;and&nbsp;the&nbsp;counterclockwise&nbsp;directions.<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Methods defined here:<br>
-<dl><dt><a name="Bidirectional_Ring-__init__"><strong>__init__</strong></a>(self, n, index_to_UID<font color="#909090">=None</font>)</dt></dl>
+<dl><dt><a name="Asynchronous_Algorithm-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
 
-<hr>
-Methods inherited from <a href="distalgs.html#Network">Network</a>:<br>
-<dl><dt><a name="Bidirectional_Ring-__getitem__"><strong>__getitem__</strong></a>(self, i)</dt></dl>
+<dl><dt><a name="Asynchronous_Algorithm-halt"><strong>halt</strong></a>(self)</dt></dl>
 
-<dl><dt><a name="Bidirectional_Ring-__len__"><strong>__len__</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="Bidirectional_Ring-__repr__"><strong>__repr__</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="Bidirectional_Ring-run"><strong>run</strong></a>(self, algorithm)</dt></dl>
-
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="LCR">class <strong>LCR</strong></a>(<a href="distalgs.html#Synchronous_Algorithm">Synchronous_Algorithm</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>The&nbsp;LeLann,&nbsp;Chang&nbsp;and&nbsp;Roberts&nbsp;algorithm&nbsp;for&nbsp;Leader&nbsp;Election&nbsp;in&nbsp;a&nbsp;Synchronous&nbsp;<a href="#Unidirectional_Ring">Unidirectional_Ring</a>.&nbsp;<br>
-&nbsp;<br>
-Each&nbsp;<a href="#Process">Process</a>&nbsp;sends&nbsp;its&nbsp;identifier&nbsp;around&nbsp;the&nbsp;ring.<br>
-When&nbsp;a&nbsp;<a href="#Process">Process</a>&nbsp;receives&nbsp;an&nbsp;incoming&nbsp;identifier,&nbsp;it&nbsp;compares&nbsp;that&nbsp;identifier&nbsp;to&nbsp;its&nbsp;own.<br>
-If&nbsp;the&nbsp;incoming&nbsp;identifier&nbsp;is&nbsp;greater&nbsp;than&nbsp;its&nbsp;own,&nbsp;it&nbsp;keeps&nbsp;passing&nbsp;the&nbsp;identifier;<br>
-if&nbsp;it&nbsp;is&nbsp;less&nbsp;than&nbsp;its&nbsp;own,&nbsp;it&nbsp;discards&nbsp;the&nbsp;incoming&nbsp;identifier;<br>
-if&nbsp;it&nbsp;is&nbsp;equal&nbsp;to&nbsp;its&nbsp;own,&nbsp;the&nbsp;<a href="#Process">Process</a>&nbsp;declares&nbsp;itself&nbsp;the&nbsp;leader.<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="distalgs.html#LCR">LCR</a></dd>
-<dd><a href="distalgs.html#Synchronous_Algorithm">Synchronous_Algorithm</a></dd>
-<dd><a href="distalgs.html#Algorithm">Algorithm</a></dd>
-</dl>
-<hr>
-Methods defined here:<br>
-<dl><dt><a name="LCR-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>)</dt></dl>
-
-<hr>
-Methods inherited from <a href="distalgs.html#Synchronous_Algorithm">Synchronous_Algorithm</a>:<br>
-<dl><dt><a name="LCR-halt"><strong>halt</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="LCR-msgs"><strong>msgs</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="LCR-round"><strong>round</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="LCR-run"><strong>run</strong></a>(self, network, *args)</dt></dl>
-
-<dl><dt><a name="LCR-trans"><strong>trans</strong></a>(self)</dt></dl>
-
-<hr>
-Methods inherited from <a href="distalgs.html#Algorithm">Algorithm</a>:<br>
-<dl><dt><a name="LCR-__call__"><strong>__call__</strong></a>(self, network, *args)</dt></dl>
+<dl><dt><a name="Asynchronous_Algorithm-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
 
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -190,9 +100,7 @@ Methods inherited from <a href="distalgs.html#Algorithm">Algorithm</a>:<br>
 <td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="Message">class <strong>Message</strong></a></font></td></tr>
     
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>#toolkit.py<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Message-__init__"><strong>__init__</strong></a>(self, content<font color="#909090">=None</font>)</dt></dl>
 
@@ -204,7 +112,7 @@ Methods inherited from <a href="distalgs.html#Algorithm">Algorithm</a>:<br>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>A&nbsp;collection&nbsp;of&nbsp;Processes.<br>
-Known&nbsp;subclasses:&nbsp;<a href="#Unidirectional_Ring">Unidirectional_Ring</a>,&nbsp;<a href="#Bidirectional_Ring">Bidirectional_Ring</a><br>&nbsp;</tt></td></tr>
+Known&nbsp;subclasses:&nbsp;Unidirectional_Ring,&nbsp;Bidirectional_Ring<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Network-__getitem__"><strong>__getitem__</strong></a>(self, i)</dt></dl>
@@ -216,6 +124,12 @@ the&nbsp;index_to_UID&nbsp;function</tt></dd></dl>
 <dl><dt><a name="Network-__len__"><strong>__len__</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="Network-__repr__"><strong>__repr__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Network-add"><strong>add</strong></a>(self, algorithm)</dt></dl>
+
+<dl><dt><a name="Network-draw"><strong>draw</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Network-index"><strong>index</strong></a>(self, p)</dt></dl>
 
 <dl><dt><a name="Network-run"><strong>run</strong></a>(self, algorithm)</dt></dl>
 
@@ -236,9 +150,21 @@ Processes&nbsp;are&nbsp;identical&nbsp;except&nbsp;for&nbsp;their&nbsp;UID<br>&n
 
 <dl><dt><a name="Process-__str__"><strong>__str__</strong></a>(self)</dt></dl>
 
-<dl><dt><a name="Process-output"><strong>output</strong></a>(self, status)</dt></dl>
+<dl><dt><a name="Process-add"><strong>add</strong></a>(self, algorithm)</dt></dl>
 
-<dl><dt><a name="Process-send_to_all_neighbors"><strong>send_to_all_neighbors</strong></a>(self, msg)</dt></dl>
+<dl><dt><a name="Process-bi_link"><strong>bi_link</strong></a>(self, nbr)</dt></dl>
+
+<dl><dt><a name="Process-get_msgs"><strong>get_msgs</strong></a>(self, in_nbrs<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Process-link_to"><strong>link_to</strong></a>(self, new_out_nbr)</dt></dl>
+
+<dl><dt><a name="Process-output"><strong>output</strong></a>(self, status, silent<font color="#909090">=False</font>)</dt></dl>
+
+<dl><dt><a name="Process-send_msg"><strong>send_msg</strong></a>(self, algorithm, msg, out_nbrs<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Process-send_to_all_neighbors"><strong>send_to_all_neighbors</strong></a>(self, algorithm, msg)</dt></dl>
+
+<dl><dt><a name="Process-terminate"><strong>terminate</strong></a>(self, algorithm)</dt></dl>
 
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -251,45 +177,25 @@ Processes&nbsp;are&nbsp;identical&nbsp;except&nbsp;for&nbsp;their&nbsp;UID<br>&n
 that&nbsp;is,&nbsp;that&nbsp;execution&nbsp;proceeds&nbsp;in&nbsp;synchronous&nbsp;rounds.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="Synchronous_Algorithm-halt"><strong>halt</strong></a>(self)</dt></dl>
-
 <dl><dt><a name="Synchronous_Algorithm-msgs"><strong>msgs</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="Synchronous_Algorithm-round"><strong>round</strong></a>(self)</dt></dl>
 
-<dl><dt><a name="Synchronous_Algorithm-run"><strong>run</strong></a>(self, network, *args)</dt></dl>
+<dl><dt><a name="Synchronous_Algorithm-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
 
 <dl><dt><a name="Synchronous_Algorithm-trans"><strong>trans</strong></a>(self)</dt></dl>
 
 <hr>
 Methods inherited from <a href="distalgs.html#Algorithm">Algorithm</a>:<br>
-<dl><dt><a name="Synchronous_Algorithm-__call__"><strong>__call__</strong></a>(self, network, *args)</dt></dl>
+<dl><dt><a name="Synchronous_Algorithm-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
 
-<dl><dt><a name="Synchronous_Algorithm-__init__"><strong>__init__</strong></a>(self, msgs_i, trans_i, halt_i, network<font color="#909090">=None</font>, name<font color="#909090">=None</font>)</dt></dl>
+<dl><dt><a name="Synchronous_Algorithm-__init__"><strong>__init__</strong></a>(self, msgs_i, trans_i, halt_i<font color="#909090">=None</font>, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
 
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Unidirectional_Ring">class <strong>Unidirectional_Ring</strong></a>(<a href="distalgs.html#Network">Network</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>A&nbsp;<a href="#Network">Network</a>&nbsp;of&nbsp;n&nbsp;Processes&nbsp;arranged&nbsp;in&nbsp;a&nbsp;ring.&nbsp;Each&nbsp;edge&nbsp;is&nbsp;directed<br>
-from&nbsp;a&nbsp;<a href="#Process">Process</a>&nbsp;to&nbsp;its&nbsp;clockwise&nbsp;neighbor,&nbsp;that&nbsp;is,&nbsp;messages&nbsp;can<br>
-only&nbsp;be&nbsp;sent&nbsp;in&nbsp;a&nbsp;clockwise&nbsp;direction.<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Methods defined here:<br>
-<dl><dt><a name="Unidirectional_Ring-__init__"><strong>__init__</strong></a>(self, n, index_to_UID<font color="#909090">=None</font>)</dt></dl>
+<dl><dt><a name="Synchronous_Algorithm-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
 
-<hr>
-Methods inherited from <a href="distalgs.html#Network">Network</a>:<br>
-<dl><dt><a name="Unidirectional_Ring-__getitem__"><strong>__getitem__</strong></a>(self, i)</dt></dl>
+<dl><dt><a name="Synchronous_Algorithm-halt"><strong>halt</strong></a>(self)</dt></dl>
 
-<dl><dt><a name="Unidirectional_Ring-__len__"><strong>__len__</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="Unidirectional_Ring-__repr__"><strong>__repr__</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="Unidirectional_Ring-run"><strong>run</strong></a>(self, algorithm)</dt></dl>
+<dl><dt><a name="Synchronous_Algorithm-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
 
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -302,12 +208,5 @@ Methods inherited from <a href="distalgs.html#Network">Network</a>:<br>
 &nbsp;<br>
 Delay&nbsp;execution&nbsp;for&nbsp;a&nbsp;given&nbsp;number&nbsp;of&nbsp;seconds.&nbsp;&nbsp;The&nbsp;argument&nbsp;may&nbsp;be<br>
 a&nbsp;floating&nbsp;point&nbsp;number&nbsp;for&nbsp;subsecond&nbsp;precision.</tt></dd></dl>
-</td></tr></table><p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#55aa55">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
-    
-<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>x</strong> = [P1 -&gt; {P4}, P4 -&gt; {P2}, P2 -&gt; {P3}, P3 -&gt; {P0}, P0 -&gt; {P5}, P5 -&gt; {P1}]</td></tr></table>
+</td></tr></table>
 </body></html>
