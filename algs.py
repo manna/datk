@@ -20,7 +20,7 @@ class LCR(Synchronous_Algorithm):
             p.state["send"] = None
             p.send_msg(self, msg, p.out_nbrs[-1])
 
-        def LCR_trans(p, verbose=False): #TODO replace params['silent'] with verbosity levels.
+        def LCR_trans(p): #TODO replace params['silent'] with verbosity levels.
             msgs = p.get_msgs()
             if len(msgs) == 0:
                 p.state["send"] = None
@@ -35,9 +35,6 @@ class LCR(Synchronous_Algorithm):
                     p.terminate(self)
                 else:
                     p.state["send"] = None
-            if verbose:
-                print str(p) + " received " + str(p.in_channel)
-                print "state: " + str(p.state)
         Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, network=network, params=params)
 
 class AsyncLCR(Asynchronous_Algorithm):

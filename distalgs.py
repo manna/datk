@@ -22,7 +22,11 @@ class Process:
     Processes are identical except for their UID"""
     def __init__(self, UID, state = None, in_nbrs = [], out_nbrs = []):
         self.UID = UID
-        self.state = state or {"send" : self.UID, "sends": [self.UID], "halted" : False, "diam" : 4} #TODO generalize
+        self.state = state or { "send" : self.UID,
+                                "sends": [self.UID], 
+                                "halted" : False,
+                                "diam" : 10
+                                                    } #TODO generalize
         
         self.in_nbrs = in_nbrs or []   # Don't remove or []
         self.out_nbrs = out_nbrs or [] # Don't remove or []
@@ -30,9 +34,14 @@ class Process:
         self.in_channel = {}
         self.algs = set()
 
-    def linkTo(self, new_out_nbr):
-        self.out_nbrs.append(new_out_nbr)
-        new_out_nbr.in_nbrs.append(self)
+    def link_to(self, new_out_nbr):
+        if new_out_nbr not in self.out_nbrs:
+            self.out_nbrs.append(new_out_nbr)
+        if self not in new_out_nbr.in_nbrs:
+            new_out_nbr.in_nbrs.append(self)
+    def bi_link(self, nbr):
+        self.link_to(nbr)
+        nbr.link_to(self)
 
     def output(self, status, silent=False):
         if "status" in self.state.keys():
@@ -109,6 +118,7 @@ class Network:
         return len(self.processes)
     def __repr__(self):
         return str(self.processes)
+
     def index(self, p):
         return self.processes.index(p)    
     def add(self, algorithm):
@@ -147,7 +157,11 @@ class Algorithm:
 
     @param params: Optional run() parameters.
     """
-    def __init__(self, msgs_i, trans_i, halt_i = None, network = None, params = {"draw": False, "silent": False}, name = None):
+    def __init__(self, 
+                 msgs_i, trans_i, halt_i = None,
+                 network = None,
+                 params = {"draw": False, "silent": False},
+                 name = None):
 
         self.msgs_i = msgs_i
         self.trans_i = trans_i
@@ -218,6 +232,8 @@ class Synchronous_Algorithm(Algorithm):
             self.msgs_i(process)
     def trans(self):
         for process in self.network:
+            if False:
+                print str(process) + " received " + str(process.in_channel)
             self.trans_i(process)
 
 class Asynchronous_Algorithm(Algorithm):

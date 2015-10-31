@@ -71,6 +71,12 @@ def FLOODMAX_COMPLETE_GRAPH():
     FloodMax(g, params = test_params)
     testLeaderElection(g)
 
+@test(precision=1e-7)
+def FLOODMAX_RANDOM_GRAPH():
+    g = Random_Network(16)
+    FloodMax(g, params = test_params)
+    testLeaderElection(g)
+
 @test
 def send_receive_msgs():
     x = Bidirectional_Ring(4, lambda p:p)
@@ -82,15 +88,3 @@ def send_receive_msgs():
     assert x[1].get_msgs(x[0]) == []
     assert x[1].get_msgs() == ["yo"]
     assert x[1].get_msgs() == []
-
-@test(main_thread=True)
-def DRAW_UNI_RING():
-    Unidirectional_Ring(4).draw()
-
-@test(main_thread=True)
-def DRAW_COMPLETE_GRAPH():
-    Complete_Graph(10).draw()
-
-@test(main_thread=True)
-def DRAW_UNI_LINE():
-    Unidirectional_Line(4).draw()
