@@ -19,7 +19,7 @@ def configure_ipython():
   else:
     return True
 
-in_ipython = configure_ipython()    
+in_ipython = configure_ipython()
 
 test_params = {"draw":in_ipython, "silent" : True}
 

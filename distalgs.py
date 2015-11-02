@@ -22,8 +22,7 @@ class Process:
     Processes are identical except for their UID"""
     def __init__(self, UID, state = None, in_nbrs = [], out_nbrs = []):
         self.UID = UID
-        self.state = state or { "send" : self.UID,
-                                "sends": [self.UID], 
+        self.state = state or {
                                 "halted" : False,
                                 "diam" : 10
                                                     } #TODO generalize
@@ -158,7 +157,7 @@ class Algorithm:
     @param params: Optional run() parameters.
     """
     def __init__(self, 
-                 msgs_i, trans_i, halt_i = None,
+                 msgs_i, trans_i, halt_i = None, cleanup_i = None,
                  network = None,
                  params = {"draw": False, "silent": False},
                  name = None):
@@ -167,6 +166,7 @@ class Algorithm:
         self.trans_i = trans_i
         
         self.halt_i_ = halt_i
+        self.cleanup_i = cleanup_i
 
         #Algorithm name defaults to X for class X(Algorithm).
         self.name = name
@@ -182,6 +182,12 @@ class Algorithm:
             return self.halt_i_(p)
         return self not in p.algs
 
+    def cleanup(self):
+        if self.cleanup_i is not None:
+            for process in self.network:
+                self.cleanup_i(process)
+
+
     def __call__(self, network, params = {}):
         self.run(network, params)
 
@@ -195,12 +201,15 @@ class Algorithm:
         print str(network)
 
     def halt(self):
-        if sum([self.halt_i(process) for process in self.network]) == len(self.network):
+        if all([self.halt_i(process) for process in self.network]):
             self.halted = True
             print "Algorithm Terminated"
             msg_complexity = "Message Complexity: " + str(self.message_count)
             print msg_complexity
             print "-"*len(msg_complexity)
+
+            self.cleanup()
+
 
     def count_msg(self, message_count):
         self.message_count += message_count
