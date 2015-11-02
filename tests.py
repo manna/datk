@@ -24,6 +24,20 @@ in_ipython = configure_ipython()
 test_params = {"draw":in_ipython, "silent" : True}
 
 @test(precision = 1e-7)
+def SYNCH_BFS_ACK():
+    x = Bidirectional_Line(6, lambda t:t)
+    FloodMax(x, test_params)
+    SynchBFSAck(x, test_params)
+
+@test(precision=1e-7)
+def SYNCH_BFS():
+    x = Random_Network(10)
+    FloodMax(x, test_params)
+    SynchBFS(x, test_params)
+    print x[0].state
+    print x[1].state
+
+@test(precision = 1e-7)
 def LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     LCR(r, test_params)

@@ -126,8 +126,7 @@ class FloodMax(Synchronous_Algorithm):
         def cleanup (p): del p.state['send']
         Synchronous_Algorithm.__init__(self, FloodMax_msgs, FloodMax_trans, cleanup_i=cleanup, network = network, params = params)
 
-
-#BFS
+#Construct BFS Tree
 
 class SynchBFS(Synchronous_Algorithm):
     """
@@ -139,9 +138,11 @@ class SynchBFS(Synchronous_Algorithm):
     round after a process gets marked, it sends a search message to all of its
     outgoing neighbors.
 
-    Precondition: testLeaderElection
+    Requires: testLeaderElection
+    Effects: every Process has state['parent']. Leader has state['parent'] = None
     """
     class Search(Message):
+        """Search for children"""
         pass
 
     def __init__(self, network = None, params = {"draw": False, "silent": False}):
@@ -159,7 +160,79 @@ class SynchBFS(Synchronous_Algorithm):
                 if "parent" not in p.state:
                     p.state["parent"] = msgs[0].content
                     p.state["recently_marked"] = True
+                    return
             if "parent" in p.state:
+                if "recently_marked" in p.state: del p.state["recently_marked"]
                 p.terminate(self)
 
         Synchronous_Algorithm.__init__(self, BFS_msgs, BFS_trans, network = network, params = params)
+
+class SynchBFSAck(Synchronous_Algorithm):
+    """
+    At any point during execution, there is some set of processes that is
+    "marked," initially just i0. Process i0 sends out a search message at
+    round 1, to all of its outgoing neighbors. At any round, if an unmarked
+    process receives a search message, it marks itself and chooses one of the
+    processes from which the search has arrived as its parent. At the first
+    round after a process gets marked, it sends a search message to all of its
+    outgoing neighbors, and an acknowledgement to its parent, so that nodes
+    will also know their children.
+
+    Requires: testLeaderElection
+    Effects: Every process has:
+                state['parent']. Leader has state['parent'] = None
+                state['childen']. Leaves have state['children'] = []
+    """
+    class Search(Message):
+        """Search for children"""
+        pass
+    class AckParent(Message):
+        """Acknowledge Parent"""
+        pass
+
+    def __init__(self, network = None, params = {"draw": False, "silent": False}):
+        is_i0 = lambda p: "status" in p.state and p.state["status"] == "leader"
+        def BFS_msgs(p):
+            if is_i0(p) and self.r == 1:
+                p.state["parent"] = None
+                p.state["recently_marked"] = True
+                p.send_msg(self, SynchBFSAck.Search(p))
+            elif "recently_marked" in p.state:
+                p.send_msg(self, SynchBFSAck.Search(p))
+                p.send_msg(self, SynchBFSAck.AckParent(p), p.state['parent'])
+                if not params["silent"]:
+                    print str(p), "ack", str(p.state['parent'])
+        def BFS_trans(p):
+            msgs = p.get_msgs()
+            search_msgs = [m.content for m in msgs if isinstance(m, SynchBFSAck.Search)]
+            ack_msgs = [m.content for m in msgs if isinstance(m, SynchBFSAck.AckParent)]
+
+            if "parent" not in p.state:
+                if len(search_msgs)> 0:
+                    p.state["parent"] = search_msgs[0]
+                    p.state["recently_marked"] = True
+                    if not params["silent"]:
+                        print str(p), "chooses parent"
+            else:
+                if "recently_marked" in p.state:
+                    del p.state["recently_marked"]
+                elif "children" not in p.state:    
+                    p.state["children"] = ack_msgs
+                    p.terminate(self)
+                    if not params["silent"]:
+                        print str(p), "knows children"
+
+        Synchronous_Algorithm.__init__(self, BFS_msgs, BFS_trans, network = network, params = params)
+
+#Convergecast
+
+class Convergecast(Synchronous_Algorithm):
+    """Precondition: Every Process knows state['parent']
+
+    If Processes also know state['children'] ==> Reduced Communication Complexity."""
+    pass
+
+
+class Convergecast(Asynchronous_Algorithm):
+    """Precondition: Every Process has state['parent'] and state['children']"""
+    pass
