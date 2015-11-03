@@ -226,13 +226,79 @@ class SynchBFSAck(Synchronous_Algorithm):
 
 #Convergecast
 
-class Convergecast(Synchronous_Algorithm):
+class SynchConvergeHeight(Synchronous_Algorithm):
+    """
+    Requires: BFS Tree
+    Effects: i0 gets height of tree in state["height"]
+    """
+    def __init__(self, network = None, params = {"draw": False, "silent": False}):
+        def msgs(p):
+            if p.state['parent'] is not None:
+                if self.r == 1:
+                    p.state['send'] = 1
+                if p.state['send'] is not None:
+                    p.send_msg(self, p.state['send'], p.state['parent'])
+                    p.state['send'] = None
+        def trans(p):
+            msgs = p.get_msgs()
+            if p.state['parent'] is None: #p is root node, i0.
+                if self.r == 1:
+                    p.state['height'] = 0
+                if len (msgs) > 0:
+                    p.state['height'] = max(msgs)
+                else:
+                    p.terminate(self)
+            else: #p is not root node.
+                if len (msgs) > 0:
+                    p.state['send'] = 1 + max(msgs)
+                else:
+                    p.terminate(self)
+
+        def cleanup(p):
+            if 'send' in p.state:
+                del p.state['send']
+        Synchronous_Algorithm.__init__(self, msgs, trans, cleanup_i=cleanup, network = network, params = params)
+
+
+class SynchConvergecast(Synchronous_Algorithm):
     """Precondition: Every Process knows state['parent']
 
     If Processes also know state['children'] ==> Reduced Communication Complexity."""
     pass
 
-
-class Convergecast(Asynchronous_Algorithm):
+class AsynchConvergecast(Asynchronous_Algorithm):
     """Precondition: Every Process has state['parent'] and state['children']"""
     pass
+
+#Broadcast
+class SynchBroadcast(Synchronous_Algorithm):
+    """
+    Requires: BFS Tree with children pointers, where root node has state['height']
+    Effects: Broadcasts state['height'] to all nodes as state['height'].
+    """
+    def __init__(self, network = None, params = {'attr':'height', "draw": False, "silent": False}):
+        attr = params['attr']
+        def msgs(p):
+            if p.state['parent'] is None:
+                if self.r == 1:
+                    p.send_msg(self, p.state[attr], p.state['children'] )
+            if p.state['parent'] is not None:
+                if 'send' in p.state and p.state['send'] is not None:
+                    p.send_msg(self, p.state['send'], p.state['children'])
+                    p.state['send'] = None
+                    p.terminate(self)
+        def trans(p):
+            msgs = p.get_msgs()
+            if p.state['parent'] is None:
+                p.terminate(self)
+            else:
+                if len (msgs) == 1:
+                    p.state[attr] = msgs[0]
+                    if len(p.state['children']) > 0:
+                        p.state['send'] = msgs[0]
+                    else:
+                        p.terminate(self)
+        def cleanup(p):
+            if 'send' in p.state:
+                del p.state['send']
+        Synchronous_Algorithm.__init__(self, msgs, trans, cleanup_i = cleanup, network = network, params = params)

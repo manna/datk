@@ -23,19 +23,6 @@ in_ipython = configure_ipython()
 
 test_params = {"draw":in_ipython, "silent" : True}
 
-@test(precision = 1e-7)
-def SYNCH_BFS_ACK():
-    x = Bidirectional_Line(6, lambda t:t)
-    FloodMax(x, test_params)
-    SynchBFSAck(x, test_params)
-
-@test(precision=1e-7)
-def SYNCH_BFS():
-    x = Random_Network(10)
-    FloodMax(x, test_params)
-    SynchBFS(x, test_params)
-    print x[0].state
-    print x[1].state
 
 @test(precision = 1e-7)
 def LCR_UNI_RING():
@@ -90,6 +77,52 @@ def FLOODMAX_RANDOM_GRAPH():
     g = Random_Network(16)
     FloodMax(g, params = test_params)
     testLeaderElection(g)
+
+@test(precision=1e-7)
+def SYNCH_BFS():
+    x = Random_Network(10)
+    FloodMax(x, test_params)
+    testLeaderElection(x)
+
+    SynchBFS(x, test_params)
+    testBFS(x)
+
+@test(precision = 1e-7)
+def SYNCH_BFS_ACK():
+    x = Bidirectional_Line(6, lambda t:t)
+
+    FloodMax(x, test_params)
+    testLeaderElection(x)
+
+    SynchBFSAck(x, test_params)
+    testBFSWithChildren(x)
+
+@test(precision=1e-7)
+def SYNCH_CONVERGE_HEIGHT():
+    x = Random_Network(10)
+
+    FloodMax(x, test_params)
+    testLeaderElection(x)
+
+    SynchBFS(x, test_params)
+    testBFS(x)
+
+    SynchConvergeHeight(x, test_params)
+
+@test(precision=1e-7)
+def SYNCH_BROADCAST_HEIGHT():
+    x = Random_Network(10)
+
+    FloodMax(x, test_params)
+    testLeaderElection(x)
+
+    SynchBFSAck(x, test_params)
+    testBFSWithChildren(x)
+
+    SynchConvergeHeight(x, test_params)
+
+    SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "silent" : True})
+    testBroadcast(x, 'height')
 
 @test
 def send_receive_msgs():

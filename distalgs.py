@@ -23,7 +23,6 @@ class Process:
     def __init__(self, UID, state = None, in_nbrs = [], out_nbrs = []):
         self.UID = UID
         self.state = state or {
-                                "halted" : False,
                                 "diam" : 10
                                                     } #TODO generalize
         
@@ -117,11 +116,12 @@ class Network:
         return len(self.processes)
     def __repr__(self):
         return str(self.processes)
-
+    def __iter__(self):
+        return iter(self.processes)
     def index(self, p):
         return self.processes.index(p)    
     def add(self, algorithm):
-        for process in self.processes:
+        for process in self:
             process.add(algorithm)
     def run(self, algorithm):
         algorithm(self)
@@ -148,7 +148,9 @@ class Network:
         frame.axes.get_xaxis().set_visible(False)
         frame.axes.get_yaxis().set_visible(False)
         plt.show()
-
+    def print_state(self):
+        for process in self:
+            print process, process.state
 class Algorithm:
 
     """
