@@ -6,19 +6,32 @@ TIMEOUT = 5
 PRECISION = 0.1
 
 lock = Lock()
+num_tests = 0
+failed_tests = 0
 
 def test(f=None, timeout=TIMEOUT, precision = PRECISION, main_thread=False):
-    global lock
     #If main_thread = True, timeout and precision are ignored.
     def test_decorator(f):
+        global lock
+
+        def test_f():
+            global num_tests
+            global failed_tests
+            try:
+                f()
+            except Exception, e:
+                failed_tests+=1
+                print "TEST", f.__name__, "FAILED."
+            finally:
+                num_tests+=1
         with lock:
             if main_thread:
-                print "Running test "+f.__name__+" on main thread."
-                f()
-                print "#"*len("Running test "+f.__name__+" on main thread.")
-
+                status = "Running test "+f.__name__+" on main thread."
+                print status
+                test_f()
+                print "#"*len(status)
             else:
-                t = Thread(target = f)
+                t = Thread(target = test_f)
                 t.daemon = True
                 t.start()
 
@@ -75,3 +88,6 @@ def testBFSWithChildren(network):
         else:
             assert isinstance(p.state['parent'], Process)
             assert p in p.state['parent'].state['children']
+
+def summarize():
+    print num_tests, "tests ran with", failed_tests, "failures."

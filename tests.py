@@ -29,6 +29,7 @@ def LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     LCR(r, test_params)
     testLeaderElection(r)
+    testBFS(r)
 
 @test(precision = 1e-7)
 def LCR_BI_RING():
@@ -135,3 +136,5 @@ def send_receive_msgs():
     assert x[1].get_msgs(x[0]) == []
     assert x[1].get_msgs() == ["yo"]
     assert x[1].get_msgs() == []
+
+summarize()
