@@ -29,7 +29,6 @@ def LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     LCR(r, test_params)
     testLeaderElection(r)
-    testBFS(r)
 
 @test(precision = 1e-7)
 def LCR_BI_RING():
