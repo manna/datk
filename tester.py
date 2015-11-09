@@ -21,6 +21,7 @@ def test(f=None, timeout=TIMEOUT, precision = PRECISION, main_thread=False):
                 f()
             except Exception, e:
                 failed_tests+=1
+                raise e
                 print "TEST", f.__name__, "FAILED."
             finally:
                 num_tests+=1

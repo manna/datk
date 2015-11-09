@@ -25,3 +25,4 @@ def DRAW_UNI_LINE():
 def DRAW_BI_LINE():
     Bidirectional_Line(5).draw()
 
+summarize()
