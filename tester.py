@@ -1,15 +1,13 @@
 from threading import Thread, Lock
-from time import sleep
+from time import sleep, clock
 from distalgs import Process
 
 TIMEOUT = 5
-PRECISION = 0.1
-
 lock = Lock()
 num_tests = 0
 failed_tests = set()
 
-def test(f=None, timeout=TIMEOUT, precision = PRECISION, main_thread=False):
+def test(f=None, timeout=TIMEOUT, main_thread=False):
     #If main_thread = True, timeout and precision are ignored.
     def test_decorator(f):
         global lock
@@ -21,8 +19,8 @@ def test(f=None, timeout=TIMEOUT, precision = PRECISION, main_thread=False):
                 f()
             except Exception, e:
                 failed_tests.add(f.__name__)
+                print_with_underline("TEST "+f.__name__+" FAILED.")
                 raise e
-                print "TEST", f.__name__, "FAILED."
             finally:
                 num_tests+=1
         with lock:
@@ -34,26 +32,24 @@ def test(f=None, timeout=TIMEOUT, precision = PRECISION, main_thread=False):
             else:
                 t = Thread(target = test_f)
                 t.daemon = True
+                
+                start_time = clock()
                 t.start()
-
-                timer = 0.
-                while timer < timeout:
-                    sleep(precision)
-                    if not t.isAlive():
-                        result = f.__name__ + " RAN IN " +str(timer) + "s"
-                        print result
-                        print "#"*len(result)
-                        break
-                    timer+=precision
-
-                if t.isAlive():
-                    result = f.__name__ + " TIMED OUT AFTER " + str(timeout) + "s"
-                    print result
-                    print "#"*len(result)
+                t.join(timeout)
+                end_time = clock()
+                if end_time - start_time >= timeout:
+                    failed_tests.add(f.__name__)
+                    print_with_underline(f.__name__ + " TIMED OUT AFTER " + str(timeout) + "s")
+                else:
+                    print_with_underline(f.__name__ + " RAN IN " +str(end_time-start_time) + "s")
     if f is None:
         return test_decorator
     else:
         test_decorator(f)
+
+def print_with_underline(text):
+    print text
+    print "#"*len(text)
 
 def testLeaderElection(network, isLeader = lambda p: "status" in p.state and p.state["status"]=="leader", isNonleader = lambda p: "status" in p.state and p.state["status"]=="non-leader"):
     assert sum([isLeader(p) for p in network]) == 1 , "Leader Election Failed"

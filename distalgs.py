@@ -14,17 +14,19 @@ from time import sleep
 import pdb
 
 class Message:
-    def __init__(self, content= None):
+    def __init__(self, algorithm, content= None):
+        assert isinstance(algorithm, Algorithm), "Message algorithm must be an instance of Algorithm"
         self.content = content
-
+        self.algorithm = algorithm
+    def __str__(self):
+        return self.__class__.__name__+"("+str(self.content)+")"
+    
 class Process:
     """A computing element located at a node of a directed network graph.
     Processes are identical except for their UID"""
     def __init__(self, UID, state = None, in_nbrs = [], out_nbrs = []):
         self.UID = UID
-        self.state = state or {
-                                "diam" : 10
-                                                    } #TODO generalize
+        self.state = state or { "diam" : 10 } #TODO generalize
         
         self.in_nbrs = in_nbrs or []   # Don't remove or []
         self.out_nbrs = out_nbrs or [] # Don't remove or []
@@ -48,16 +50,16 @@ class Process:
         if not silent:
             print str(self) +  " is " +status
 
-    def send_to_all_neighbors(self, algorithm, msg):
-        self.send_msg(algorithm, msg)
+    def send_to_all_neighbors(self, msg):
+        self.send_msg(msg)
 
-    def send_msg(self, algorithm, msg, out_nbrs=None):
+    def send_msg(self, msg, out_nbrs=None):
         if out_nbrs is None:
             out_nbrs = self.out_nbrs
         elif isinstance(out_nbrs, Process):
             out_nbrs = [out_nbrs]
         if isinstance(out_nbrs, list):
-            algorithm.count_msg(len(out_nbrs))
+            msg.algorithm.count_msg(len(out_nbrs))
             for nbr in out_nbrs:
                 if nbr.in_nbrs.index(self) in nbr.in_channel:
                     nbr.in_channel[nbr.in_nbrs.index(self)].append(msg)
@@ -66,18 +68,25 @@ class Process:
         else:
             raise Exception("incorrect type for out_nbrs argument of Process.send_msg()")
 
-    def get_msgs(self, in_nbrs = None):
+    def get_msgs(self, algorithm, in_nbrs = None):
         if in_nbrs is None:
             in_nbrs = self.in_nbrs[:]
         elif isinstance(in_nbrs, Process):
             in_nbrs = [in_nbrs]
+
         if isinstance(in_nbrs, list):
             msgs = []
             for in_nbr in in_nbrs:
                 idx = self.in_nbrs.index(in_nbr)
                 if idx in self.in_channel:
-                    msgs.extend(self.in_channel[idx])
-                    self.in_channel[self.in_nbrs.index(in_nbr)] = []
+                    i = 0
+                    while i < len(self.in_channel[idx]):
+                        msg = self.in_channel[idx][i]
+                        if msg.algorithm == algorithm:
+                            self.in_channel[idx].pop(i)
+                            msgs.append(msg)
+                        else:
+                            i+=1
             return msgs
         else:
             raise Exception("incorrect type for in_nbrs argument of Process.get_msgs()")

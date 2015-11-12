@@ -12,27 +12,27 @@ class LCR(Synchronous_Algorithm):
     if it is less than its own, it discards the incoming identifier;
     if it is equal to its own, the Process declares itself the leader.
     """
-    def __init__(self, network = None, params = {"draw": False, "silent": False}):
+    def __init__(self, network = None, params = {"draw": False, "silent": False}, name=None):
         def LCR_msgs(p):
             if "send" not in p.state:
-                p.state["send"] = p.UID
+                p.state["send"] = Message(self, p.UID)
 
             msg = p.state["send"]
             if msg is None:
                 return
             p.state["send"] = None
-            p.send_msg(self, msg, p.out_nbrs[-1])
+            p.send_msg(msg, p.out_nbrs[-1])
 
         def LCR_trans(p): #TODO replace params['silent'] with verbosity levels.
-            msgs = p.get_msgs()
+            msgs = p.get_msgs(self)
             if len(msgs) == 0:
                 p.state["send"] = None
             else:
                 msg = msgs.pop()
-                if msg == p.UID:
+                if msg.content == p.UID:
                     p.output("leader", params["silent"])
                     p.terminate(self)
-                elif msg > p.UID:
+                elif msg.content > p.UID:
                     p.state["send"] = msg
                     p.output("non-leader", params["silent"])
                     p.terminate(self) #shouldn't really halt yet.
@@ -42,45 +42,43 @@ class LCR(Synchronous_Algorithm):
         def cleanup (p):
             if 'send' in p.state:
                 del p.state['send']
-        Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, cleanup_i=cleanup, network=network, params=params)
+        Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, cleanup_i=cleanup, network=network, params=params, name=name)
 
 class AsyncLCR(Asynchronous_Algorithm):
-    class Leader_Declaration(Message):
-        def __str__(self):
-            return "LD"
+    class Leader_Declaration(Message): pass
     def __init__(self, network = None, params= {"draw":False, "silent":False}):
         def LCR_msgs(p, verbose=False):
             if "sends" not in p.state:
-                p.state["sends"] = [p.UID]
+                p.state["sends"] = [Message(self, p.UID)]
 
             if "status" in p.state and p.state["status"] == "leader":
-                msg = AsyncLCR.Leader_Declaration()
-                p.send_msg(self, msg, p.out_nbrs[-1])
+                msg = AsyncLCR.Leader_Declaration(self)
+                p.send_msg(msg, p.out_nbrs[-1])
                 if verbose:
-                    print str(p) + " sends " + str(msg)
+                    print p,"sends",msg
                 p.terminate(self)
                 return
             while len(p.state["sends"]) > 0:
                 msg = p.state["sends"].pop()
-                p.send_msg(self, msg, p.out_nbrs[-1])
+                p.send_msg(msg, p.out_nbrs[-1])
                 if verbose:
-                    print str(p) + " sends " + str(msg)
+                    print p,"sends",msg
 
         def LCR_trans(p, verbose=False):
             if verbose:
                 print str(p) + " received " + str(p.in_channel)
-            msgs = p.get_msgs()
+            msgs = p.get_msgs(self)
             while len(msgs) > 0:
                 msg = msgs.pop()
                 if isinstance(msg, AsyncLCR.Leader_Declaration):
-                    p.send_msg(self, msg, p.out_nbrs[-1])
+                    p.send_msg(msg, p.out_nbrs[-1])
                     if verbose:
-                        print str(p) + " sends " + str(msg)
+                        print p,"sends",msg
                     p.terminate(self)
                     return
-                if msg == p.UID:
+                elif msg.content == p.UID:
                     p.output("leader", params["silent"])
-                elif msg > p.UID:
+                elif msg.content > p.UID:
                     p.state["sends"].append(msg)
                     p.output("non-leader", params["silent"])
 
@@ -104,20 +102,19 @@ class FloodMax(Synchronous_Algorithm):
         def FloodMax_msgs(p):
             if self.r < p.state["diam"]:
                 if "send" not in p.state:
-                    p.state["send"] = p.UID
-                msg = p.state["send"]
-                p.send_msg(self, msg)
+                    p.state["send"] = Message(self, p.UID)
+                p.send_msg(p.state["send"])
 
         def FloodMax_trans(p, verbose=False):
             if verbose:
-                print "state: " + str(p.state)
-                print str(p) + " received " + str(p.in_channel)
+                print "state:", p.state
+                print p, "received", p.in_channel
 
-            seen_uids = p.get_msgs()+[p.state["send"]]
-            p.state["send"] = max(seen_uids)
+            seen_uids = p.get_msgs(self)+[p.state["send"]]
+            p.state["send"] = max(seen_uids, key = lambda m: m.content)
 
             if self.r == p.state["diam"]:
-                if p.state["send"] == p.UID:
+                if p.state["send"].content == p.UID:
                     p.output("leader", params["silent"])
                     p.terminate(self)
                 else:
@@ -153,12 +150,12 @@ class SynchBFS(Synchronous_Algorithm):
         def BFS_msgs(p):
             if is_i0(p) and self.r == 1:
                 p.state["parent"] = None
-                p.send_msg(self, SynchBFS.Search(p))
+                p.send_msg(SynchBFS.Search(self, p))
             if "recently_marked" in p.state:
-                p.send_msg(self, SynchBFS.Search(p))
+                p.send_msg(SynchBFS.Search(self, p))
                 del p.state["recently_marked"]
         def BFS_trans(p):
-            msgs = p.get_msgs()
+            msgs = p.get_msgs(self)
             if len(msgs)> 0:
                 if "parent" not in p.state:
                     p.state["parent"] = msgs[0].content
@@ -199,14 +196,14 @@ class SynchBFSAck(Synchronous_Algorithm):
             if is_i0(p) and self.r == 1:
                 p.state["parent"] = None
                 p.state["recently_marked"] = True
-                p.send_msg(self, SynchBFSAck.Search(p))
+                p.send_msg(SynchBFSAck.Search(self, p))
             elif "recently_marked" in p.state:
-                p.send_msg(self, SynchBFSAck.Search(p))
-                p.send_msg(self, SynchBFSAck.AckParent(p), p.state['parent'])
+                p.send_msg(SynchBFSAck.Search(self, p))
+                p.send_msg(SynchBFSAck.AckParent(self, p), p.state['parent'])
                 if not params["silent"]:
-                    print str(p), "ack", str(p.state['parent'])
+                    print p,"ack",p.state['parent']
         def BFS_trans(p):
-            msgs = p.get_msgs()
+            msgs = p.get_msgs(self)
             search_msgs = [m.content for m in msgs if isinstance(m, SynchBFSAck.Search)]
             ack_msgs = [m.content for m in msgs if isinstance(m, SynchBFSAck.AckParent)]
 
@@ -223,7 +220,7 @@ class SynchBFSAck(Synchronous_Algorithm):
                     p.state["children"] = ack_msgs
                     p.terminate(self)
                     if not params["silent"]:
-                        print str(p), "knows children"
+                        print p,"knows children"
 
         Synchronous_Algorithm.__init__(self, BFS_msgs, BFS_trans, network = network, params = params)
 
@@ -238,12 +235,12 @@ class SynchConvergeHeight(Synchronous_Algorithm):
         def msgs(p):
             if p.state['parent'] is not None:
                 if self.r == 1:
-                    p.state['send'] = 1
+                    p.state['send'] = Message(self, 1)
                 if p.state['send'] is not None:
-                    p.send_msg(self, p.state['send'], p.state['parent'])
+                    p.send_msg(p.state['send'], p.state['parent'])
                     p.state['send'] = None
         def trans(p):
-            msgs = p.get_msgs()
+            msgs = [m.content for m in p.get_msgs(self)]
             if p.state['parent'] is None: #p is root node, i0.
                 if self.r == 1:
                     p.state['height'] = 0
@@ -253,7 +250,7 @@ class SynchConvergeHeight(Synchronous_Algorithm):
                     p.terminate(self)
             else: #p is not root node.
                 if len (msgs) > 0:
-                    p.state['send'] = 1 + max(msgs)
+                    p.state['send'] = Message(self, 1 + max(msgs))
                 else:
                     p.terminate(self)
 
@@ -284,14 +281,14 @@ class SynchBroadcast(Synchronous_Algorithm):
         def msgs(p):
             if p.state['parent'] is None:
                 if self.r == 1:
-                    p.send_msg(self, p.state[attr], p.state['children'] )
+                    p.send_msg(Message(self, p.state[attr]), p.state['children'] )
             if p.state['parent'] is not None:
                 if 'send' in p.state and p.state['send'] is not None:
-                    p.send_msg(self, p.state['send'], p.state['children'])
+                    p.send_msg(Message(self,p.state['send']), p.state['children'])
                     p.state['send'] = None
                     p.terminate(self)
         def trans(p):
-            msgs = p.get_msgs()
+            msgs = [m.content for m in p.get_msgs(self)]
             if p.state['parent'] is None:
                 p.terminate(self)
             else:

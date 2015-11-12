@@ -24,61 +24,61 @@ in_ipython = configure_ipython()
 
 test_params = {"draw":False, "silent" : True}
 
-@test(precision = 1e-7)
+@test
 def LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     LCR(r, test_params)
     testLeaderElection(r)
 
-@test(precision = 1e-7)
+@test
 def LCR_BI_RING():
     r = Bidirectional_Ring(6)
     LCR(r, params = test_params)
     testLeaderElection(r)
 
-@test(precision = 1e-3)
+@test
 def ASYNC_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     AsyncLCR(r, params = test_params)
     testLeaderElection(r)
 
-@test(precision = 1e-3)
+@test
 def ASYNC_LCR_BI_RING():
     r = Bidirectional_Ring(6)
     AsyncLCR(r, params = test_params)
     testLeaderElection(r)
 
-@test(precision=1e-7)
+@test
 def FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
     FloodMax(r, params = test_params)
     testLeaderElection(r)
 
-@test(precision=1e-7)
+@test
 def FLOODMAX_BI_RING():
     r = Bidirectional_Ring(4)
     FloodMax(r, params = test_params)
     testLeaderElection(r)
 
-@test(precision=1e-7)
+@test
 def FLOODMAX_BI_LINE():
     l = Bidirectional_Line(4)
     FloodMax(l, params = test_params)
     testLeaderElection(l)
 
-@test(precision=1e-7)
+@test
 def FLOODMAX_COMPLETE_GRAPH():
     g = Complete_Graph(10)
     FloodMax(g, params = test_params)
     testLeaderElection(g)
 
-@test(precision=1e-7)
+@test
 def FLOODMAX_RANDOM_GRAPH():
     g = Random_Network(16)
     FloodMax(g, params = test_params)
     testLeaderElection(g)
 
-@test(precision=1e-7)
+@test
 def SYNCH_BFS():
     x = Random_Network(10)
     FloodMax(x, test_params)
@@ -87,7 +87,7 @@ def SYNCH_BFS():
     SynchBFS(x, test_params)
     testBFS(x)
 
-@test(precision = 1e-7)
+@test
 def SYNCH_BFS_ACK():
     x = Bidirectional_Line(6, lambda t:t)
 
@@ -97,7 +97,7 @@ def SYNCH_BFS_ACK():
     SynchBFSAck(x, test_params)
     testBFSWithChildren(x)
 
-@test(precision=1e-7)
+@test
 def SYNCH_CONVERGE_HEIGHT():
     x = Random_Network(10)
 
@@ -109,7 +109,7 @@ def SYNCH_CONVERGE_HEIGHT():
 
     SynchConvergeHeight(x, test_params)
 
-@test(precision=1e-7)
+@test
 def SYNCH_BROADCAST_HEIGHT():
     x = Random_Network(10)
 
@@ -125,30 +125,49 @@ def SYNCH_BROADCAST_HEIGHT():
     testBroadcast(x, 'height')
 
 @test
+def send_receive_msgs():
+    A = LCR()
+    a1 = Message(A)
+    a2 = Message(A)
+    a3 = Message(A)
+
+    B = LCR()
+    b1 = Message(B)
+    b2 = Message(B)
+
+    x = Bidirectional_Ring(4, lambda p:p)
+    assert x[0].get_msgs(A) == []
+    x[0].send_msg(a1)
+    x[0].send_msg(a2)
+    x[2].send_msg(a3)
+    x[0].send_msg(b1)
+    x[2].send_msg(b2)
+
+    assert x[1].get_msgs(B) == [b1,b2]
+    assert x[1].get_msgs(A, x[0]) == [a1, a2]
+    assert x[1].get_msgs(A, x[0]) == []
+    assert x[1].get_msgs(A) == [a3]
+    assert x[1].get_msgs(A) == []
+
+@test
 def SYNCH_DO_NOTHING():
     x = Random_Network(5)
     state = x.state()
     Do_Nothing(x)
     assert state == x.state()
 
-@test(precision=1e-7)
+@test
 def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
     A = Compose(LCR(), Do_Nothing())
     x = Unidirectional_Ring(5)
     A(x)
     testLeaderElection(x)
 
-
-@test
-def send_receive_msgs():
-    x = Bidirectional_Ring(4, lambda p:p)
-    assert x[0].get_msgs() == []
-    x[0].send_to_all_neighbors(LCR(),"hi")
-    x[0].send_to_all_neighbors(LCR(),"hey")
-    x[2].send_to_all_neighbors(LCR(),"yo")
-    assert x[1].get_msgs(x[0]) == ["hi", "hey"]
-    assert x[1].get_msgs(x[0]) == []
-    assert x[1].get_msgs() == ["yo"]
-    assert x[1].get_msgs() == []
+@test(timeout=2)
+def COMPOSE_SYNCH_LCR_AND_LCR():
+    A = Compose(LCR(name="B"), LCR(name="C"))
+    x = Unidirectional_Ring(5)
+    A(x, params=test_params)
+    testLeaderElection(x)
 
 summarize()
