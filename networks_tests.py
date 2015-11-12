@@ -1,5 +1,6 @@
 from networks import *
 from tester import *
+begin_testing()
 
 @test(main_thread=True)
 def DRAW_RANDOM():

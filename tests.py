@@ -2,6 +2,7 @@ from distalgs import *
 from networks import *
 from algs import *
 from tester import *
+begin_testing()
 
 def configure_ipython():
   """
@@ -21,8 +22,7 @@ def configure_ipython():
 
 in_ipython = configure_ipython()
 
-test_params = {"draw":in_ipython, "silent" : True}
-
+test_params = {"draw":False, "silent" : True}
 
 @test(precision = 1e-7)
 def LCR_UNI_RING():
@@ -123,6 +123,21 @@ def SYNCH_BROADCAST_HEIGHT():
 
     SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "silent" : True})
     testBroadcast(x, 'height')
+
+@test
+def SYNCH_DO_NOTHING():
+    x = Random_Network(5)
+    state = x.state()
+    Do_Nothing(x)
+    assert state == x.state()
+
+@test(precision=1e-7)
+def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
+    A = Compose(LCR(), Do_Nothing())
+    x = Unidirectional_Ring(5)
+    A(x)
+    testLeaderElection(x)
+
 
 @test
 def send_receive_msgs():

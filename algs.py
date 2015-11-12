@@ -35,11 +35,13 @@ class LCR(Synchronous_Algorithm):
                 elif msg > p.UID:
                     p.state["send"] = msg
                     p.output("non-leader", params["silent"])
-                    p.terminate(self)
+                    p.terminate(self) #shouldn't really halt yet.
                 else:
                     p.state["send"] = None
         
-        def cleanup (p): del p.state['send']
+        def cleanup (p):
+            if 'send' in p.state:
+                del p.state['send']
         Synchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, cleanup_i=cleanup, network=network, params=params)
 
 class AsyncLCR(Asynchronous_Algorithm):
@@ -85,7 +87,6 @@ class AsyncLCR(Asynchronous_Algorithm):
         def cleanup (p): del p.state['sends']
         Asynchronous_Algorithm.__init__(self, LCR_msgs, LCR_trans, cleanup_i=cleanup, network = network, params=params )
 
-
 #Leader Election Algorithms for general Networks:
 
 class FloodMax(Synchronous_Algorithm):
@@ -123,7 +124,9 @@ class FloodMax(Synchronous_Algorithm):
                     p.output("non-leader", params["silent"])
                     p.terminate(self)
 
-        def cleanup (p): del p.state['send']
+        def cleanup (p):
+            if 'send' in p.state:
+                del p.state['send']
         Synchronous_Algorithm.__init__(self, FloodMax_msgs, FloodMax_trans, cleanup_i=cleanup, network = network, params = params)
 
 #Construct BFS Tree

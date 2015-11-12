@@ -148,27 +148,29 @@ class Network:
         frame.axes.get_xaxis().set_visible(False)
         frame.axes.get_yaxis().set_visible(False)
         plt.show()
-    def print_state(self):
-        for process in self:
-            print process, process.state
-class Algorithm:
+    def state(self):
+        return [(str(process), str(process.state)) for process in self]
 
+class Algorithm:
     """
     Abstract superclass for a distributed algorithm.
 
     @param params: Optional run() parameters.
     """
     def __init__(self, 
-                 msgs_i, trans_i, halt_i = None, cleanup_i = None,
+                 msgs_i, trans_i, halt_i=None, cleanup_i = None,
                  network = None,
                  params = {"draw": False, "silent": False},
                  name = None):
 
         self.msgs_i = msgs_i
         self.trans_i = trans_i
-        
         self.halt_i_ = halt_i
+        
+        def do_nothing_fn(p): pass
         self.cleanup_i = cleanup_i
+        if cleanup_i is None:
+            self.cleanup_i = do_nothing_fn
 
         #Algorithm name defaults to X for class X(Algorithm).
         self.name = name
@@ -185,12 +187,10 @@ class Algorithm:
         return self not in p.algs
 
     def cleanup(self):
-        if self.cleanup_i is not None:
-            for process in self.network:
-                self.cleanup_i(process)
+        for process in self.network:
+            self.cleanup_i(process)
 
-
-    def __call__(self, network, params = {}):
+    def __call__(self, network, params = {"draw":False, "silent":False}):
         self.run(network, params)
 
     def run(self, network, params = {"draw":False, "silent":False}):
@@ -198,9 +198,12 @@ class Algorithm:
         header = "Running " + self.name + " on"
         print len(header)*"-"
         print header
-        if params['draw']:
+        if 'draw' in params and params['draw']:
             network.draw()
         print str(network)
+
+        self.network = network
+        network.add(self)
 
     def halt(self):
         if all([self.halt_i(process) for process in self.network]):
@@ -212,7 +215,6 @@ class Algorithm:
 
             self.cleanup()
 
-
     def count_msg(self, message_count):
         self.message_count += message_count
 
@@ -221,20 +223,20 @@ class Synchronous_Algorithm(Algorithm):
     We assume that Processes take steps simultaneously,
     that is, that execution proceeds in synchronous rounds.
     """
-    def run(self, network, params = {}):
+    def run(self, network, params = {"draw": False, "silent": False}):
         Algorithm.run(self, network, params)
+        self.execute(params)
 
-        self.network = network
-        network.add(self)
-
+    def execute(self, params):
         self.halted = False
-        self.r = 1
+        self.r = 0
         while not self.halted:
-            if not params['silent']:
-                print "Round "+str(self.r)
+            self.r+=1
+            if 'silent' not in params or not params['silent']:
+                print "Round",self.r
             self.round()
             self.halt()
-            self.r+=1
+
     def round(self):
         self.msgs()
         self.trans()
@@ -243,9 +245,17 @@ class Synchronous_Algorithm(Algorithm):
             self.msgs_i(process)
     def trans(self):
         for process in self.network:
-            if False:
-                print str(process) + " received " + str(process.in_channel)
+            if False: #if maximum verbosity setting
+                print process,"received",process.in_channel
             self.trans_i(process)
+
+class Do_Nothing(Synchronous_Algorithm):
+    def __init__(self, network = None, params = {"draw": False, "silent": False}):
+        def msgs_i(p):
+            pass
+        def trans_i(p):
+            p.terminate(self)
+        Synchronous_Algorithm.__init__(self, msgs_i, trans_i, network = network, params = params)
 
 class Asynchronous_Algorithm(Algorithm):
     """
@@ -253,10 +263,7 @@ class Asynchronous_Algorithm(Algorithm):
     in an arbitrary order, at arbitrary relative speeds.
     """
     def run(self, network, params = {"draw" : False, "silent" : False}):
-        Algorithm.run(self, network, params)
-
-        self.network = network
-        network.add(self)
+        Algorithm.run(self, network, params=params)
 
         threads = []
         for process in network.processes:
@@ -277,3 +284,34 @@ class Asynchronous_Algorithm(Algorithm):
             if self.halt_i(process):
                 break
     
+class Compose(Synchronous_Algorithm):
+    """
+    A Synchonous_Algorithm that is the composition of two synchronous algorithms
+    running in parallel.
+    """
+    def __init__(self, A, B, name = None):
+        assert isinstance(A,Synchronous_Algorithm), "Not a Synchronous_Algorithm"
+        assert isinstance(B,Synchronous_Algorithm), "Not a Synchronous_Algorithm"
+        self.A=A
+        self.B=B
+        if name is None:
+            name = self.name="Compose("+A.name+","+B.name+")"
+        def msgs_i(p):
+            A.msgs_i(p)
+            B.msgs_i(p)
+        def trans_i(p):
+            A.trans_i(p)
+            B.trans_i(p)
+        def halt_i(p):
+            return A.halt_i(p) and B.halt_i(p)
+        def cleanup_i(p):
+            A.cleanup_i(p)
+            B.cleanup_i(p)
+            p.terminate(self)
+
+        Synchronous_Algorithm.__init__(self, msgs_i, trans_i, halt_i=halt_i, cleanup_i=cleanup_i, name = name)
+    def run(self, network, params = {"draw": False, "silent": False}):
+        Algorithm.run(self, network, params)
+        self.network.add(self.A)
+        self.network.add(self.B)
+        self.execute(params)

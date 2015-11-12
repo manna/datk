@@ -7,7 +7,7 @@ PRECISION = 0.1
 
 lock = Lock()
 num_tests = 0
-failed_tests = 0
+failed_tests = set()
 
 def test(f=None, timeout=TIMEOUT, precision = PRECISION, main_thread=False):
     #If main_thread = True, timeout and precision are ignored.
@@ -20,7 +20,7 @@ def test(f=None, timeout=TIMEOUT, precision = PRECISION, main_thread=False):
             try:
                 f()
             except Exception, e:
-                failed_tests+=1
+                failed_tests.add(f.__name__)
                 raise e
                 print "TEST", f.__name__, "FAILED."
             finally:
@@ -90,5 +90,11 @@ def testBFSWithChildren(network):
             assert isinstance(p.state['parent'], Process)
             assert p in p.state['parent'].state['children']
 
+def begin_testing():
+    global num_tests
+    global failed_tests
+    num_tests = 0
+    failed_tests = set()
+
 def summarize():
-    print num_tests, "tests ran with", failed_tests, "failures."
+    print num_tests, "tests ran with", len(failed_tests), "failures:", sorted(list(failed_tests))
