@@ -42,7 +42,7 @@ def ASYNC_LCR_UNI_RING():
     AsyncLCR(r, params = test_params)
     testLeaderElection(r)
 
-@test
+@test(timeout=10)
 def ASYNC_LCR_BI_RING():
     r = Bidirectional_Ring(6)
     AsyncLCR(r, params = test_params)
@@ -153,21 +153,21 @@ def send_receive_msgs():
 def SYNCH_DO_NOTHING():
     x = Random_Network(5)
     state = x.state()
-    Do_Nothing(x)
+    Do_Nothing(x, params=test_params)
     assert state == x.state()
 
 @test
 def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
     A = Compose(LCR(), Do_Nothing())
     x = Unidirectional_Ring(5)
-    A(x)
+    A(x, params=test_params)
     testLeaderElection(x)
 
-@test(timeout=2)
+@test
 def COMPOSE_SYNCH_LCR_AND_LCR():
     A = Compose(LCR(name="B"), LCR(name="C"))
     x = Unidirectional_Ring(5)
-    A(x, params=test_params)
+    A(x)
     testLeaderElection(x)
 
 summarize()

@@ -12,6 +12,8 @@ import threading
 from threading import Thread
 from time import sleep
 import pdb
+import collections
+from collections import defaultdict
 
 class Message:
     def __init__(self, algorithm, content= None):
@@ -26,7 +28,7 @@ class Process:
     Processes are identical except for their UID"""
     def __init__(self, UID, state = None, in_nbrs = [], out_nbrs = []):
         self.UID = UID
-        self.state = state or { "diam" : 10 } #TODO generalize
+        self.state = defaultdict(dict) # algorithm : state dict
         
         self.in_nbrs = in_nbrs or []   # Don't remove or []
         self.out_nbrs = out_nbrs or [] # Don't remove or []
@@ -43,12 +45,10 @@ class Process:
         self.link_to(nbr)
         nbr.link_to(self)
 
-    def output(self, status, silent=False):
-        if "status" in self.state.keys():
-            return
-        self.state["status"] =  status
+    def output(self, key, val, silent=False):
+        self.state[key] =  val
         if not silent:
-            print str(self) +  " is " +status
+            print self,"is",val
 
     def send_to_all_neighbors(self, msg):
         self.send_msg(msg)
@@ -93,10 +93,12 @@ class Process:
 
     def add(self, algorithm):
         self.algs.add(algorithm)
+        self.state[algorithm]["diam"] = 10 #TODO Generalize
 
     def terminate(self, algorithm):
         if algorithm in self.algs:
             self.algs.remove(algorithm)
+
 
     def __str__(self):
         return "P"+str(self.UID)
@@ -198,6 +200,8 @@ class Algorithm:
     def cleanup(self):
         for process in self.network:
             self.cleanup_i(process)
+            if self in process.state:
+                del process.state[self]
 
     def __call__(self, network, params = {"draw":False, "silent":False}):
         self.run(network, params)
@@ -226,6 +230,17 @@ class Algorithm:
 
     def count_msg(self, message_count):
         self.message_count += message_count
+
+    def set(self, process, state, value):
+        process.state[self][state] = value
+    def has(self, process, state):
+        return state in process.state[self]
+    def get(self, process, state):
+        if self.has(process, state):
+            return process.state[self][state]
+    def delete(self, process, state):
+        if self.has(process, state):
+            del process.state[self][state]
 
 class Synchronous_Algorithm(Algorithm):
     """
@@ -256,13 +271,14 @@ class Synchronous_Algorithm(Algorithm):
         for process in self.network:
             if False: #if maximum verbosity setting
                 print process,"received",process.in_channel
-            self.trans_i(process)
+            messages = process.get_msgs(self)
+            self.trans_i(process, messages)
 
 class Do_Nothing(Synchronous_Algorithm):
     def __init__(self, network = None, params = {"draw": False, "silent": False}):
         def msgs_i(p):
             pass
-        def trans_i(p):
+        def trans_i(p, messages):
             p.terminate(self)
         Synchronous_Algorithm.__init__(self, msgs_i, trans_i, network = network, params = params)
 
@@ -298,7 +314,7 @@ class Compose(Synchronous_Algorithm):
     A Synchonous_Algorithm that is the composition of two synchronous algorithms
     running in parallel.
     """
-    def __init__(self, A, B, name = None):
+    def __init__(self, A, B, name = None, params = {"draw": False, "silent": False}):
         assert isinstance(A,Synchronous_Algorithm), "Not a Synchronous_Algorithm"
         assert isinstance(B,Synchronous_Algorithm), "Not a Synchronous_Algorithm"
         self.A=A
@@ -308,17 +324,18 @@ class Compose(Synchronous_Algorithm):
         def msgs_i(p):
             A.msgs_i(p)
             B.msgs_i(p)
-        def trans_i(p):
-            A.trans_i(p)
-            B.trans_i(p)
+        def trans_i(p, msgs):
+            A.trans_i(p, p.get_msgs(A))
+            B.trans_i(p, p.get_msgs(B))
         def halt_i(p):
             return A.halt_i(p) and B.halt_i(p)
         def cleanup_i(p):
+            self.message_count = A.message_count + B.message_count
             A.cleanup_i(p)
             B.cleanup_i(p)
             p.terminate(self)
 
-        Synchronous_Algorithm.__init__(self, msgs_i, trans_i, halt_i=halt_i, cleanup_i=cleanup_i, name = name)
+        Synchronous_Algorithm.__init__(self, msgs_i, trans_i, halt_i=halt_i, cleanup_i=cleanup_i, name = name, params=params)
     def run(self, network, params = {"draw": False, "silent": False}):
         Algorithm.run(self, network, params)
         self.network.add(self.A)

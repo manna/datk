@@ -1,5 +1,5 @@
 from threading import Thread, Lock
-from time import sleep, clock
+from time import sleep, time
 from distalgs import Process
 
 TIMEOUT = 5
@@ -33,10 +33,10 @@ def test(f=None, timeout=TIMEOUT, main_thread=False):
                 t = Thread(target = test_f)
                 t.daemon = True
                 
-                start_time = clock()
+                start_time = time()
                 t.start()
                 t.join(timeout)
-                end_time = clock()
+                end_time = time()
                 if end_time - start_time >= timeout:
                     failed_tests.add(f.__name__)
                     print_with_underline(f.__name__ + " TIMED OUT AFTER " + str(timeout) + "s")
@@ -64,27 +64,27 @@ def testBroadcast(network, attr):
 def testBFS(network):
     found_root = False
     for p in network:
-        assert 'parent' in p.state
+        assert 'parent' in p.state, "BFS Failed. state['parent'] not found."
         if p.state['parent'] is None:
             if found_root:
                 assert False, "BFS failed. No unique root node"
             else:
                 found_root = True
         else:
-            assert isinstance(p.state['parent'], Process)
+            assert isinstance(p.state['parent'], Process), "BFS FAILED"
 
 def testBFSWithChildren(network):
     found_root = False
     for p in network:
-        assert 'parent' in p.state
+        assert 'parent' in p.state, "BFS Failed. state['parent'] not found."
         if p.state['parent'] is None:
             if found_root:
                 assert False, "BFS failed. No unique root node"
             else:
                 found_root = True
         else:
-            assert isinstance(p.state['parent'], Process)
-            assert p in p.state['parent'].state['children']
+            assert isinstance(p.state['parent'], Process), "BFS FAILED"
+            assert p in p.state['parent'].state['children'], "BFS FAILED"
 
 def begin_testing():
     global num_tests
