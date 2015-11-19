@@ -14,6 +14,7 @@ from time import sleep
 import pdb
 import collections
 from collections import defaultdict
+from copy import deepcopy
 
 class Message:
     def __init__(self, algorithm, content= None):
@@ -161,6 +162,8 @@ class Network:
         plt.show()
     def state(self):
         return [(str(process), str(process.state)) for process in self]
+    def clone(self):
+        return deepcopy(self)
 
 class Algorithm:
     """
@@ -183,6 +186,7 @@ class Algorithm:
         if cleanup_i is None:
             self.cleanup_i = do_nothing_fn
 
+        self.message_count = 0
         #Algorithm name defaults to X for class X(Algorithm).
         self.name = name
         if name is None:
@@ -190,7 +194,6 @@ class Algorithm:
         if network is not None:
             self(network, params)
 
-        self.message_count = 0
 
     def halt_i(self, p):
         if self.halt_i_ is not None:
@@ -221,12 +224,13 @@ class Algorithm:
     def halt(self):
         if all([self.halt_i(process) for process in self.network]):
             self.halted = True
+            self.cleanup()
+
             print "Algorithm Terminated"
             msg_complexity = "Message Complexity: " + str(self.message_count)
             print msg_complexity
             print "-"*len(msg_complexity)
 
-            self.cleanup()
 
     def count_msg(self, message_count):
         self.message_count += message_count
@@ -330,7 +334,7 @@ class Compose(Synchronous_Algorithm):
         def halt_i(p):
             return A.halt_i(p) and B.halt_i(p)
         def cleanup_i(p):
-            self.message_count = A.message_count + B.message_count
+            self.message_count = self.A.message_count + self.B.message_count
             A.cleanup_i(p)
             B.cleanup_i(p)
             p.terminate(self)
@@ -341,3 +345,4 @@ class Compose(Synchronous_Algorithm):
         self.network.add(self.A)
         self.network.add(self.B)
         self.execute(params)
+

@@ -42,7 +42,7 @@ def ASYNC_LCR_UNI_RING():
     AsyncLCR(r, params = test_params)
     testLeaderElection(r)
 
-@test(timeout=10)
+@test
 def ASYNC_LCR_BI_RING():
     r = Bidirectional_Ring(6)
     AsyncLCR(r, params = test_params)
@@ -153,21 +153,43 @@ def send_receive_msgs():
 def SYNCH_DO_NOTHING():
     x = Random_Network(5)
     state = x.state()
-    Do_Nothing(x, params=test_params)
+    assert Do_Nothing(x, params=test_params).message_count == 0
     assert state == x.state()
 
 @test
 def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
-    A = Compose(LCR(), Do_Nothing())
     x = Unidirectional_Ring(5)
-    A(x, params=test_params)
-    testLeaderElection(x)
+    x1 = x.clone()
 
-@test
-def COMPOSE_SYNCH_LCR_AND_LCR():
-    A = Compose(LCR(name="B"), LCR(name="C"))
-    x = Unidirectional_Ring(5)
+    A = LCR()
     A(x)
     testLeaderElection(x)
+
+    C = Compose(LCR(), Do_Nothing())
+    C(x1, params=test_params)
+    testLeaderElection(x1)
+
+    assert C.message_count == A.message_count, "Wrong message count"
+
+@test
+def COMPOSE_SYNCH_LCR():
+    x = Unidirectional_Ring(10)
+    x1 = x.clone()
+    x2 = x.clone()
+
+    A = LCR()
+    A(x, params = test_params)
+    testLeaderElection(x)
+
+    B = Compose(LCR(name="B1"), LCR(name="B2"))
+    B(x1)
+    testLeaderElection(x1)
+
+    C = Compose(Compose(LCR(), LCR()), LCR())
+    C(x2)
+    testLeaderElection(x2)
+
+    assert B.message_count == 2*A.message_count, "Compose LCR LCR wrong message count"
+    assert C.message_count == 3*A.message_count, "Compose LCR LCR LCR wrong message count"
 
 summarize()
