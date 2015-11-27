@@ -231,7 +231,6 @@ class Algorithm:
             print msg_complexity
             print "-"*len(msg_complexity)
 
-
     def count_msg(self, message_count):
         self.message_count += message_count
 
@@ -345,4 +344,30 @@ class Compose(Synchronous_Algorithm):
         self.network.add(self.A)
         self.network.add(self.B)
         self.execute(params)
+    def __repr__(self):
+        return self.name
 
+class Chain(Algorithm):
+    """
+    An Algorithm that is the result of sequentially running two algorithms
+    """
+    def __init__(self, A, B, name = None, params = {"draw": False, "silent": False}):
+        assert isinstance(A,Algorithm), "Not an Algorithm"
+        assert isinstance(B,Algorithm), "Not an Algorithm"
+        self.A = A
+        self.B = B
+        if name is None:
+            name = self.name = "Chain(" + A.name+","+B.name+")"
+        self.halt_i = lambda process : True
+        def do_nothing_fn(p): pass
+        self.cleanup_i = do_nothing_fn
+
+    def run(self, network, params = {"draw": False, "silent": False}):
+        Algorithm.run(self, network, params)
+        self.A.run(network, params=params)
+        self.B.run(network, params=params)
+        self.message_count = self.A.message_count + self.B.message_count
+        self.halt()
+
+    def __repr__(self):
+        return self.name

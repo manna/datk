@@ -192,4 +192,21 @@ def COMPOSE_SYNCH_LCR():
     assert B.message_count == 2*A.message_count, "Compose LCR LCR wrong message count"
     assert C.message_count == 3*A.message_count, "Compose LCR LCR LCR wrong message count"
 
+@test
+def CHAIN_BROADCAST_HEIGHT():
+    fm = FloodMax()
+    bfs = SynchBFSAck()
+    converge = SynchConvergeHeight()
+    broadcast = SynchBroadcast(params ={"attr":"height","draw":in_ipython, "silent":True})
+
+    A = Chain(Chain(fm, bfs), Chain(converge, broadcast))
+    x = Random_Network(10)
+    A(x)
+    testLeaderElection(x)
+    testBFSWithChildren(x)
+    testBroadcast(x, 'height')
+
+
+
+
 summarize()
