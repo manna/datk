@@ -7,7 +7,9 @@ lock = Lock()
 num_tests = 0
 failed_tests = set()
 
-def test(f=None, timeout=TIMEOUT, main_thread=False):
+def test(f=None, timeout=TIMEOUT, main_thread=False, test=True):
+    if not test:
+        return
     #If main_thread = True, timeout and precision are ignored.
     def test_decorator(f):
         global lock

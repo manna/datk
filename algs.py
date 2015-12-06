@@ -221,44 +221,62 @@ class SynchBFSAck(Synchronous_Algorithm):
 
 #Convergecast
 
-class SynchConvergeHeight(Synchronous_Algorithm):
-    """
-    Requires: BFS Tree
-    Effects: i0 gets height of tree in state["height"]
-    """
-    def __init__(self, network = None, params = {"draw": False, "silent": False}):
+class SynchConvergecast(Synchronous_Algorithm):
+    """Precondition: Every Process knows state['parent']
+
+    If Processes also know state['children'] ==> Reduced Communication Complexity."""
+    def __init__(self, network = None, params={"draw":False, "silent":False}):
         def msgs(p):
-            if p.state['parent'] is not None:
+            if not self.is_root(p):
                 if self.r == 1:
-                    self.set(p, 'send',  Message(self, 1))
+                    self.set(p, 'send',  self.initial_msg_to_parent(p))
                 if self.get(p, 'send') is not None:
                     p.send_msg(self.get(p, 'send'), p.state['parent'])
                     self.set(p, 'send',  None)
         def trans(p, msgs):
             msgs = [m.content for m in msgs]
-            if p.state['parent'] is None: #p is root node, i0.
+            if self.is_root(p):
                 if self.r == 1:
-                    self.set(p, 'height',  0) #Initializes height.
+                     self.initialize_root(p)
                 if len (msgs) > 0:
-                    self.set(p, 'height',  max(msgs)) #Updates height.
+                    self.trans_root(p, msgs) 
                 else:
-                    p.output('height', self.get(p, 'height'), params["silent"]) #Decides height.
+                    self.output_root(p, params['silent'])
                     p.terminate(self)
-            else: #p is not root node.
+            else:
                 if len (msgs) > 0:
-                    self.set(p, 'send',  Message(self, 1 + max(msgs)))
+                    self.set(p, 'send', self.trans_msg_to_parent(p, msgs) )
                 else:
                     p.terminate(self)
-
         def cleanup(p): self.delete(p, 'send'); self.delete(p, 'height')
         Synchronous_Algorithm.__init__(self, msgs, trans, cleanup_i=cleanup, network = network, params = params)
+    
+    def is_root(self, p):
+        return p.state['parent'] is None
 
+    def initialize_root(self, p):           pass
+    def trans_root(self, p, msgs):          pass
+    def output_root(self, p, silent):       pass
 
-class SynchConvergecast(Synchronous_Algorithm):
-    """Precondition: Every Process knows state['parent']
+    def initial_msg_to_parent(self, p):     return
+    def trans_msg_to_parent(self, p, msgs): return
 
-    If Processes also know state['children'] ==> Reduced Communication Complexity."""
-    pass
+class SynchConvergeHeight(SynchConvergecast):
+    """
+    Requires: BFS Tree
+    Effects: i0 gets height of tree in state["height"]
+    """
+    def initialize_root(self, p):           #Initializes height
+        self.set(p, 'height',  0) 
+    def trans_root(self, p, msgs):              #Updates height
+        self.set(p, 'height', max(msgs)) 
+    def output_root(self, p, silent):           #Decides height
+        p.output('height', self.get(p, 'height'), silent) 
+
+    def initial_msg_to_parent(self, p):
+        return Message(self, 1)
+    def trans_msg_to_parent(self, p, msgs):
+        return Message(self, 1 + max(msgs))    
 
 class AsynchConvergecast(Asynchronous_Algorithm):
     """Precondition: Every Process has state['parent'] and state['children']"""
