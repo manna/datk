@@ -172,33 +172,23 @@ class Algorithm:
     @param params: Optional run() parameters.
     """
     def __init__(self, 
-                 msgs_i, trans_i, halt_i=None, cleanup_i = None,
                  network = None,
                  params = {"draw": False, "silent": False},
                  name = None):
 
-        self.msgs_i = msgs_i
-        self.trans_i = trans_i
-        self.halt_i_ = halt_i
-        
-        def do_nothing_fn(p): pass
-        self.cleanup_i = cleanup_i
-        if cleanup_i is None:
-            self.cleanup_i = do_nothing_fn
-
+        self.params = params
         self.message_count = 0
         #Algorithm name defaults to X for class X(Algorithm).
         self.name = name
         if name is None:
             self.name = self.__class__.__name__
         if network is not None:
-            self(network, params)
+            self(network, self.params)
 
-
-    def halt_i(self, p):
-        if self.halt_i_ is not None:
-            return self.halt_i_(p)
-        return self not in p.algs
+    def msgs_i(self, p): pass
+    def trans_i(self, p, msgs): pass
+    def halt_i(self, p): return self not in p.algs
+    def cleanup_i(self,p): pass
 
     def cleanup(self):
         for process in self.network:
@@ -206,15 +196,18 @@ class Algorithm:
             if self in process.state:
                 del process.state[self]
 
-    def __call__(self, network, params = {"draw":False, "silent":False}):
+    def __call__(self, network, params = {}):
         self.run(network, params)
 
-    def run(self, network, params = {"draw":False, "silent":False}):
+    def run(self, network, params = {}):
+        for param,value in params.items():
+            self.params[param] = value
+
         self.message_count = 0
         header = "Running " + self.name + " on"
         print len(header)*"-"
         print header
-        if 'draw' in params and params['draw']:
+        if 'draw' in self.params and self.params['draw']:
             network.draw()
         print str(network)
 
@@ -250,16 +243,16 @@ class Synchronous_Algorithm(Algorithm):
     We assume that Processes take steps simultaneously,
     that is, that execution proceeds in synchronous rounds.
     """
-    def run(self, network, params = {"draw": False, "silent": False}):
+    def run(self, network, params = {}):
         Algorithm.run(self, network, params)
-        self.execute(params)
+        self.execute()
 
-    def execute(self, params):
+    def execute(self):
         self.halted = False
         self.r = 0
         while not self.halted:
             self.r+=1
-            if 'silent' not in params or not params['silent']:
+            if not self.params['silent']:
                 print "Round",self.r
             self.round()
             self.halt()
@@ -278,19 +271,14 @@ class Synchronous_Algorithm(Algorithm):
             self.trans_i(process, messages)
 
 class Do_Nothing(Synchronous_Algorithm):
-    def __init__(self, network = None, params = {"draw": False, "silent": False}):
-        def msgs_i(p):
-            pass
-        def trans_i(p, messages):
-            p.terminate(self)
-        Synchronous_Algorithm.__init__(self, msgs_i, trans_i, network = network, params = params)
-
+    def trans_i(self, p, messages): p.terminate(self)
+    
 class Asynchronous_Algorithm(Algorithm):
     """
     We assume that the separate Processes take steps
     in an arbitrary order, at arbitrary relative speeds.
     """
-    def run(self, network, params = {"draw" : False, "silent" : False}):
+    def run(self, network, params = {}):
         Algorithm.run(self, network, params=params)
 
         threads = []
@@ -322,30 +310,37 @@ class Compose(Synchronous_Algorithm):
         assert isinstance(B,Synchronous_Algorithm), "Not a Synchronous_Algorithm"
         self.A=A
         self.B=B
+        self.message_count = 0
+        self.params = params
         if name is None:
-            name = self.name="Compose("+A.name+","+B.name+")"
-        def msgs_i(p):
-            A.msgs_i(p)
-            B.msgs_i(p)
-        def trans_i(p, msgs):
-            A.trans_i(p, p.get_msgs(A))
-            B.trans_i(p, p.get_msgs(B))
-        def halt_i(p):
-            return A.halt_i(p) and B.halt_i(p)
-        def cleanup_i(p):
-            self.message_count = self.A.message_count + self.B.message_count
-            A.cleanup_i(p)
-            B.cleanup_i(p)
-            p.terminate(self)
+            name = self.name="Compose("+self.A.name+","+self.B.name+")"
 
-        Synchronous_Algorithm.__init__(self, msgs_i, trans_i, halt_i=halt_i, cleanup_i=cleanup_i, name = name, params=params)
-    def run(self, network, params = {"draw": False, "silent": False}):
+    def msgs_i(self, p):
+        self.A.msgs_i(p)
+        self.B.msgs_i(p)
+
+    def trans_i(self, p, msgs):
+        self.A.trans_i(p, p.get_msgs(self.A))
+        self.B.trans_i(p, p.get_msgs(self.B))
+
+    def halt_i(self, p):
+        self.message_count = self.A.message_count + self.B.message_count
+
+        return self.A.halt_i(p) and self.B.halt_i(p)
+
+    def cleanup_i(self, p):
+        self.message_count = self.A.message_count + self.B.message_count
+        self.A.cleanup_i(p)
+        self.B.cleanup_i(p)
+        p.terminate(self)
+
+    def run(self, network, params = {}):
         Algorithm.run(self, network, params)
         self.network.add(self.A)
         self.network.add(self.B)
-        self.execute(params)
-    def __repr__(self):
-        return self.name
+        self.execute()
+    
+    def __repr__(self): return self.name
 
 class Chain(Algorithm):
     """
@@ -354,20 +349,17 @@ class Chain(Algorithm):
     def __init__(self, A, B, name = None, params = {"draw": False, "silent": False}):
         assert isinstance(A,Algorithm), "Not an Algorithm"
         assert isinstance(B,Algorithm), "Not an Algorithm"
+        self.params = params
         self.A = A
         self.B = B
-        if name is None:
-            name = self.name = "Chain(" + A.name+","+B.name+")"
-        self.halt_i = lambda process : True
-        def do_nothing_fn(p): pass
-        self.cleanup_i = do_nothing_fn
+        
+        self.name = name or "Chain(" + A.name+","+B.name+")"
 
-    def run(self, network, params = {"draw": False, "silent": False}):
+    def run(self, network, params = {}):
         Algorithm.run(self, network, params)
         self.A.run(network, params=params)
         self.B.run(network, params=params)
         self.message_count = self.A.message_count + self.B.message_count
         self.halt()
 
-    def __repr__(self):
-        return self.name
+    def __repr__(self): return self.name

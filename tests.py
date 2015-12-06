@@ -206,7 +206,4 @@ def CHAIN_BROADCAST_HEIGHT():
     testBFSWithChildren(x)
     testBroadcast(x, 'height')
 
-
-
-
 summarize()
