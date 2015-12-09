@@ -1,7 +1,19 @@
-from distalgs import *
-from networks import *
-from algs import *
-from tester import *
+"""
+Algorithm Test Suite
+"""
+
+try:
+    from datk.core.distalgs import *
+    from datk.core.networks import *
+    from datk.core.algs import *
+    from datk.core.tester import *
+except ImportError:
+    raise ImportError(
+""" Imports failed\n
+To run tests, execute the following commands:
+$ cd ../..
+$ python -m datk.tests.tests """)
+from helpers import *
 
 def configure_ipython():
   """
