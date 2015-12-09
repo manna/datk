@@ -1,0 +1,824 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module algs</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>algs</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/amin/Dropbox (MIT)/Junior/Fall/6.852/datk/algs.py">/Users/amin/Dropbox (MIT)/Junior/Fall/6.852/datk/algs.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="collections.html">collections</a><br>
+</td><td width="25%" valign=top><a href="pdb.html">pdb</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top><a href="threading.html">threading</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="distalgs.html#Asynchronous_Algorithm">distalgs.Asynchronous_Algorithm</a>(<a href="distalgs.html#Algorithm">distalgs.Algorithm</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="algs.html#AsyncLCR">AsyncLCR</a>
+</font></dt><dt><font face="helvetica, arial"><a href="algs.html#AsynchConvergecast">AsynchConvergecast</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial">_ConvergeHeight
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>(<a href="distalgs.html#Algorithm">distalgs.Algorithm</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="algs.html#FloodMax">FloodMax</a>
+</font></dt><dt><font face="helvetica, arial"><a href="algs.html#LCR">LCR</a>
+</font></dt><dt><font face="helvetica, arial"><a href="algs.html#SynchBFS">SynchBFS</a>
+</font></dt><dt><font face="helvetica, arial"><a href="algs.html#SynchBFSAck">SynchBFSAck</a>
+</font></dt><dt><font face="helvetica, arial"><a href="algs.html#SynchBroadcast">SynchBroadcast</a>
+</font></dt><dt><font face="helvetica, arial"><a href="algs.html#SynchConvergecast">SynchConvergecast</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial">_ConvergeHeight
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="algs.html#SynchLubyMIS">SynchLubyMIS</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="AsyncLCR">class <strong>AsyncLCR</strong></a>(<a href="distalgs.html#Asynchronous_Algorithm">distalgs.Asynchronous_Algorithm</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="algs.html#AsyncLCR">AsyncLCR</a></dd>
+<dd><a href="distalgs.html#Asynchronous_Algorithm">distalgs.Asynchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="AsyncLCR-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-msgs_i"><strong>msgs_i</strong></a>(self, p, verbose<font color="#909090">=False</font>)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-trans_i"><strong>trans_i</strong></a>(self, p, verbose<font color="#909090">=False</font>)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>Leader_Declaration</strong> = &lt;class algs.Leader_Declaration&gt;</dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Asynchronous_Algorithm">distalgs.Asynchronous_Algorithm</a>:<br>
+<dl><dt><a name="AsyncLCR-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-run_process"><strong>run_process</strong></a>(self, process)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="AsyncLCR-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="AsyncLCR-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><strong>AsynchConvergeHeight</strong> = <a name="AsynchConvergeHeight">class _ConvergeHeight</a>(<a href="algs.html#AsynchConvergecast">AsynchConvergecast</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Requires:&nbsp;BFS&nbsp;Tree<br>
+Effects:&nbsp;i0&nbsp;gets&nbsp;height&nbsp;of&nbsp;tree&nbsp;in&nbsp;state["height"]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd>_ConvergeHeight</dd>
+<dd><a href="algs.html#AsynchConvergecast">AsynchConvergecast</a></dd>
+<dd><a href="distalgs.html#Asynchronous_Algorithm">distalgs.Asynchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="_ConvergeHeight-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-initial_msg_to_parent"><strong>initial_msg_to_parent</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-output_root"><strong>output_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-trans_msg_to_parent"><strong>trans_msg_to_parent</strong></a>(self, p, msgs)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-trans_root"><strong>trans_root</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Methods inherited from <a href="algs.html#AsynchConvergecast">AsynchConvergecast</a>:<br>
+<dl><dt><a name="_ConvergeHeight-is_root"><strong>is_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-outpout_root"><strong>outpout_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-trans_i"><strong>trans_i</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Asynchronous_Algorithm">distalgs.Asynchronous_Algorithm</a>:<br>
+<dl><dt><a name="_ConvergeHeight-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-run_process"><strong>run_process</strong></a>(self, process)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="_ConvergeHeight-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="AsynchConvergecast">class <strong>AsynchConvergecast</strong></a>(<a href="distalgs.html#Asynchronous_Algorithm">distalgs.Asynchronous_Algorithm</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Requires:<br>
+-&nbsp;&nbsp;Every&nbsp;Process&nbsp;knows&nbsp;state['parent']&nbsp;and&nbsp;state['children']<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="algs.html#AsynchConvergecast">AsynchConvergecast</a></dd>
+<dd><a href="distalgs.html#Asynchronous_Algorithm">distalgs.Asynchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="AsynchConvergecast-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-initial_msg_to_parent"><strong>initial_msg_to_parent</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-is_root"><strong>is_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-outpout_root"><strong>outpout_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-trans_i"><strong>trans_i</strong></a>(self, p, msgs)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-trans_msg_to_parent"><strong>trans_msg_to_parent</strong></a>(self, p, msgs)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-trans_root"><strong>trans_root</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Asynchronous_Algorithm">distalgs.Asynchronous_Algorithm</a>:<br>
+<dl><dt><a name="AsynchConvergecast-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-run_process"><strong>run_process</strong></a>(self, process)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="AsynchConvergecast-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="AsynchConvergecast-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="FloodMax">class <strong>FloodMax</strong></a>(<a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Every&nbsp;process&nbsp;maintains&nbsp;a&nbsp;record&nbsp;of&nbsp;the&nbsp;maximum&nbsp;UID&nbsp;it&nbsp;has&nbsp;seen&nbsp;so&nbsp;far<br>
+(initially&nbsp;its&nbsp;own).&nbsp;At&nbsp;each&nbsp;round,&nbsp;each&nbsp;process&nbsp;propagates&nbsp;this&nbsp;maximum<br>
+on&nbsp;all&nbsp;of&nbsp;its&nbsp;outgoing&nbsp;edges.&nbsp;After&nbsp;diam&nbsp;rounds,&nbsp;if&nbsp;the&nbsp;maximum&nbsp;value&nbsp;seen<br>
+is&nbsp;the&nbsp;process's&nbsp;own&nbsp;UID,&nbsp;the&nbsp;process&nbsp;elects&nbsp;itself&nbsp;the&nbsp;leader;&nbsp;otherwise,<br>
+it&nbsp;is&nbsp;a&nbsp;non-leader.<br>
+&nbsp;<br>
+Precondition:&nbsp;for&nbsp;every&nbsp;process,&nbsp;p,&nbsp;self.<a href="#FloodMax-get">get</a>(p,&nbsp;"diam")&nbsp;&gt;=&nbsp;dist(&nbsp;p,&nbsp;q&nbsp;),&nbsp;forall&nbsp;q.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="algs.html#FloodMax">FloodMax</a></dd>
+<dd><a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="FloodMax-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="FloodMax-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="FloodMax-trans_i"><strong>trans_i</strong></a>(self, p, msgs, verbose<font color="#909090">=False</font>)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>:<br>
+<dl><dt><a name="FloodMax-execute"><strong>execute</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="FloodMax-msgs"><strong>msgs</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="FloodMax-round"><strong>round</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="FloodMax-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="FloodMax-trans"><strong>trans</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="FloodMax-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="FloodMax-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="FloodMax-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="FloodMax-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="FloodMax-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="FloodMax-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="FloodMax-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="FloodMax-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="FloodMax-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="FloodMax-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="FloodMax-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="LCR">class <strong>LCR</strong></a>(<a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;LeLann,&nbsp;Chang&nbsp;and&nbsp;Roberts&nbsp;algorithm&nbsp;for&nbsp;Leader&nbsp;Election&nbsp;in&nbsp;a&nbsp;Synchronous&nbsp;Unidirectional_Ring.&nbsp;<br>
+&nbsp;<br>
+Each&nbsp;Process&nbsp;sends&nbsp;its&nbsp;identifier&nbsp;around&nbsp;the&nbsp;ring.<br>
+When&nbsp;a&nbsp;Process&nbsp;receives&nbsp;an&nbsp;incoming&nbsp;identifier,&nbsp;it&nbsp;compares&nbsp;that&nbsp;identifier&nbsp;to&nbsp;its&nbsp;own.<br>
+If&nbsp;the&nbsp;incoming&nbsp;identifier&nbsp;is&nbsp;greater&nbsp;than&nbsp;its&nbsp;own,&nbsp;it&nbsp;keeps&nbsp;passing&nbsp;the&nbsp;identifier;<br>
+if&nbsp;it&nbsp;is&nbsp;less&nbsp;than&nbsp;its&nbsp;own,&nbsp;it&nbsp;discards&nbsp;the&nbsp;incoming&nbsp;identifier;<br>
+if&nbsp;it&nbsp;is&nbsp;equal&nbsp;to&nbsp;its&nbsp;own,&nbsp;the&nbsp;Process&nbsp;declares&nbsp;itself&nbsp;the&nbsp;leader.<br>
+&nbsp;<br>
+Requires:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Every&nbsp;process&nbsp;knows&nbsp;n,&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;network<br>
+Effects:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Every&nbsp;process&nbsp;has&nbsp;state['status']&nbsp;is&nbsp;'leader'&nbsp;or&nbsp;'non-leader'.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Exactly&nbsp;one&nbsp;process&nbsp;has&nbsp;state['status']&nbsp;is&nbsp;'leader'<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="algs.html#LCR">LCR</a></dd>
+<dd><a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="LCR-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="LCR-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="LCR-trans_i"><strong>trans_i</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>:<br>
+<dl><dt><a name="LCR-execute"><strong>execute</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="LCR-msgs"><strong>msgs</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="LCR-round"><strong>round</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="LCR-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="LCR-trans"><strong>trans</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="LCR-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="LCR-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="LCR-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="LCR-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="LCR-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="LCR-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="LCR-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="LCR-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="LCR-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="LCR-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="LCR-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SynchBFS">class <strong>SynchBFS</strong></a>(<a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>At&nbsp;any&nbsp;point&nbsp;during&nbsp;execution,&nbsp;there&nbsp;is&nbsp;some&nbsp;set&nbsp;of&nbsp;processes&nbsp;that&nbsp;is<br>
+"marked,"&nbsp;initially&nbsp;just&nbsp;i0.&nbsp;Process&nbsp;i0&nbsp;sends&nbsp;out&nbsp;a&nbsp;search&nbsp;message&nbsp;at<br>
+round&nbsp;1,&nbsp;to&nbsp;all&nbsp;of&nbsp;its&nbsp;outgoing&nbsp;neighbors.&nbsp;At&nbsp;any&nbsp;round,&nbsp;if&nbsp;an&nbsp;unmarked<br>
+process&nbsp;receives&nbsp;a&nbsp;search&nbsp;message,&nbsp;it&nbsp;marks&nbsp;itself&nbsp;and&nbsp;chooses&nbsp;one&nbsp;of&nbsp;the<br>
+processes&nbsp;from&nbsp;which&nbsp;the&nbsp;search&nbsp;has&nbsp;arrived&nbsp;as&nbsp;its&nbsp;parent.&nbsp;At&nbsp;the&nbsp;first<br>
+round&nbsp;after&nbsp;a&nbsp;process&nbsp;gets&nbsp;marked,&nbsp;it&nbsp;sends&nbsp;a&nbsp;search&nbsp;message&nbsp;to&nbsp;all&nbsp;of&nbsp;its<br>
+outgoing&nbsp;neighbors.<br>
+&nbsp;<br>
+Requires:&nbsp;testLeaderElection<br>
+Effects:&nbsp;every&nbsp;Process&nbsp;has&nbsp;state['parent'].&nbsp;Leader&nbsp;has&nbsp;state['parent']&nbsp;=&nbsp;None<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="algs.html#SynchBFS">SynchBFS</a></dd>
+<dd><a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SynchBFS-is_i0"><strong>is_i0</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBFS-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBFS-trans_i"><strong>trans_i</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>Search</strong> = &lt;class algs.Search&gt;</dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>:<br>
+<dl><dt><a name="SynchBFS-execute"><strong>execute</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFS-msgs"><strong>msgs</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFS-round"><strong>round</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFS-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchBFS-trans"><strong>trans</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="SynchBFS-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchBFS-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="SynchBFS-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFS-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBFS-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="SynchBFS-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchBFS-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchBFS-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFS-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBFS-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchBFS-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="SynchBFS-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SynchBFSAck">class <strong>SynchBFSAck</strong></a>(<a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>At&nbsp;any&nbsp;point&nbsp;during&nbsp;execution,&nbsp;there&nbsp;is&nbsp;some&nbsp;set&nbsp;of&nbsp;processes&nbsp;that&nbsp;is<br>
+"marked,"&nbsp;initially&nbsp;just&nbsp;i0.&nbsp;Process&nbsp;i0&nbsp;sends&nbsp;out&nbsp;a&nbsp;search&nbsp;message&nbsp;at<br>
+round&nbsp;1,&nbsp;to&nbsp;all&nbsp;of&nbsp;its&nbsp;outgoing&nbsp;neighbors.&nbsp;At&nbsp;any&nbsp;round,&nbsp;if&nbsp;an&nbsp;unmarked<br>
+process&nbsp;receives&nbsp;a&nbsp;search&nbsp;message,&nbsp;it&nbsp;marks&nbsp;itself&nbsp;and&nbsp;chooses&nbsp;one&nbsp;of&nbsp;the<br>
+processes&nbsp;from&nbsp;which&nbsp;the&nbsp;search&nbsp;arrived&nbsp;as&nbsp;its&nbsp;parent.&nbsp;At&nbsp;the&nbsp;first<br>
+round&nbsp;after&nbsp;a&nbsp;process&nbsp;gets&nbsp;marked,&nbsp;it&nbsp;sends&nbsp;a&nbsp;search&nbsp;message&nbsp;to&nbsp;all&nbsp;of&nbsp;its<br>
+outgoing&nbsp;neighbors,&nbsp;and&nbsp;an&nbsp;acknowledgement&nbsp;to&nbsp;its&nbsp;parent,&nbsp;so&nbsp;that&nbsp;nodes<br>
+will&nbsp;also&nbsp;know&nbsp;their&nbsp;children.<br>
+&nbsp;<br>
+Requires:&nbsp;testLeaderElection<br>
+Effects:&nbsp;Every&nbsp;process&nbsp;has:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state['parent'].&nbsp;Leader&nbsp;has&nbsp;state['parent']&nbsp;=&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state['childen'].&nbsp;Leaves&nbsp;have&nbsp;state['children']&nbsp;=&nbsp;[]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="algs.html#SynchBFSAck">SynchBFSAck</a></dd>
+<dd><a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SynchBFSAck-is_i0"><strong>is_i0</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-trans_i"><strong>trans_i</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>AckParent</strong> = &lt;class algs.AckParent&gt;</dl>
+
+<dl><dt><strong>Search</strong> = &lt;class algs.Search&gt;</dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>:<br>
+<dl><dt><a name="SynchBFSAck-execute"><strong>execute</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-msgs"><strong>msgs</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-round"><strong>round</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-trans"><strong>trans</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="SynchBFSAck-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="SynchBFSAck-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SynchBroadcast">class <strong>SynchBroadcast</strong></a>(<a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Requires:&nbsp;BFS&nbsp;Tree&nbsp;with&nbsp;children&nbsp;pointers,&nbsp;where&nbsp;root&nbsp;node&nbsp;has&nbsp;state['height']<br>
+Effects:&nbsp;Broadcasts&nbsp;state['height']&nbsp;to&nbsp;all&nbsp;nodes&nbsp;as&nbsp;state['height'].<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="algs.html#SynchBroadcast">SynchBroadcast</a></dd>
+<dd><a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SynchBroadcast-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-trans_i"><strong>trans_i</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>:<br>
+<dl><dt><a name="SynchBroadcast-execute"><strong>execute</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-msgs"><strong>msgs</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-round"><strong>round</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-trans"><strong>trans</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="SynchBroadcast-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="SynchBroadcast-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><strong>SynchConvergeHeight</strong> = <a name="SynchConvergeHeight">class _ConvergeHeight</a>(<a href="algs.html#SynchConvergecast">SynchConvergecast</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Requires:&nbsp;BFS&nbsp;Tree<br>
+Effects:&nbsp;i0&nbsp;gets&nbsp;height&nbsp;of&nbsp;tree&nbsp;in&nbsp;state["height"]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd>_ConvergeHeight</dd>
+<dd><a href="algs.html#SynchConvergecast">SynchConvergecast</a></dd>
+<dd><a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="_ConvergeHeight-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-initial_msg_to_parent"><strong>initial_msg_to_parent</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-output_root"><strong>output_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-trans_msg_to_parent"><strong>trans_msg_to_parent</strong></a>(self, p, msgs)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-trans_root"><strong>trans_root</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Methods inherited from <a href="algs.html#SynchConvergecast">SynchConvergecast</a>:<br>
+<dl><dt><a name="_ConvergeHeight-is_root"><strong>is_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-outpout_root"><strong>outpout_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-trans_i"><strong>trans_i</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>:<br>
+<dl><dt><a name="_ConvergeHeight-execute"><strong>execute</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-msgs"><strong>msgs</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-round"><strong>round</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-trans"><strong>trans</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="_ConvergeHeight-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="_ConvergeHeight-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SynchConvergecast">class <strong>SynchConvergecast</strong></a>(<a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Precondition:&nbsp;Every&nbsp;Process&nbsp;knows&nbsp;state['parent']<br>
+&nbsp;<br>
+#TODO&nbsp;If&nbsp;Processes&nbsp;also&nbsp;know&nbsp;state['children']&nbsp;==&gt;&nbsp;Reduced&nbsp;Communication&nbsp;Complexity.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="algs.html#SynchConvergecast">SynchConvergecast</a></dd>
+<dd><a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SynchConvergecast-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-initial_msg_to_parent"><strong>initial_msg_to_parent</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-is_root"><strong>is_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-outpout_root"><strong>outpout_root</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-trans_i"><strong>trans_i</strong></a>(self, p, msgs)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-trans_msg_to_parent"><strong>trans_msg_to_parent</strong></a>(self, p, msgs)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-trans_root"><strong>trans_root</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>:<br>
+<dl><dt><a name="SynchConvergecast-execute"><strong>execute</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-msgs"><strong>msgs</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-round"><strong>round</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-trans"><strong>trans</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="SynchConvergecast-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="SynchConvergecast-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SynchLubyMIS">class <strong>SynchLubyMIS</strong></a>(<a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;algorithm&nbsp;works&nbsp;in&nbsp;stages,&nbsp;each&nbsp;consisting&nbsp;of&nbsp;three&nbsp;rounds.<br>
+&nbsp;<br>
+Round&nbsp;1:&nbsp;In&nbsp;the&nbsp;first&nbsp;round&nbsp;of&nbsp;a&nbsp;stage,&nbsp;the&nbsp;processes&nbsp;choose&nbsp;their<br>
+&nbsp;&nbsp;&nbsp;&nbsp;respective&nbsp;vals&nbsp;and&nbsp;send&nbsp;them&nbsp;to&nbsp;their&nbsp;neighbors.&nbsp;By&nbsp;the&nbsp;end&nbsp;of&nbsp;round<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;when&nbsp;all&nbsp;the&nbsp;val&nbsp;messages&nbsp;have&nbsp;been&nbsp;received,&nbsp;the&nbsp;winners--that&nbsp;is,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;processes&nbsp;in&nbsp;F--know&nbsp;who&nbsp;they&nbsp;are.<br>
+Round&nbsp;2:&nbsp;In&nbsp;the&nbsp;second&nbsp;round,&nbsp;the&nbsp;winners&nbsp;notify&nbsp;their&nbsp;neighbors.&nbsp;By<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;end&nbsp;of&nbsp;round&nbsp;2,&nbsp;the&nbsp;losers--that&nbsp;is,&nbsp;the&nbsp;processes&nbsp;having&nbsp;neighbors<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;F--know&nbsp;who&nbsp;they&nbsp;are.<br>
+Round&nbsp;3:&nbsp;In&nbsp;the&nbsp;third&nbsp;round,&nbsp;each&nbsp;loser&nbsp;notifies&nbsp;its&nbsp;neighbors.&nbsp;Then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;all&nbsp;the&nbsp;involved&nbsp;processes--the&nbsp;winners,&nbsp;the&nbsp;losers,&nbsp;and&nbsp;the&nbsp;losers'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;neighbors--&nbsp;remove&nbsp;the&nbsp;appropriate&nbsp;nodes&nbsp;and&nbsp;edges&nbsp;from&nbsp;the&nbsp;graph.&nbsp;More<br>
+&nbsp;&nbsp;&nbsp;&nbsp;precisely,&nbsp;this&nbsp;means&nbsp;the&nbsp;winners&nbsp;and&nbsp;losers&nbsp;discontinue&nbsp;participation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;after&nbsp;this&nbsp;stage,&nbsp;and&nbsp;the&nbsp;losers'&nbsp;neighbors&nbsp;remove&nbsp;all&nbsp;the&nbsp;edges&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;incident&nbsp;on&nbsp;the&nbsp;newly&nbsp;removed&nbsp;nodes.<br>
+&nbsp;<br>
+Requires:&nbsp;n,&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;network<br>
+Effect:&nbsp;Every&nbsp;process&nbsp;knows&nbsp;'MIS'.&nbsp;A&nbsp;boolean&nbsp;representing&nbsp;whether&nbsp;it&nbsp;is&nbsp;a&nbsp;member<br>
+of&nbsp;the&nbsp;Maximal&nbsp;Independent&nbsp;Set&nbsp;found&nbsp;by&nbsp;Luby's&nbsp;algorithm.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="algs.html#SynchLubyMIS">SynchLubyMIS</a></dd>
+<dd><a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a></dd>
+<dd><a href="distalgs.html#Algorithm">distalgs.Algorithm</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SynchLubyMIS-msgs_i"><strong>msgs_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-trans_i"><strong>trans_i</strong></a>(self, p, msgs)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Synchronous_Algorithm">distalgs.Synchronous_Algorithm</a>:<br>
+<dl><dt><a name="SynchLubyMIS-execute"><strong>execute</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-msgs"><strong>msgs</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-round"><strong>round</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-run"><strong>run</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-trans"><strong>trans</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="distalgs.html#Algorithm">distalgs.Algorithm</a>:<br>
+<dl><dt><a name="SynchLubyMIS-__call__"><strong>__call__</strong></a>(self, network, params<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-__init__"><strong>__init__</strong></a>(self, network<font color="#909090">=None</font>, params<font color="#909090">={'draw': False, 'silent': False}</font>, name<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-cleanup"><strong>cleanup</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-cleanup_i"><strong>cleanup_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-count_msg"><strong>count_msg</strong></a>(self, message_count)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-delete"><strong>delete</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-get"><strong>get</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-halt"><strong>halt</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-halt_i"><strong>halt_i</strong></a>(self, p)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-has"><strong>has</strong></a>(self, process, state)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-increment"><strong>increment</strong></a>(self, process, state, inc<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="SynchLubyMIS-set"><strong>set</strong></a>(self, process, state, value)</dt></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-sleep"><strong>sleep</strong></a>(...)</dt><dd><tt><a href="#-sleep">sleep</a>(seconds)<br>
+&nbsp;<br>
+Delay&nbsp;execution&nbsp;for&nbsp;a&nbsp;given&nbsp;number&nbsp;of&nbsp;seconds.&nbsp;&nbsp;The&nbsp;argument&nbsp;may&nbsp;be<br>
+a&nbsp;floating&nbsp;point&nbsp;number&nbsp;for&nbsp;subsecond&nbsp;precision.</tt></dd></dl>
+</td></tr></table>
+</body></html>

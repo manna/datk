@@ -279,8 +279,8 @@ class AsynchConvergecast(Asynchronous_Algorithm):
     def initial_msg_to_parent(self, p):     return
     def trans_msg_to_parent(self, p, msgs): return
 
-def _ConvergeHeight(Convergecast):
-    class ConvergeHeight(Convergecast):
+def _converge_height(Convergecast):
+    class _ConvergeHeight(Convergecast):
         """
         Requires: BFS Tree
         Effects: i0 gets height of tree in state["height"]
@@ -296,10 +296,10 @@ def _ConvergeHeight(Convergecast):
         def cleanup_i(self, p):
             Convergecast.cleanup_i(self,p)
             self.delete(p, 'height')
-    return ConvergeHeight
+    return _ConvergeHeight
 
-SynchConvergeHeight = _ConvergeHeight(SynchConvergecast)
-AsynchConvergeHeight = _ConvergeHeight(AsynchConvergecast)
+SynchConvergeHeight = _converge_height(SynchConvergecast)
+AsynchConvergeHeight = _converge_height(AsynchConvergecast)
 
 #Broadcast
 class SynchBroadcast(Synchronous_Algorithm):
