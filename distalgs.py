@@ -236,6 +236,8 @@ class Algorithm:
 
     def set(self, process, state, value):
         process.state[self][state] = value
+    def increment(self, process, state, inc=1):
+        process.state[self][state] += inc
     def has(self, process, state):
         return state in process.state[self]
     def get(self, process, state):
@@ -274,8 +276,10 @@ class Synchronous_Algorithm(Algorithm):
     def trans(self):
         for process in self.network:
             if self.halt_i(process): continue
-            messages = process.get_msgs(self)
-            self.trans_i(process, messages)
+            try: #Checks if function trans_i(self, p) is defined
+                self.trans_i(process)
+            except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
+                self.trans_i(process, process.get_msgs(self))
 
 class Do_Nothing(Synchronous_Algorithm):
     def trans_i(self, p, messages): p.terminate(self)
@@ -303,7 +307,10 @@ class Asynchronous_Algorithm(Algorithm):
             self.msgs_i(process)
             if self.halt_i(process):
                 break
-            self.trans_i(process)
+            try: #Checks if function trans_i(self, p) is defined
+                self.trans_i(process)
+            except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
+                self.trans_i(process, process.get_msgs(self))
             if self.halt_i(process):
                 break
     

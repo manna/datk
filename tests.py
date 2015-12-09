@@ -73,13 +73,13 @@ def FLOODMAX_COMPLETE_GRAPH():
 
 @test
 def FLOODMAX_RANDOM_GRAPH():
-    g = Random_Network(16)
+    g = Random_Line_Network(16)
     FloodMax(g, params = test_params)
     testLeaderElection(g)
 
 @test
 def SYNCH_BFS():
-    x = Random_Network(10)
+    x = Random_Line_Network(10)
     FloodMax(x, test_params)
     testLeaderElection(x)
 
@@ -98,7 +98,7 @@ def SYNCH_BFS_ACK():
 
 @test
 def SYNCH_CONVERGE_HEIGHT():
-    x = Random_Network(10)
+    x = Random_Line_Network(10)
 
     FloodMax(x, test_params)
     testLeaderElection(x)
@@ -110,7 +110,7 @@ def SYNCH_CONVERGE_HEIGHT():
 
 @test
 def SYNCH_BROADCAST_HEIGHT():
-    x = Random_Network(10)
+    x = Random_Line_Network(10)
 
     FloodMax(x, test_params)
     testLeaderElection(x)
@@ -119,6 +119,21 @@ def SYNCH_BROADCAST_HEIGHT():
     testBFSWithChildren(x)
 
     SynchConvergeHeight(x, test_params)
+
+    SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "silent" : True})
+    testBroadcast(x, 'height')
+
+@test
+def ASYNCH_BROADCAST_HEIGHT():
+    x = Random_Line_Network(10)
+
+    FloodMax(x, test_params)
+    testLeaderElection(x)
+
+    SynchBFSAck(x, test_params)
+    testBFSWithChildren(x)
+
+    AsynchConvergeHeight(x, test_params)
 
     SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "silent" : True})
     testBroadcast(x, 'height')
@@ -154,7 +169,7 @@ def send_receive_msgs():
 
 @test
 def SYNCH_DO_NOTHING():
-    x = Random_Network(5)
+    x = Random_Line_Network(5)
     state = x.state()
     assert Do_Nothing(x, params=test_params).message_count == 0
     assert state == x.state()
@@ -203,7 +218,7 @@ def CHAIN_BROADCAST_HEIGHT():
     broadcast = SynchBroadcast(params ={"attr":"height","draw":in_ipython, "silent":True})
 
     A = Chain(Chain(fm, bfs), Chain(converge, broadcast))
-    x = Random_Network(10)
+    x = Random_Line_Network(10)
     A(x)
     testLeaderElection(x)
     testBFSWithChildren(x)
@@ -217,7 +232,7 @@ def SYNCH_LUBY_MIS_BI_RING():
 
 @test
 def SYNCH_LUBY_MIS():
-    x = Random_Network(10)
+    x = Random_Line_Network(10)
     SynchLubyMIS(x)
     testLubyMIS(x)
 
