@@ -3,7 +3,7 @@ from tester import *
 
 @test(main_thread=True)
 def DRAW_RANDOM():
-    Random_Network(25).draw()
+    Random_Line_Network(25).draw()
 
 @test(main_thread=True)
 def DRAW_UNI_RING():
