@@ -21,6 +21,7 @@ class Message:
         assert isinstance(algorithm, Algorithm), "Message algorithm must be an instance of Algorithm"
         self.content = content
         self.algorithm = algorithm
+        self.author = None
     def __str__(self):
         return self.__class__.__name__+"("+str(self.content)+")"
     
@@ -49,12 +50,16 @@ class Process:
     def output(self, key, val, silent=False):
         self.state[key] =  val
         if not silent:
-            print self,"is",val
+            if isinstance(val, list):
+                print str(self)+"."+str(key), "are", [str(v) for v in val]
+            else: 
+                print str(self)+"."+str(key),"is", val
 
     def send_to_all_neighbors(self, msg):
         self.send_msg(msg)
 
     def send_msg(self, msg, out_nbrs=None):
+        msg.author = self
         if out_nbrs is None:
             out_nbrs = self.out_nbrs
         elif isinstance(out_nbrs, Process):
@@ -107,8 +112,8 @@ class Process:
         return "P" + str(self.UID) + " -> {"+", ".join([str(process) for process in self.out_nbrs]) + "}" 
 
 class Network:
-    """ A collection of Processes.
-    Known subclasses: Unidirectional_Ring, Bidirectional_Ring """
+    """ A collection of Processes that know n, the # of processes.
+    Known subclasses in networkd.py """
     def __init__(self, processes):
         self.processes = processes
     def __init__(self, n, index_to_UID = None):
@@ -122,6 +127,8 @@ class Network:
             shuffle(self.processes)
         else:
             self.processes = [Process(index_to_UID(i)) for i in range(n)]
+        for process in self:
+            process.state['n'] = n
     def __getitem__(self, i):
         return self.processes[i]
     def __len__(self):
@@ -262,11 +269,11 @@ class Synchronous_Algorithm(Algorithm):
         self.trans()
     def msgs(self):
         for process in self.network:
+            if self.halt_i(process): continue
             self.msgs_i(process)
     def trans(self):
         for process in self.network:
-            if False: #if maximum verbosity setting
-                print process,"received",process.in_channel
+            if self.halt_i(process): continue
             messages = process.get_msgs(self)
             self.trans_i(process, messages)
 
@@ -316,10 +323,12 @@ class Compose(Synchronous_Algorithm):
             name = self.name="Compose("+self.A.name+","+self.B.name+")"
 
     def msgs_i(self, p):
+        self.A.r, self.B.r = self.r, self.r
         self.A.msgs_i(p)
         self.B.msgs_i(p)
 
     def trans_i(self, p, msgs):
+        self.A.r, self.B.r = self.r, self.r
         self.A.trans_i(p, p.get_msgs(self.A))
         self.B.trans_i(p, p.get_msgs(self.B))
 

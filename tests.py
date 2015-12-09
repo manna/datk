@@ -2,7 +2,6 @@ from distalgs import *
 from networks import *
 from algs import *
 from tester import *
-begin_testing()
 
 def configure_ipython():
   """
@@ -27,7 +26,7 @@ test_params = {"draw":False, "silent" : True}
 @test
 def LCR_UNI_RING():
     r = Unidirectional_Ring(6)
-    LCR(r, test_params)
+    LCR(r, params=test_params)
     testLeaderElection(r)
 
 @test
@@ -139,9 +138,13 @@ def send_receive_msgs():
     assert x[0].get_msgs(A) == []
     x[0].send_msg(a1)
     x[0].send_msg(a2)
+    assert a1.author == x[0] and a2.author == x[0]
     x[2].send_msg(a3)
+    assert a3.author == x[2]
     x[0].send_msg(b1)
+    assert b1.author == x[0]
     x[2].send_msg(b2)
+    assert b2.author == x[2]
 
     assert x[1].get_msgs(B) == [b1,b2]
     assert x[1].get_msgs(A, x[0]) == [a1, a2]
@@ -161,11 +164,11 @@ def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
     x = Unidirectional_Ring(5)
     x1 = x.clone()
 
-    A = LCR()
+    A = LCR(params = test_params)
     A(x)
     testLeaderElection(x)
 
-    C = Compose(LCR(), Do_Nothing())
+    C = Compose(LCR(params = test_params), Do_Nothing())
     C(x1, params=test_params)
     testLeaderElection(x1)
 
@@ -181,11 +184,11 @@ def COMPOSE_SYNCH_LCR():
     A(x, params = test_params)
     testLeaderElection(x)
 
-    B = Compose(LCR(name="B1"), LCR(name="B2"))
+    B = Compose(LCR(name="B1", params = test_params), LCR(name="B2", params = test_params))
     B(x1)
     testLeaderElection(x1)
 
-    C = Compose(Compose(LCR(), LCR()), LCR())
+    C = Compose(Compose(LCR(params = test_params), LCR(params = test_params)), LCR(params = test_params))
     C(x2)
     testLeaderElection(x2)
 
@@ -205,5 +208,17 @@ def CHAIN_BROADCAST_HEIGHT():
     testLeaderElection(x)
     testBFSWithChildren(x)
     testBroadcast(x, 'height')
+
+@test
+def SYNCH_LUBY_MIS_BI_RING():
+    x = Bidirectional_Ring(10, lambda t:t)
+    SynchLubyMIS(x, params=test_params)
+    testLubyMIS(x)
+
+@test
+def SYNCH_LUBY_MIS():
+    x = Random_Network(10)
+    SynchLubyMIS(x)
+    testLubyMIS(x)
 
 summarize()

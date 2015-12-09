@@ -12,6 +12,8 @@ class LCR(Synchronous_Algorithm):
     if it is less than its own, it discards the incoming identifier;
     if it is equal to its own, the Process declares itself the leader.
 
+    Requires:
+        Every process knows n, the size of the network
     Effects:
         Every process has state['status'] is 'leader' or 'non-leader'.
         Exactly one process has state['status'] is 'leader'
@@ -33,13 +35,12 @@ class LCR(Synchronous_Algorithm):
             msg = msgs.pop()
             if msg.content == p.UID:
                 p.output("status", "leader", self.params["silent"])
-                p.terminate(self)
             elif msg.content > p.UID:
                 self.set(p,"send", msg)
                 p.output("status", "non-leader", self.params["silent"])
-                p.terminate(self) #shouldn't really halt yet.
             else:
                 self.set(p, "send",  None)
+        if self.r == p.state['n']: p.terminate(self)
     
     def cleanup_i(self, p): self.delete(p, 'send')
 
@@ -302,3 +303,59 @@ class SynchBroadcast(Synchronous_Algorithm):
                 else:
                     p.terminate(self)
     def cleanup_i(self, p): self.delete(p, 'send')
+
+#Maximal Independent Set
+class SynchLubyMIS(Synchronous_Algorithm):
+    """ 
+    The algorithm works in stages, each consisting of three rounds.
+
+    Round 1: In the first round of a stage, the processes choose their
+        respective vals and send them to their neighbors. By the end of round
+        1, when all the val messages have been received, the winners--that is,
+        the processes in F--know who they are.
+    Round 2: In the second round, the winners notify their neighbors. By
+        the end of round 2, the losers--that is, the processes having neighbors
+        in F--know who they are.
+    Round 3: In the third round, each loser notifies its neighbors. Then
+        all the involved processes--the winners, the losers, and the losers'
+        neighbors-- remove the appropriate nodes and edges from the graph. More
+        precisely, this means the winners and losers discontinue participation
+        after this stage, and the losers' neighbors remove all the edges that
+        are incident on the newly removed nodes.
+
+    Requires: n, the size of the network
+    Effect: Every process knows 'MIS'. A boolean representing whether it is a member
+    of the Maximal Independent Set found by Luby's algorithm.
+    """
+    def msgs_i(self, p):
+        if self.r == 1:
+            self.set(p, 'rem_nbrs', p.out_nbrs[:])
+            self.set(p, 'status', 'unknown')
+
+        if self.r%3 == 1: 
+            self.set(p, 'val', random.randint(0,p.state['n'] **4 ))
+            p.send_msg( Message(self, self.get(p, 'val')), self.get(p, 'rem_nbrs') )
+        if self.r%3 == 2:
+            if self.get(p, 'status') == 'winner':
+                p.send_msg( Message(self, 'winner') , self.get(p, 'rem_nbrs') )
+        if self.r%3 == 0:
+             if self.get(p, 'status') == 'loser':
+                p.send_msg( Message(self, 'loser') , self.get(p, 'rem_nbrs') )           
+    def trans_i(self, p, msgs):
+        values = [m.content for m in msgs]
+        if self.r%3 ==1:
+            if len(values) == 0 or self.get(p, 'val') > max(values):
+                self.set(p, 'status', 'winner')
+                p.output('MIS', True, self.params['silent'])
+        if self.r%3 ==2:
+            if 'winner' in values:
+                self.set(p, 'status', 'loser')
+                p.output('MIS', False, self.params['silent'])
+        if self.r%3 == 0:
+            rem_nbrs = self.get(p, 'rem_nbrs')
+            for m in msgs:
+                if m.content == 'loser':
+                    rem_nbrs.remove(m.author)
+            self.set(p, 'rem_nbrs', rem_nbrs)
+            if self.get(p, 'status') in ['winner', 'loser']:
+                p.terminate(self)

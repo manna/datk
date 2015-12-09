@@ -8,8 +8,8 @@ num_tests = 0
 failed_tests = set()
 
 def test(f=None, timeout=TIMEOUT, main_thread=False, test=True):
-    if not test:
-        return
+    if not test: return lambda f: f
+
     #If main_thread = True, timeout and precision are ignored.
     def test_decorator(f):
         global lock
@@ -48,6 +48,7 @@ def test(f=None, timeout=TIMEOUT, main_thread=False, test=True):
         return test_decorator
     else:
         test_decorator(f)
+        return f
 
 def print_with_underline(text):
     print text
@@ -88,11 +89,20 @@ def testBFSWithChildren(network):
             assert isinstance(p.state['parent'], Process), "BFS FAILED"
             assert p in p.state['parent'].state['children'], "BFS FAILED"
 
-def begin_testing():
-    global num_tests
-    global failed_tests
-    num_tests = 0
-    failed_tests = set()
+def testLubyMIS(network):
+    for process in network:
+        assert 'MIS' in process.state, "'MIS' not in Process state"
+        assert isinstance(process.state['MIS'], bool)
+        if process.state['MIS'] == True:
+            assert not any([nbr.state['MIS'] for nbr in process.out_nbrs]), 'MIS not independent'
+        if process.state['MIS'] == False:
+            assert any([nbr.state['MIS'] for nbr in process.out_nbrs]), 'MIS not maximal'
 
 def summarize():
+    global num_tests
+    global failed_tests
+    
     print num_tests, "tests ran with", len(failed_tests), "failures:", sorted(list(failed_tests))
+
+    num_tests = 0
+    failed_tests = set()
