@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class Hierarchy</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="datk-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Trees&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">&nbsp;</td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="class-tree.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<center><b>
+ [ <a href="module-tree.html">Module Hierarchy</a>
+ | <a href="class-tree.html">Class Hierarchy</a> ]
+</b></center><br />
+<h1 class="epydoc">Class Hierarchy</h1>
+<ul class="nomargin-top">
+    <li> <strong class="uidlink"><a href="datk.distalgs.Algorithm-class.html">datk.distalgs.Algorithm</a></strong>:
+      <em class="summary">Abstract superclass for a distributed algorithm.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="datk.distalgs.Asynchronous_Algorithm-class.html">datk.distalgs.Asynchronous_Algorithm</a></strong>:
+      <em class="summary">We assume that the separate Processes take steps in an arbitrary 
+        order, at arbitrary relative speeds.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="datk.algs.AsyncLCR-class.html">datk.algs.AsyncLCR</a></strong>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.AsynchConvergecast-class.html">datk.algs.AsynchConvergecast</a></strong>:
+      <em class="summary">Requires:...</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="datk.algs.AsynchConvergeHeight-class.html">datk.algs.AsynchConvergeHeight</a></strong>:
+      <em class="summary">Requires: BFS Tree Effects: i0 gets height of tree in 
+        state[&quot;height&quot;]</em>
+    </li>
+    </ul>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.distalgs.Chain-class.html">datk.distalgs.Chain</a></strong>:
+      <em class="summary">An Algorithm that is the result of sequentially running two 
+        algorithms</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.distalgs.Synchronous_Algorithm-class.html">datk.distalgs.Synchronous_Algorithm</a></strong>:
+      <em class="summary">We assume that Processes take steps simultaneously, that is, that 
+        execution proceeds in synchronous rounds.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="datk.distalgs.Compose-class.html">datk.distalgs.Compose</a></strong>:
+      <em class="summary">A Synchonous_Algorithm that is the composition of two synchronous 
+        algorithms running in parallel.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.distalgs.Do_Nothing-class.html">datk.distalgs.Do_Nothing</a></strong>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.FloodMax-class.html">datk.algs.FloodMax</a></strong>:
+      <em class="summary">Every process maintains a record of the maximum UID it has seen so 
+        far (initially its own).</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.LCR-class.html">datk.algs.LCR</a></strong>:
+      <em class="summary">The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Unidirectional_Ring.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.SynchBFS-class.html">datk.algs.SynchBFS</a></strong>:
+      <em class="summary">At any point during execution, there is some set of processes that 
+        is &quot;marked,&quot; initially just i0.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.SynchBFSAck-class.html">datk.algs.SynchBFSAck</a></strong>:
+      <em class="summary">At any point during execution, there is some set of processes that is
+&quot;marked,&quot; initially just i0.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.SynchBroadcast-class.html">datk.algs.SynchBroadcast</a></strong>:
+      <em class="summary">Requires: BFS Tree with children pointers, where root node has 
+        state['height'] Effects: Broadcasts state['height'] to all nodes as
+        state['height'].</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.SynchConvergecast-class.html">datk.algs.SynchConvergecast</a></strong>:
+      <em class="summary">Precondition: Every Process knows state['parent']</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="datk.algs.SynchConvergeHeight-class.html">datk.algs.SynchConvergeHeight</a></strong>:
+      <em class="summary">Requires: BFS Tree Effects: i0 gets height of tree in 
+        state[&quot;height&quot;]</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.SynchLubyMIS-class.html">datk.algs.SynchLubyMIS</a></strong>:
+      <em class="summary">The algorithm works in stages, each consisting of three rounds.</em>
+    </li>
+    </ul>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.distalgs.Message-class.html">datk.distalgs.Message</a></strong>
+    <ul>
+    <li> <strong class="uidlink"><a href="datk.algs.SynchBFSAck.AckParent-class.html">datk.algs.SynchBFSAck.AckParent</a></strong>:
+      <em class="summary">Acknowledge Parent</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.AsyncLCR.Leader_Declaration-class.html">datk.algs.AsyncLCR.Leader_Declaration</a></strong>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.SynchBFS.Search-class.html">datk.algs.SynchBFS.Search</a></strong>:
+      <em class="summary">Search for children</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.algs.SynchBFSAck.Search-class.html">datk.algs.SynchBFSAck.Search</a></strong>:
+      <em class="summary">Search for children</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.distalgs.Network-class.html">datk.distalgs.Network</a></strong>:
+      <em class="summary">A collection of Processes that know n, the # of processes.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="datk.networks.Bidirectional_Line-class.html">datk.networks.Bidirectional_Line</a></strong>:
+      <em class="summary">A Network of n Processes arranged in a line.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.networks.Bidirectional_Ring-class.html">datk.networks.Bidirectional_Ring</a></strong>:
+      <em class="summary">A Network of n Processes arranged in a ring.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.networks.Complete_Graph-class.html">datk.networks.Complete_Graph</a></strong>:
+      <em class="summary">A Network of n Processes arranged at the vertices of a Complete 
+        undirected graph of size n.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.networks.Random_Line_Network-class.html">datk.networks.Random_Line_Network</a></strong>:
+      <em class="summary">A Network of n processes arranged randomly at the vertices of a 
+        connected undirected line graph of size n.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.networks.Unidirectional_Line-class.html">datk.networks.Unidirectional_Line</a></strong>:
+      <em class="summary">A Network of n Processes arranged in a line.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.networks.Unidirectional_Ring-class.html">datk.networks.Unidirectional_Ring</a></strong>:
+      <em class="summary">A Network of n Processes arranged in a ring.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="datk.distalgs.Process-class.html">datk.distalgs.Process</a></strong>:
+      <em class="summary">A computing element located at a node of a directed network graph.</em>
+    </li>
+</ul>
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="datk-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Trees&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Dec  9 02:02:42 2015
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

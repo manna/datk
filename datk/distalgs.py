@@ -1,11 +1,3 @@
-"""
-A Python Toolkit for Distributed Algorithms
-
-Author: Amin Manna <manna@mit.edu>
-        Mayuri Sridhar <mayuri@mit.edu>
-"""
-#Generate documentation by running pydoc -w distalgs
-
 import random
 from random import shuffle
 import threading
