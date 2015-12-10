@@ -1,5 +1,7 @@
 """
 Algorithm Test Suite
+
+Tests algorithms defined in algs.py
 """
 
 try:

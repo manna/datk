@@ -3,8 +3,7 @@ from distalgs import *
 #Leader Election Algorithms for Ring networks:
 
 class LCR(Synchronous_Algorithm):
-    """
-    The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Unidirectional_Ring. 
+    """The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Ring Network 
     
     Each Process sends its identifier around the ring.
     When a Process receives an incoming identifier, it compares that identifier to its own.
@@ -13,10 +12,10 @@ class LCR(Synchronous_Algorithm):
     if it is equal to its own, the Process declares itself the leader.
 
     Requires:
-        Every process knows n, the size of the network
+        - Every process knows state['n'], the size of the network
     Effects:
-        Every process has state['status'] is 'leader' or 'non-leader'.
-        Exactly one process has state['status'] is 'leader'
+        - Every process has state['status'] is 'leader' or 'non-leader'.
+        - Exactly one process has state['status'] is 'leader'
     """
     def msgs_i(self, p):
         if not self.has(p, "send"):
@@ -45,6 +44,22 @@ class LCR(Synchronous_Algorithm):
     def cleanup_i(self, p): self.delete(p, 'send')
 
 class AsyncLCR(Asynchronous_Algorithm):
+    """The LeLann, Chang and Roberts algorithm for Leader Election in an Asynchronous Ring Network 
+    
+    Each Process sends its identifier around the ring.
+    When a Process receives incoming identifier(s), it compares their largest to its own.
+    If that incoming identifier is greater than its own, it keeps passing that identifier;
+    if it is less than its own, it discards all the incoming identifiers;
+    if it is equal to its own, the Process declares itself the leader.
+    When a Process has declared itself Leader, it sends a Leader Declaration message around the ring, and halts
+    As it goes around the ring, each other Process outputs 'non-leader', and halts.
+
+    Requires:
+        - Every process knows state['n'], the size of the network
+    Effects:
+        - Every process has state['status'] is 'leader' or 'non-leader'.
+        - Exactly one process has state['status'] is 'leader'
+    """
     class Leader_Declaration(Message): pass
     def msgs_i(self, p, verbose=False):
         if not self.has(p, "sends"):
@@ -87,13 +102,16 @@ class AsyncLCR(Asynchronous_Algorithm):
 
 class FloodMax(Synchronous_Algorithm):
     """
+    UID flooding algorithm for Leader Election in a general network
+
     Every process maintains a record of the maximum UID it has seen so far
     (initially its own). At each round, each process propagates this maximum
     on all of its outgoing edges. After diam rounds, if the maximum value seen
     is the process's own UID, the process elects itself the leader; otherwise,
     it is a non-leader.
 
-    Precondition: for every process, p, self.get(p, "diam") >= dist( p, q ), forall q.
+    Requires:
+        - Every process, p, has p.state["diam"] >= dist( p, q ), forall q.
     """
     def msgs_i(self,p):
         if self.r < self.get(p, "diam"):
@@ -120,7 +138,8 @@ class FloodMax(Synchronous_Algorithm):
 #Construct BFS Tree
 
 class SynchBFS(Synchronous_Algorithm):
-    """
+    """Constructs a BFS tree with the 'leader' Process at its root
+
     At any point during execution, there is some set of processes that is
     "marked," initially just i0. Process i0 sends out a search message at
     round 1, to all of its outgoing neighbors. At any round, if an unmarked
@@ -129,8 +148,10 @@ class SynchBFS(Synchronous_Algorithm):
     round after a process gets marked, it sends a search message to all of its
     outgoing neighbors.
 
-    Requires: testLeaderElection
-    Effects: every Process has state['parent']. Leader has state['parent'] = None
+    Requires:
+        - testLeaderElection
+    Effects:
+        - every Process has state['parent']. Leader has state['parent'] = None
     """
     class Search(Message):
         """Search for children"""
@@ -156,7 +177,9 @@ class SynchBFS(Synchronous_Algorithm):
             p.terminate(self)
 
 class SynchBFSAck(Synchronous_Algorithm):
-    """
+    """Constructs a BFS tree with children pointers and the 'leader' Process at its root
+
+    Algorithm (Informal):
     At any point during execution, there is some set of processes that is
     "marked," initially just i0. Process i0 sends out a search message at
     round 1, to all of its outgoing neighbors. At any round, if an unmarked
@@ -166,10 +189,12 @@ class SynchBFSAck(Synchronous_Algorithm):
     outgoing neighbors, and an acknowledgement to its parent, so that nodes
     will also know their children.
 
-    Requires: testLeaderElection
-    Effects: Every process has:
-                state['parent']. Leader has state['parent'] = None
-                state['childen']. Leaves have state['children'] = []
+    Requires:
+        - testLeaderElection
+    Effects: 
+        - Every process knows:
+            - state['parent']. Leader has state['parent'] = None
+            - state['childen']. Leaves have state['children'] = []
     """
     class Search(Message):
         """Search for children"""
@@ -212,7 +237,11 @@ class SynchBFSAck(Synchronous_Algorithm):
 #Convergecast
 
 class SynchConvergecast(Synchronous_Algorithm):
-    """Precondition: Every Process knows state['parent']
+    """The abstract superclass of a class of Synchronous Algorithms that
+    propagate information from the leaves of a BFS tree to its root.
+
+    Requires:
+        - Every Process knows state['parent']
 
     #TODO If Processes also know state['children'] ==> Reduced Communication Complexity.
     """
@@ -244,9 +273,11 @@ class SynchConvergecast(Synchronous_Algorithm):
     def trans_msg_to_parent(self, p, msgs): return
 
 class AsynchConvergecast(Asynchronous_Algorithm):
-    """
+    """The abstract superclass of a class of Synchronous Algorithms that
+    propagate information from the leaves of a BFS tree to its root.
+
     Requires:
-    -  Every Process knows state['parent'] and state['children']"""
+        - Every Process knows state['parent'] and state['children']"""
     def is_root(self, p): return p.state['parent'] is None
     def msgs_i(self, p):
         if not self.has(p, 'reports'):
@@ -282,8 +313,10 @@ class AsynchConvergecast(Asynchronous_Algorithm):
 def _converge_height(Convergecast):
     class _ConvergeHeight(Convergecast):
         """
-        Requires: BFS Tree
-        Effects: i0 gets height of tree in state["height"]
+        Requires:
+            - BFS Tree
+        Effects:
+            - Root Process knows height of tree in state["height"]
         """
         def trans_root(self, p, msgs):      #Updates height
             self.set(p, 'height', max(msgs)) 
@@ -303,9 +336,14 @@ AsynchConvergeHeight = _converge_height(AsynchConvergecast)
 
 #Broadcast
 class SynchBroadcast(Synchronous_Algorithm):
-    """
-    Requires: BFS Tree with children pointers, where root node has state['height']
-    Effects: Broadcasts state['height'] to all nodes as state['height'].
+    """Broadcasts a value stored in Process, p, to the BFS tree rooted at p
+    
+    Requires:
+        - The attribute to be broadcasted must be specified in self.params['attr']
+        - BFS Tree with children pointers, where root node has state[self.params['attr']]
+    Effects:
+        - All Processes have state[self.params['attr']] := the original value of in
+        state[self.params['attr']] of the root Process.
     """
     def msgs_i(self, p):
         attr = self.params['attr']
@@ -333,26 +371,29 @@ class SynchBroadcast(Synchronous_Algorithm):
 
 #Maximal Independent Set
 class SynchLubyMIS(Synchronous_Algorithm):
-    """ 
+    """A randomized algorithm that constructs a Maximal Independent Set
+    
     The algorithm works in stages, each consisting of three rounds.
-
-    Round 1: In the first round of a stage, the processes choose their
+    
+        - Round 1: In the first round of a stage, the processes choose their
         respective vals and send them to their neighbors. By the end of round
         1, when all the val messages have been received, the winners--that is,
         the processes in F--know who they are.
-    Round 2: In the second round, the winners notify their neighbors. By
+        - Round 2: In the second round, the winners notify their neighbors. By
         the end of round 2, the losers--that is, the processes having neighbors
         in F--know who they are.
-    Round 3: In the third round, each loser notifies its neighbors. Then
+        - Round 3: In the third round, each loser notifies its neighbors. Then
         all the involved processes--the winners, the losers, and the losers'
         neighbors-- remove the appropriate nodes and edges from the graph. More
         precisely, this means the winners and losers discontinue participation
         after this stage, and the losers' neighbors remove all the edges that
         are incident on the newly removed nodes.
 
-    Requires: n, the size of the network
-    Effect: Every process knows 'MIS'. A boolean representing whether it is a member
-    of the Maximal Independent Set found by Luby's algorithm.
+    Requires:
+        - Every process knows state['n'], the size of the network
+    Effect:
+        - Every process knows state['MIS']. A boolean representing whether it
+        is a member of the Maximal Independent Set found by Luby's algorithm.
     """
     def msgs_i(self, p):
         if self.r == 1:

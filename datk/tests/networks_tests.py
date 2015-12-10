@@ -1,9 +1,27 @@
-from networks import *
-from tester import *
+"""
+Network Test Suite
+
+Tests Netwoks defined in networks.py by visual inspection
+"""
+
+try:
+    from datk.core.networks import *
+    from datk.core.tester import *
+except ImportError:
+    raise ImportError(
+""" Imports failed\n
+To run tests, execute the following commands:
+$ cd ../..
+$ python -m datk.tests.networks_tests """)
+
 
 @test(main_thread=True)
 def DRAW_RANDOM():
     Random_Line_Network(25).draw()
+
+@test(main_thread=True)
+def DRAW_HUGE_RANDOM():
+    Random_Line_Network(100, sparsity=0.2).draw()
 
 @test(main_thread=True)
 def DRAW_UNI_RING():

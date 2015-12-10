@@ -1,6 +1,7 @@
 """
 Helper functions for tests in tests.py
 """
+from datk.core.distalgs import Process
 
 def testLeaderElection(
     network,

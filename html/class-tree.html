@@ -55,117 +55,117 @@
 </b></center><br />
 <h1 class="epydoc">Class Hierarchy</h1>
 <ul class="nomargin-top">
-    <li> <strong class="uidlink"><a href="datk.distalgs.Algorithm-class.html">datk.distalgs.Algorithm</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.distalgs.Algorithm-class.html">datk.core.distalgs.Algorithm</a></strong>:
       <em class="summary">Abstract superclass for a distributed algorithm.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="datk.distalgs.Asynchronous_Algorithm-class.html">datk.distalgs.Asynchronous_Algorithm</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.distalgs.Asynchronous_Algorithm-class.html">datk.core.distalgs.Asynchronous_Algorithm</a></strong>:
       <em class="summary">We assume that the separate Processes take steps in an arbitrary 
         order, at arbitrary relative speeds.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="datk.algs.AsyncLCR-class.html">datk.algs.AsyncLCR</a></strong>
+    <li> <strong class="uidlink"><a href="datk.core.algs.AsyncLCR-class.html">datk.core.algs.AsyncLCR</a></strong>:
+      <em class="summary">The LeLann, Chang and Roberts algorithm for Leader Election in an 
+        Asynchronous Ring Network</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.AsynchConvergecast-class.html">datk.algs.AsynchConvergecast</a></strong>:
-      <em class="summary">Requires:...</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.AsynchConvergecast-class.html">datk.core.algs.AsynchConvergecast</a></strong>:
+      <em class="summary">The abstract superclass of a class of Synchronous Algorithms that 
+        propagate information from the leaves of a BFS tree to its root.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="datk.algs.AsynchConvergeHeight-class.html">datk.algs.AsynchConvergeHeight</a></strong>:
-      <em class="summary">Requires: BFS Tree Effects: i0 gets height of tree in 
-        state[&quot;height&quot;]</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.AsynchConvergeHeight-class.html">datk.core.algs.AsynchConvergeHeight</a></strong>:
+      <em class="summary">Requires:</em>
     </li>
     </ul>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="datk.distalgs.Chain-class.html">datk.distalgs.Chain</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.distalgs.Chain-class.html">datk.core.distalgs.Chain</a></strong>:
       <em class="summary">An Algorithm that is the result of sequentially running two 
         algorithms</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.distalgs.Synchronous_Algorithm-class.html">datk.distalgs.Synchronous_Algorithm</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.distalgs.Synchronous_Algorithm-class.html">datk.core.distalgs.Synchronous_Algorithm</a></strong>:
       <em class="summary">We assume that Processes take steps simultaneously, that is, that 
         execution proceeds in synchronous rounds.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="datk.distalgs.Compose-class.html">datk.distalgs.Compose</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.distalgs.Compose-class.html">datk.core.distalgs.Compose</a></strong>:
       <em class="summary">A Synchonous_Algorithm that is the composition of two synchronous 
         algorithms running in parallel.</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.distalgs.Do_Nothing-class.html">datk.distalgs.Do_Nothing</a></strong>
+    <li> <strong class="uidlink"><a href="datk.core.distalgs.Do_Nothing-class.html">datk.core.distalgs.Do_Nothing</a></strong>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.FloodMax-class.html">datk.algs.FloodMax</a></strong>:
-      <em class="summary">Every process maintains a record of the maximum UID it has seen so 
-        far (initially its own).</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.FloodMax-class.html">datk.core.algs.FloodMax</a></strong>:
+      <em class="summary">UID flooding algorithm for Leader Election in a general network</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.LCR-class.html">datk.algs.LCR</a></strong>:
-      <em class="summary">The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Unidirectional_Ring.</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.LCR-class.html">datk.core.algs.LCR</a></strong>:
+      <em class="summary">The LeLann, Chang and Roberts algorithm for Leader Election in a 
+        Synchronous Ring Network</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.SynchBFS-class.html">datk.algs.SynchBFS</a></strong>:
-      <em class="summary">At any point during execution, there is some set of processes that 
-        is &quot;marked,&quot; initially just i0.</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.SynchBFS-class.html">datk.core.algs.SynchBFS</a></strong>:
+      <em class="summary">Constructs a BFS tree with the 'leader' Process at its root</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.SynchBFSAck-class.html">datk.algs.SynchBFSAck</a></strong>:
-      <em class="summary">At any point during execution, there is some set of processes that is
-&quot;marked,&quot; initially just i0.</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.SynchBFSAck-class.html">datk.core.algs.SynchBFSAck</a></strong>:
+      <em class="summary">Constructs a BFS tree with children pointers and the 'leader' 
+        Process at its root</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.SynchBroadcast-class.html">datk.algs.SynchBroadcast</a></strong>:
-      <em class="summary">Requires: BFS Tree with children pointers, where root node has 
-        state['height'] Effects: Broadcasts state['height'] to all nodes as
-        state['height'].</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.SynchBroadcast-class.html">datk.core.algs.SynchBroadcast</a></strong>:
+      <em class="summary">Broadcasts a value stored in Process, p, to the BFS tree rooted at 
+        p</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.SynchConvergecast-class.html">datk.algs.SynchConvergecast</a></strong>:
-      <em class="summary">Precondition: Every Process knows state['parent']</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.SynchConvergecast-class.html">datk.core.algs.SynchConvergecast</a></strong>:
+      <em class="summary">The abstract superclass of a class of Synchronous Algorithms that 
+        propagate information from the leaves of a BFS tree to its root.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="datk.algs.SynchConvergeHeight-class.html">datk.algs.SynchConvergeHeight</a></strong>:
-      <em class="summary">Requires: BFS Tree Effects: i0 gets height of tree in 
-        state[&quot;height&quot;]</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.SynchConvergeHeight-class.html">datk.core.algs.SynchConvergeHeight</a></strong>:
+      <em class="summary">Requires:</em>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.SynchLubyMIS-class.html">datk.algs.SynchLubyMIS</a></strong>:
-      <em class="summary">The algorithm works in stages, each consisting of three rounds.</em>
+    <li> <strong class="uidlink"><a href="datk.core.algs.SynchLubyMIS-class.html">datk.core.algs.SynchLubyMIS</a></strong>:
+      <em class="summary">A randomized algorithm that constructs a Maximal Independent Set</em>
     </li>
     </ul>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="datk.distalgs.Message-class.html">datk.distalgs.Message</a></strong>
+    <li> <strong class="uidlink"><a href="datk.core.distalgs.Message-class.html">datk.core.distalgs.Message</a></strong>
     <ul>
-    <li> <strong class="uidlink"><a href="datk.algs.SynchBFSAck.AckParent-class.html">datk.algs.SynchBFSAck.AckParent</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.algs.SynchBFSAck.AckParent-class.html">datk.core.algs.SynchBFSAck.AckParent</a></strong>:
       <em class="summary">Acknowledge Parent</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.AsyncLCR.Leader_Declaration-class.html">datk.algs.AsyncLCR.Leader_Declaration</a></strong>
+    <li> <strong class="uidlink"><a href="datk.core.algs.AsyncLCR.Leader_Declaration-class.html">datk.core.algs.AsyncLCR.Leader_Declaration</a></strong>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.SynchBFS.Search-class.html">datk.algs.SynchBFS.Search</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.algs.SynchBFS.Search-class.html">datk.core.algs.SynchBFS.Search</a></strong>:
       <em class="summary">Search for children</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.algs.SynchBFSAck.Search-class.html">datk.algs.SynchBFSAck.Search</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.algs.SynchBFSAck.Search-class.html">datk.core.algs.SynchBFSAck.Search</a></strong>:
       <em class="summary">Search for children</em>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="datk.distalgs.Network-class.html">datk.distalgs.Network</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.distalgs.Network-class.html">datk.core.distalgs.Network</a></strong>:
       <em class="summary">A collection of Processes that know n, the # of processes.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="datk.networks.Bidirectional_Line-class.html">datk.networks.Bidirectional_Line</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.networks.Bidirectional_Line-class.html">datk.core.networks.Bidirectional_Line</a></strong>:
       <em class="summary">A Network of n Processes arranged in a line.</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.networks.Bidirectional_Ring-class.html">datk.networks.Bidirectional_Ring</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.networks.Bidirectional_Ring-class.html">datk.core.networks.Bidirectional_Ring</a></strong>:
       <em class="summary">A Network of n Processes arranged in a ring.</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.networks.Complete_Graph-class.html">datk.networks.Complete_Graph</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.networks.Complete_Graph-class.html">datk.core.networks.Complete_Graph</a></strong>:
       <em class="summary">A Network of n Processes arranged at the vertices of a Complete 
         undirected graph of size n.</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.networks.Random_Line_Network-class.html">datk.networks.Random_Line_Network</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.networks.Random_Line_Network-class.html">datk.core.networks.Random_Line_Network</a></strong>:
       <em class="summary">A Network of n processes arranged randomly at the vertices of a 
         connected undirected line graph of size n.</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.networks.Unidirectional_Line-class.html">datk.networks.Unidirectional_Line</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.networks.Unidirectional_Line-class.html">datk.core.networks.Unidirectional_Line</a></strong>:
       <em class="summary">A Network of n Processes arranged in a line.</em>
     </li>
-    <li> <strong class="uidlink"><a href="datk.networks.Unidirectional_Ring-class.html">datk.networks.Unidirectional_Ring</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.networks.Unidirectional_Ring-class.html">datk.core.networks.Unidirectional_Ring</a></strong>:
       <em class="summary">A Network of n Processes arranged in a ring.</em>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="datk.distalgs.Process-class.html">datk.distalgs.Process</a></strong>:
+    <li> <strong class="uidlink"><a href="datk.core.distalgs.Process-class.html">datk.core.distalgs.Process</a></strong>:
       <em class="summary">A computing element located at a node of a directed network graph.</em>
     </li>
 </ul>
@@ -195,7 +195,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Dec  9 02:02:42 2015
+    Generated by Epydoc 3.0.1 on Wed Dec  9 16:09:33 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
