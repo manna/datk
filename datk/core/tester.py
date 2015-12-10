@@ -8,9 +8,16 @@ num_tests = 0
 failed_tests = set()
 
 def test(f=None, timeout=TIMEOUT, main_thread=False, test=True):
+    """
+    Decorator function test to run distributed algorithm tests in safe environment
+
+    @param f: the test (a function) to run.
+    @param timeout: the number of seconds to allow the test to run, before timing it out (causing it to fail).
+    @param main_thread: True iff the test cannot run on a thread other than the main thread.
+    @param test: If false, skips testing this function. Useful because it can be set to default to false, and then set to True for a select few tests currently being tested.
+    """
     if not test: return lambda f: f
 
-    #If main_thread = True, timeout and precision are ignored.
     def test_decorator(f):
         global lock
 

@@ -198,19 +198,27 @@ class Algorithm:
         return self not in p.algs
     def cleanup_i(self,p):
         """Determines what final state transition a Process, p, will perform,
-        after the algorithm terminates"""
+        after the algorithm terminates."""
         pass
 
     def cleanup(self):
+        """Calls cleanup_i on all processes"""
         for process in self.network:
             self.cleanup_i(process)
             if self in process.state:
                 del process.state[self]
 
     def __call__(self, network, params = {}):
+        """Same as run, allows an algorithm, A, to be executed like this: A()"""
         self.run(network, params)
 
     def run(self, network, params = {}):
+        """
+        Executes the algorithm on the network
+
+        @param network: the parameter to run in
+        @param params: runtime parameters
+        """
         for param,value in params.items():
             self.params[param] = value
 

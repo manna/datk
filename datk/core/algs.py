@@ -242,9 +242,8 @@ class SynchConvergecast(Synchronous_Algorithm):
 
     Requires:
         - Every Process knows state['parent']
-
-    #TODO If Processes also know state['children'] ==> Reduced Communication Complexity.
     """
+    #TODO If Processes also know state['children'] ==> Reduced Communication Complexity.
     def is_root(self, p): return p.state['parent'] is None
     def msgs_i(self, p):
         if not self.is_root(p):
@@ -273,7 +272,7 @@ class SynchConvergecast(Synchronous_Algorithm):
     def trans_msg_to_parent(self, p, msgs): return
 
 class AsynchConvergecast(Asynchronous_Algorithm):
-    """The abstract superclass of a class of Synchronous Algorithms that
+    """The abstract superclass of a class of Asynchronous Algorithms that
     propagate information from the leaves of a BFS tree to its root.
 
     Requires:
@@ -313,6 +312,9 @@ class AsynchConvergecast(Asynchronous_Algorithm):
 def _converge_height(Convergecast):
     class _ConvergeHeight(Convergecast):
         """
+        A Convergecast Algorithm that results in the root node, p, knowing
+        p.state['height'], the height of the tree rooted at p.
+        
         Requires:
             - BFS Tree
         Effects:
@@ -337,13 +339,16 @@ AsynchConvergeHeight = _converge_height(AsynchConvergecast)
 #Broadcast
 class SynchBroadcast(Synchronous_Algorithm):
     """Broadcasts a value stored in Process, p, to the BFS tree rooted at p
-    
+
     Requires:
         - The attribute to be broadcasted must be specified in self.params['attr']
         - BFS Tree with children pointers, where root node has state[self.params['attr']]
     Effects:
         - All Processes have state[self.params['attr']] := the original value of in
         state[self.params['attr']] of the root Process.
+
+    For example: If the root Process, p, knows p.state['min_UID'] = 4. Then after the
+    execution, all Processes q in the Network know q.state['min_UID'].
     """
     def msgs_i(self, p):
         attr = self.params['attr']
