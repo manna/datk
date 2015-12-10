@@ -82,8 +82,8 @@
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.run \textit{(method)}|hyperpage}{20}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.halt \textit{(method)}|hyperpage}{20}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.count\_msg \textit{(method)}|hyperpage}{20}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.set \textit{(method)}|hyperpage}{20}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.increment \textit{(method)}|hyperpage}{20}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.set \textit{(method)}|hyperpage}{21}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.increment \textit{(method)}|hyperpage}{21}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.has \textit{(method)}|hyperpage}{21}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.get \textit{(method)}|hyperpage}{21}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.delete \textit{(method)}|hyperpage}{21}
@@ -93,14 +93,14 @@
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.msgs \textit{(method)}|hyperpage}{21}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.round \textit{(method)}|hyperpage}{21}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.trans \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}|)hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Do\_Nothing \textit{(class)}|(hyperpage}{21}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}|)hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Do\_Nothing \textit{(class)}|(hyperpage}{22}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Do\_Nothing \textit{(class)}|)hyperpage}{22}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Asynchronous\_Algorithm \textit{(class)}|(hyperpage}{22}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Asynchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Asynchronous\_Algorithm.run\_process \textit{(method)}|hyperpage}{22}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Asynchronous\_Algorithm \textit{(class)}|)hyperpage}{23}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}|(hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}!datk.core.distalgs.Compose.\_\_repr\_\_ \textit{(method)}|hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}!datk.core.distalgs.Compose.\_\_repr\_\_ \textit{(method)}|hyperpage}{24}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}|)hyperpage}{24}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Chain \textit{(class)}|(hyperpage}{24}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Chain \textit{(class)}!datk.core.distalgs.Chain.\_\_repr\_\_ \textit{(method)}|hyperpage}{24}

@@ -18,7 +18,7 @@ class Message:
         return self.__class__.__name__+"("+str(self.content)+")"
     
 class Process:
-    """A computing element located at a node of a directed network graph.
+    """A computing element located at a node of a network graph.
     Processes are identical except for their UID"""
     def __init__(self, UID, state = None, in_nbrs = [], out_nbrs = []):
         self.UID = UID
@@ -31,6 +31,7 @@ class Process:
         self.algs = set()
 
     def link_to(self, new_out_nbr):
+        """Adds a new outgoing neighbor of the Process"""
         if new_out_nbr not in self.out_nbrs:
             self.out_nbrs.append(new_out_nbr)
         if self not in new_out_nbr.in_nbrs:
@@ -104,8 +105,7 @@ class Process:
         return "P" + str(self.UID) + " -> {"+", ".join([str(process) for process in self.out_nbrs]) + "}" 
 
 class Network:
-    """ A collection of Processes that know n, the # of processes.
-    Known subclasses in networkd.py """
+    """ A collection of Processes that know n, the # of processes in the network."""
     def __init__(self, processes):
         self.processes = processes
     def __init__(self, n, index_to_UID = None):
@@ -168,7 +168,9 @@ class Algorithm:
     """
     Abstract superclass for a distributed algorithm.
 
-    @param params: Optional run() parameters.
+    @param network: [Optional] network. If specified, algorithm is immediately executed on network.
+    @param params: [Optional] runtime parameters.
+    @param name: [Optional] name of the Algorithm instance. Defaults to class name.
     """
     def __init__(self, 
                  network = None,
@@ -177,17 +179,27 @@ class Algorithm:
 
         self.params = params
         self.message_count = 0
-        #Algorithm name defaults to X for class X(Algorithm).
+
         self.name = name
         if name is None:
             self.name = self.__class__.__name__
         if network is not None:
             self(network, self.params)
 
-    def msgs_i(self, p): pass
-    def trans_i(self, p, msgs): pass
-    def halt_i(self, p): return self not in p.algs
-    def cleanup_i(self,p): pass
+    def msgs_i(self, p):
+        """Determines what messages a Process, p, will send."""
+        pass
+    def trans_i(self, p, msgs):
+        """Determines what state transition a Process, p, will perform,
+        having received messages, msgs"""
+        pass
+    def halt_i(self, p):
+        """Returns True iff Process p has halted execution of the algorithm"""
+        return self not in p.algs
+    def cleanup_i(self,p):
+        """Determines what final state transition a Process, p, will perform,
+        after the algorithm terminates"""
+        pass
 
     def cleanup(self):
         for process in self.network:
