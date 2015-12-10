@@ -1,0 +1,19 @@
+\begin{theindex}
+
+  \item datk \textit{(package)}, \hyperpage{2}
+    \subitem datk.core \textit{(package)}, \hyperpage{3}
+      \subsubitem datk.core.algs \textit{(module)}, \hyperpage{4--15}
+      \subsubitem datk.core.distalgs \textit{(module)}, 
+		\hyperpage{16--22}
+      \subsubitem datk.core.imports \textit{(module)}, \hyperpage{23}
+      \subsubitem datk.core.networks \textit{(module)}, 
+		\hyperpage{24--27}
+      \subsubitem datk.core.tester \textit{(module)}, \hyperpage{28}
+    \subitem datk.tests \textit{(package)}, \hyperpage{29}
+      \subsubitem datk.tests.helpers \textit{(module)}, \hyperpage{30}
+      \subsubitem datk.tests.networks\_tests \textit{(module)}, 
+		\hyperpage{31}
+      \subsubitem datk.tests.tests \textit{(module)}, 
+		\hyperpage{32--33}
+
+\end{theindex}
