@@ -110,7 +110,8 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="msgs_i"></a><span class="summary-sig-name">msgs_i</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">p</span>)</span></td>
+        <span class="summary-sig-arg">p</span>)</span><br />
+      Determines what messages a Process, p, will send.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.distalgs-pysrc.html#Algorithm.msgs_i">source&nbsp;code</a></span>
             
@@ -128,7 +129,9 @@
         <tr>
           <td><span class="summary-sig"><a name="trans_i"></a><span class="summary-sig-name">trans_i</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">p</span>,
-        <span class="summary-sig-arg">msgs</span>)</span></td>
+        <span class="summary-sig-arg">msgs</span>)</span><br />
+      Determines what state transition a Process, p, will perform, having 
+      received messages, msgs</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.distalgs-pysrc.html#Algorithm.trans_i">source&nbsp;code</a></span>
             
@@ -145,7 +148,8 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="halt_i"></a><span class="summary-sig-name">halt_i</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">p</span>)</span></td>
+        <span class="summary-sig-arg">p</span>)</span><br />
+      Returns True iff Process p has halted execution of the algorithm</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.distalgs-pysrc.html#Algorithm.halt_i">source&nbsp;code</a></span>
             
@@ -162,7 +166,9 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="cleanup_i"></a><span class="summary-sig-name">cleanup_i</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">p</span>)</span></td>
+        <span class="summary-sig-arg">p</span>)</span><br />
+      Determines what final state transition a Process, p, will perform, 
+      after the algorithm terminates.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.distalgs-pysrc.html#Algorithm.cleanup_i">source&nbsp;code</a></span>
             
@@ -178,7 +184,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="cleanup"></a><span class="summary-sig-name">cleanup</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td><span class="summary-sig"><a name="cleanup"></a><span class="summary-sig-name">cleanup</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Calls cleanup_i on all processes</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.distalgs-pysrc.html#Algorithm.cleanup">source&nbsp;code</a></span>
             
@@ -196,7 +203,8 @@
         <tr>
           <td><span class="summary-sig"><a name="__call__"></a><span class="summary-sig-name">__call__</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">network</span>,
-        <span class="summary-sig-arg">params</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span></td>
+        <span class="summary-sig-arg">params</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span><br />
+      Same as run, allows an algorithm, A, to be executed like this: A()</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.distalgs-pysrc.html#Algorithm.__call__">source&nbsp;code</a></span>
             
@@ -212,9 +220,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="run"></a><span class="summary-sig-name">run</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="datk.core.distalgs.Algorithm-class.html#run" class="summary-sig-name">run</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">network</span>,
-        <span class="summary-sig-arg">params</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span></td>
+        <span class="summary-sig-arg">params</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span><br />
+      Executes the algorithm on the network</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.distalgs-pysrc.html#Algorithm.run">source&nbsp;code</a></span>
             
@@ -390,7 +399,37 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>params</code></strong> - Optional run() parameters.</li>
+        <li><strong class="pname"><code>network</code></strong> - [Optional] network. If specified, algorithm is immediately 
+          executed on network.</li>
+        <li><strong class="pname"><code>params</code></strong> - [Optional] runtime parameters.</li>
+        <li><strong class="pname"><code>name</code></strong> - [Optional] name of the Algorithm instance. Defaults to class 
+          name.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="run"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">run</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">network</span>,
+        <span class="sig-arg">params</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="datk.core.distalgs-pysrc.html#Algorithm.run">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Executes the algorithm on the network</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>network</code></strong> - the parameter to run in</li>
+        <li><strong class="pname"><code>params</code></strong> - runtime parameters</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -422,7 +461,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Dec  9 16:09:33 2015
+    Generated by Epydoc 3.0.1 on Thu Dec 10 17:35:02 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -73,7 +73,7 @@
 </dd></dl>
 
 <hr />
-<p>The abstract superclass of a class of Synchronous Algorithms that 
+<p>The abstract superclass of a class of Asynchronous Algorithms that 
   propagate information from the leaves of a BFS tree to its root.</p>
   <p>Requires:</p>
   <ul>
@@ -123,7 +123,8 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="datk.core.algs.AsynchConvergecast-class.html#msgs_i" class="summary-sig-name">msgs_i</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">p</span>)</span></td>
+        <span class="summary-sig-arg">p</span>)</span><br />
+      Determines what messages a Process, p, will send.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.msgs_i">source&nbsp;code</a></span>
             
@@ -141,7 +142,9 @@
         <tr>
           <td><span class="summary-sig"><a href="datk.core.algs.AsynchConvergecast-class.html#trans_i" class="summary-sig-name">trans_i</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">p</span>,
-        <span class="summary-sig-arg">msgs</span>)</span></td>
+        <span class="summary-sig-arg">msgs</span>)</span><br />
+      Determines what state transition a Process, p, will perform, having 
+      received messages, msgs</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.trans_i">source&nbsp;code</a></span>
             
@@ -158,7 +161,9 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="datk.core.algs.AsynchConvergecast-class.html#cleanup_i" class="summary-sig-name">cleanup_i</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">p</span>)</span></td>
+        <span class="summary-sig-arg">p</span>)</span><br />
+      Determines what final state transition a Process, p, will perform, 
+      after the algorithm terminates.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.cleanup_i">source&nbsp;code</a></span>
             
@@ -174,9 +179,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="trans_root"></a><span class="summary-sig-name">trans_root</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="datk.core.algs.AsynchConvergecast-class.html#trans_root" class="summary-sig-name">trans_root</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">p</span>,
-        <span class="summary-sig-arg">msgs</span>)</span></td>
+        <span class="summary-sig-arg">msgs</span>)</span><br />
+      Determines the state transition the root node should undergo when it 
+      receives messages</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.trans_root">source&nbsp;code</a></span>
             
@@ -192,10 +199,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="outpout_root"></a><span class="summary-sig-name">outpout_root</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">p</span>)</span></td>
+          <td><span class="summary-sig"><a name="output_root"></a><span class="summary-sig-name">output_root</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">p</span>)</span><br />
+      Determines the output action, if any, that the root should perform at
+      the end of the Convergecast.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.outpout_root">source&nbsp;code</a></span>
+            <span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.output_root">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -209,8 +218,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="initial_msg_to_parent"></a><span class="summary-sig-name">initial_msg_to_parent</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">p</span>)</span></td>
+          <td><span class="summary-sig"><a href="datk.core.algs.AsynchConvergecast-class.html#initial_msg_to_parent" class="summary-sig-name">initial_msg_to_parent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">p</span>)</span><br />
+      Defines the initial message sent from a leaf process to its parent at
+      the beginning of the Convergecast</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.initial_msg_to_parent">source&nbsp;code</a></span>
             
@@ -226,9 +237,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="trans_msg_to_parent"></a><span class="summary-sig-name">trans_msg_to_parent</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="datk.core.algs.AsynchConvergecast-class.html#trans_msg_to_parent" class="summary-sig-name">trans_msg_to_parent</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">p</span>,
-        <span class="summary-sig-arg">msgs</span>)</span></td>
+        <span class="summary-sig-arg">msgs</span>)</span><br />
+      Defines the message a non-leaf, non-root Process should send to its 
+      parent when it has received all its children's messages</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.trans_msg_to_parent">source&nbsp;code</a></span>
             
@@ -293,10 +306,11 @@
     </td>
   </tr></table>
   
-  
+  <p>Determines what messages a Process, p, will send.</p>
   <dl class="fields">
     <dt>Overrides:
         <a href="datk.core.distalgs.Algorithm-class.html#msgs_i">distalgs.Algorithm.msgs_i</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
   </dl>
 </td></tr></table>
@@ -317,10 +331,12 @@
     </td>
   </tr></table>
   
-  
+  <p>Determines what state transition a Process, p, will perform, having 
+  received messages, msgs</p>
   <dl class="fields">
     <dt>Overrides:
         <a href="datk.core.distalgs.Algorithm-class.html#trans_i">distalgs.Algorithm.trans_i</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
   </dl>
 </td></tr></table>
@@ -340,11 +356,97 @@
     </td>
   </tr></table>
   
-  
+  <p>Determines what final state transition a Process, p, will perform, 
+  after the algorithm terminates.</p>
   <dl class="fields">
     <dt>Overrides:
         <a href="datk.core.distalgs.Algorithm-class.html#cleanup_i">distalgs.Algorithm.cleanup_i</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="trans_root"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">trans_root</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">p</span>,
+        <span class="sig-arg">msgs</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.trans_root">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Determines the state transition the root node should undergo when it 
+  receives messages</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>p</code></strong> - the root Process</li>
+        <li><strong class="pname"><code>msgs</code></strong> - the messages received by the root Process, from its BFS children</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="initial_msg_to_parent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">initial_msg_to_parent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">p</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.initial_msg_to_parent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Defines the initial message sent from a leaf process to its parent at 
+  the beginning of the Convergecast</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>p</code></strong> - A Process at a leaf of the BFS tree</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the Message p should send to its state['parent']</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="trans_msg_to_parent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">trans_msg_to_parent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">p</span>,
+        <span class="sig-arg">msgs</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="datk.core.algs-pysrc.html#AsynchConvergecast.trans_msg_to_parent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Defines the message a non-leaf, non-root Process should send to its 
+  parent when it has received all its children's messages</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>p</code></strong> - a Process that has both p.state['parent'] != null, and 
+          p.state['children'] not empty</li>
+        <li><strong class="pname"><code>msgs</code></strong> - A list of messages from every child of p (in p.state['children'])</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the Message p should send to its state['parent']</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -375,7 +477,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Dec  9 16:09:33 2015
+    Generated by Epydoc 3.0.1 on Thu Dec 10 17:35:02 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

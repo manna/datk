@@ -61,126 +61,115 @@
 <a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">time</tt> <tt class="py-keyword">import</tt> <tt class="py-name">sleep</tt><tt class="py-op">,</tt> <tt class="py-name">time</tt> </tt>
 <a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Module datk.core.distalgs=datk.core.distalgs-module.html"><a title="datk.core.distalgs" class="py-name" href="#" onclick="return doclink('link-0', 'distalgs', 'link-0');">distalgs</a></tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Class datk.core.distalgs.Process=datk.core.distalgs.Process-class.html"><a title="datk.core.distalgs.Process" class="py-name" href="#" onclick="return doclink('link-1', 'Process', 'link-1');">Process</a></tt> </tt>
 <a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt id="link-2" class="py-name" targets="Variable datk.core.imports.TIMEOUT=datk.core.imports-module.html#TIMEOUT,Variable datk.core.tester.TIMEOUT=datk.core.tester-module.html#TIMEOUT,Variable datk.tests.networks_tests.TIMEOUT=datk.tests.networks_tests-module.html#TIMEOUT,Variable datk.tests.tests.TIMEOUT=datk.tests.tests-module.html#TIMEOUT"><a title="datk.core.imports.TIMEOUT
-datk.core.tester.TIMEOUT
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt id="link-2" class="py-name" targets="Variable datk.core.tester.TIMEOUT=datk.core.tester-module.html#TIMEOUT,Variable datk.tests.networks_tests.TIMEOUT=datk.tests.networks_tests-module.html#TIMEOUT,Variable datk.tests.tests.TIMEOUT=datk.tests.tests-module.html#TIMEOUT"><a title="datk.core.tester.TIMEOUT
 datk.tests.networks_tests.TIMEOUT
 datk.tests.tests.TIMEOUT" class="py-name" href="#" onclick="return doclink('link-2', 'TIMEOUT', 'link-2');">TIMEOUT</a></tt> <tt class="py-op">=</tt> <tt class="py-number">5</tt> </tt>
-<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt id="link-3" class="py-name" targets="Variable datk.core.imports.lock=datk.core.imports-module.html#lock,Variable datk.core.tester.lock=datk.core.tester-module.html#lock,Variable datk.tests.networks_tests.lock=datk.tests.networks_tests-module.html#lock,Variable datk.tests.tests.lock=datk.tests.tests-module.html#lock"><a title="datk.core.imports.lock
-datk.core.tester.lock
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt id="link-3" class="py-name" targets="Variable datk.core.tester.lock=datk.core.tester-module.html#lock,Variable datk.tests.networks_tests.lock=datk.tests.networks_tests-module.html#lock,Variable datk.tests.tests.lock=datk.tests.tests-module.html#lock"><a title="datk.core.tester.lock
 datk.tests.networks_tests.lock
 datk.tests.tests.lock" class="py-name" href="#" onclick="return doclink('link-3', 'lock', 'link-3');">lock</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Lock</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt id="link-4" class="py-name" targets="Variable datk.core.imports.num_tests=datk.core.imports-module.html#num_tests,Variable datk.core.tester.num_tests=datk.core.tester-module.html#num_tests,Variable datk.tests.networks_tests.num_tests=datk.tests.networks_tests-module.html#num_tests,Variable datk.tests.tests.num_tests=datk.tests.tests-module.html#num_tests"><a title="datk.core.imports.num_tests
-datk.core.tester.num_tests
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt id="link-4" class="py-name" targets="Variable datk.core.tester.num_tests=datk.core.tester-module.html#num_tests,Variable datk.tests.networks_tests.num_tests=datk.tests.networks_tests-module.html#num_tests,Variable datk.tests.tests.num_tests=datk.tests.tests-module.html#num_tests"><a title="datk.core.tester.num_tests
 datk.tests.networks_tests.num_tests
 datk.tests.tests.num_tests" class="py-name" href="#" onclick="return doclink('link-4', 'num_tests', 'link-4');">num_tests</a></tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable datk.core.imports.failed_tests=datk.core.imports-module.html#failed_tests,Variable datk.core.tester.failed_tests=datk.core.tester-module.html#failed_tests,Variable datk.tests.networks_tests.failed_tests=datk.tests.networks_tests-module.html#failed_tests,Variable datk.tests.tests.failed_tests=datk.tests.tests-module.html#failed_tests"><a title="datk.core.imports.failed_tests
-datk.core.tester.failed_tests
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable datk.core.tester.failed_tests=datk.core.tester-module.html#failed_tests,Variable datk.tests.networks_tests.failed_tests=datk.tests.networks_tests-module.html#failed_tests,Variable datk.tests.tests.failed_tests=datk.tests.tests-module.html#failed_tests"><a title="datk.core.tester.failed_tests
 datk.tests.networks_tests.failed_tests
 datk.tests.tests.failed_tests" class="py-name" href="#" onclick="return doclink('link-5', 'failed_tests', 'link-5');">failed_tests</a></tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name" targets="Method datk.core.distalgs.Algorithm.set()=datk.core.distalgs.Algorithm-class.html#set"><a title="datk.core.distalgs.Algorithm.set" class="py-name" href="#" onclick="return doclink('link-6', 'set', 'link-6');">set</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
 <a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
-<a name="test"></a><div id="test-def"><a name="L10"></a><tt class="py-lineno">10</tt> <a class="py-toggle" href="#" id="test-toggle" onclick="return toggle('test');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="datk.core.tester-module.html#test">test</a><tt class="py-op">(</tt><tt class="py-param">f</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">timeout</tt><tt class="py-op">=</tt><tt id="link-7" class="py-name"><a title="datk.core.imports.TIMEOUT
-datk.core.tester.TIMEOUT
+<a name="test"></a><div id="test-def"><a name="L10"></a><tt class="py-lineno">10</tt> <a class="py-toggle" href="#" id="test-toggle" onclick="return toggle('test');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="datk.core.tester-module.html#test">test</a><tt class="py-op">(</tt><tt class="py-param">f</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">timeout</tt><tt class="py-op">=</tt><tt id="link-7" class="py-name"><a title="datk.core.tester.TIMEOUT
 datk.tests.networks_tests.TIMEOUT
 datk.tests.tests.TIMEOUT" class="py-name" href="#" onclick="return doclink('link-7', 'TIMEOUT', 'link-2');">TIMEOUT</a></tt><tt class="py-op">,</tt> <tt class="py-param">main_thread</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-param">test</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="test-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="test-expanded"><a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt id="link-8" class="py-name" targets="Function datk.core.tester.test()=datk.core.tester-module.html#test"><a title="datk.core.tester.test" class="py-name" href="#" onclick="return doclink('link-8', 'test', 'link-8');">test</a></tt><tt class="py-op">:</tt> <tt class="py-keyword">return</tt> <tt class="py-keyword">lambda</tt> <tt class="py-name">f</tt><tt class="py-op">:</tt> <tt class="py-name">f</tt> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt class="py-comment">#If main_thread = True, timeout and precision are ignored.</tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">    <tt class="py-keyword">def</tt> <tt class="py-def-name">test_decorator</tt><tt class="py-op">(</tt><tt class="py-param">f</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">        <tt class="py-keyword">global</tt> <tt id="link-9" class="py-name"><a title="datk.core.imports.lock
-datk.core.tester.lock
+</div><div id="test-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="test-expanded"><a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring">    Decorator function test to run distributed algorithm tests in safe environment. Logs failed tests.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">    @param f: the test (a function) to run.</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">    @param timeout: the number of seconds to allow the test to run, before timing it out (causing it to fail).</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">    @param main_thread: True iff the test cannot run on a thread other than the main thread.</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">    @param test: If false, skips testing this function. Useful because it can be set to default to false, and then set to True for a select few tests currently being tested.</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt id="link-8" class="py-name" targets="Function datk.core.tester.test()=datk.core.tester-module.html#test"><a title="datk.core.tester.test" class="py-name" href="#" onclick="return doclink('link-8', 'test', 'link-8');">test</a></tt><tt class="py-op">:</tt> <tt class="py-keyword">return</tt> <tt class="py-keyword">lambda</tt> <tt class="py-name">f</tt><tt class="py-op">:</tt> <tt class="py-name">f</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">    <tt class="py-keyword">def</tt> <tt class="py-def-name">test_decorator</tt><tt class="py-op">(</tt><tt class="py-param">f</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt class="py-keyword">global</tt> <tt id="link-9" class="py-name"><a title="datk.core.tester.lock
 datk.tests.networks_tests.lock
 datk.tests.tests.lock" class="py-name" href="#" onclick="return doclink('link-9', 'lock', 'link-3');">lock</a></tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">test_f</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">            <tt class="py-keyword">global</tt> <tt id="link-10" class="py-name"><a title="datk.core.imports.num_tests
-datk.core.tester.num_tests
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">test_f</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">            <tt class="py-keyword">global</tt> <tt id="link-10" class="py-name"><a title="datk.core.tester.num_tests
 datk.tests.networks_tests.num_tests
 datk.tests.tests.num_tests" class="py-name" href="#" onclick="return doclink('link-10', 'num_tests', 'link-4');">num_tests</a></tt> </tt>
-<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">            <tt class="py-keyword">global</tt> <tt id="link-11" class="py-name"><a title="datk.core.imports.failed_tests
-datk.core.tester.failed_tests
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">            <tt class="py-keyword">global</tt> <tt id="link-11" class="py-name"><a title="datk.core.tester.failed_tests
 datk.tests.networks_tests.failed_tests
 datk.tests.tests.failed_tests" class="py-name" href="#" onclick="return doclink('link-11', 'failed_tests', 'link-5');">failed_tests</a></tt> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
-<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">                <tt class="py-name">f</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt><tt class="py-op">,</tt> <tt class="py-name">e</tt><tt class="py-op">:</tt> </tt>
-<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">                <tt id="link-12" class="py-name"><a title="datk.core.imports.failed_tests
-datk.core.tester.failed_tests
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">                <tt class="py-name">f</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt><tt class="py-op">,</tt> <tt class="py-name">e</tt><tt class="py-op">:</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">                <tt id="link-12" class="py-name"><a title="datk.core.tester.failed_tests
 datk.tests.networks_tests.failed_tests
 datk.tests.tests.failed_tests" class="py-name" href="#" onclick="return doclink('link-12', 'failed_tests', 'link-5');">failed_tests</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Method datk.core.distalgs.Network.add()=datk.core.distalgs.Network-class.html#add,Method datk.core.distalgs.Process.add()=datk.core.distalgs.Process-class.html#add"><a title="datk.core.distalgs.Network.add
 datk.core.distalgs.Process.add" class="py-name" href="#" onclick="return doclink('link-13', 'add', 'link-13');">add</a></tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt><tt class="py-op">)</tt> </tt>
-<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">                <tt id="link-14" class="py-name" targets="Function datk.core.tester.print_with_underline()=datk.core.tester-module.html#print_with_underline"><a title="datk.core.tester.print_with_underline" class="py-name" href="#" onclick="return doclink('link-14', 'print_with_underline', 'link-14');">print_with_underline</a></tt><tt class="py-op">(</tt><tt class="py-string">"TEST "</tt><tt class="py-op">+</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt><tt class="py-op">+</tt><tt class="py-string">" FAILED."</tt><tt class="py-op">)</tt> </tt>
-<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">                <tt class="py-keyword">raise</tt> <tt class="py-name">e</tt> </tt>
-<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">            <tt class="py-keyword">finally</tt><tt class="py-op">:</tt> </tt>
-<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">                <tt id="link-15" class="py-name"><a title="datk.core.imports.num_tests
-datk.core.tester.num_tests
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">                <tt id="link-14" class="py-name" targets="Function datk.core.tester.print_with_underline()=datk.core.tester-module.html#print_with_underline"><a title="datk.core.tester.print_with_underline" class="py-name" href="#" onclick="return doclink('link-14', 'print_with_underline', 'link-14');">print_with_underline</a></tt><tt class="py-op">(</tt><tt class="py-string">"TEST "</tt><tt class="py-op">+</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt><tt class="py-op">+</tt><tt class="py-string">" FAILED."</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">                <tt class="py-keyword">raise</tt> <tt class="py-name">e</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">            <tt class="py-keyword">finally</tt><tt class="py-op">:</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">                <tt id="link-15" class="py-name"><a title="datk.core.tester.num_tests
 datk.tests.networks_tests.num_tests
 datk.tests.tests.num_tests" class="py-name" href="#" onclick="return doclink('link-15', 'num_tests', 'link-4');">num_tests</a></tt><tt class="py-op">+=</tt><tt class="py-number">1</tt> </tt>
-</div><a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt id="link-16" class="py-name"><a title="datk.core.imports.lock
-datk.core.tester.lock
+</div><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt id="link-16" class="py-name"><a title="datk.core.tester.lock
 datk.tests.networks_tests.lock
 datk.tests.tests.lock" class="py-name" href="#" onclick="return doclink('link-16', 'lock', 'link-3');">lock</a></tt><tt class="py-op">:</tt> </tt>
-<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">main_thread</tt><tt class="py-op">:</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">                <tt class="py-name">status</tt> <tt class="py-op">=</tt> <tt class="py-string">"Running test "</tt><tt class="py-op">+</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt><tt class="py-op">+</tt><tt class="py-string">" on main thread."</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">                <tt class="py-keyword">print</tt> <tt class="py-name">status</tt> </tt>
-<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">                <tt class="py-name">test_f</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">                <tt class="py-keyword">print</tt> <tt class="py-string">"#"</tt><tt class="py-op">*</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">status</tt><tt class="py-op">)</tt> </tt>
-<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
-<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">                <tt class="py-name">t</tt> <tt class="py-op">=</tt> <tt class="py-name">Thread</tt><tt class="py-op">(</tt><tt class="py-name">target</tt> <tt class="py-op">=</tt> <tt class="py-name">test_f</tt><tt class="py-op">)</tt> </tt>
-<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">                <tt class="py-name">t</tt><tt class="py-op">.</tt><tt class="py-name">daemon</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
-<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">                 </tt>
-<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">                <tt class="py-name">start_time</tt> <tt class="py-op">=</tt> <tt class="py-name">time</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">                <tt class="py-name">t</tt><tt class="py-op">.</tt><tt class="py-name">start</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">                <tt class="py-name">t</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">timeout</tt><tt class="py-op">)</tt> </tt>
-<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">                <tt class="py-name">end_time</tt> <tt class="py-op">=</tt> <tt class="py-name">time</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">end_time</tt> <tt class="py-op">-</tt> <tt class="py-name">start_time</tt> <tt class="py-op">&gt;=</tt> <tt class="py-name">timeout</tt><tt class="py-op">:</tt> </tt>
-<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">                    <tt id="link-17" class="py-name"><a title="datk.core.imports.failed_tests
-datk.core.tester.failed_tests
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">main_thread</tt><tt class="py-op">:</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">                <tt class="py-name">status</tt> <tt class="py-op">=</tt> <tt class="py-string">"Running test "</tt><tt class="py-op">+</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt><tt class="py-op">+</tt><tt class="py-string">" on main thread."</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">                <tt class="py-keyword">print</tt> <tt class="py-name">status</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">                <tt class="py-name">test_f</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">                <tt class="py-keyword">print</tt> <tt class="py-string">"#"</tt><tt class="py-op">*</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">status</tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">                <tt class="py-name">t</tt> <tt class="py-op">=</tt> <tt class="py-name">Thread</tt><tt class="py-op">(</tt><tt class="py-name">target</tt> <tt class="py-op">=</tt> <tt class="py-name">test_f</tt><tt class="py-op">)</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">                <tt class="py-name">t</tt><tt class="py-op">.</tt><tt class="py-name">daemon</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">                 </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">                <tt class="py-name">start_time</tt> <tt class="py-op">=</tt> <tt class="py-name">time</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">                <tt class="py-name">t</tt><tt class="py-op">.</tt><tt class="py-name">start</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">                <tt class="py-name">t</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">timeout</tt><tt class="py-op">)</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">                <tt class="py-name">end_time</tt> <tt class="py-op">=</tt> <tt class="py-name">time</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">end_time</tt> <tt class="py-op">-</tt> <tt class="py-name">start_time</tt> <tt class="py-op">&gt;=</tt> <tt class="py-name">timeout</tt><tt class="py-op">:</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">                    <tt id="link-17" class="py-name"><a title="datk.core.tester.failed_tests
 datk.tests.networks_tests.failed_tests
 datk.tests.tests.failed_tests" class="py-name" href="#" onclick="return doclink('link-17', 'failed_tests', 'link-5');">failed_tests</a></tt><tt class="py-op">.</tt><tt id="link-18" class="py-name"><a title="datk.core.distalgs.Network.add
 datk.core.distalgs.Process.add" class="py-name" href="#" onclick="return doclink('link-18', 'add', 'link-13');">add</a></tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt><tt class="py-op">)</tt> </tt>
-<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">                    <tt id="link-19" class="py-name"><a title="datk.core.tester.print_with_underline" class="py-name" href="#" onclick="return doclink('link-19', 'print_with_underline', 'link-14');">print_with_underline</a></tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt> <tt class="py-op">+</tt> <tt class="py-string">" TIMED OUT AFTER "</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">timeout</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">"s"</tt><tt class="py-op">)</tt> </tt>
-<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">                <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
-<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">                    <tt id="link-20" class="py-name"><a title="datk.core.tester.print_with_underline" class="py-name" href="#" onclick="return doclink('link-20', 'print_with_underline', 'link-14');">print_with_underline</a></tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt> <tt class="py-op">+</tt> <tt class="py-string">" RAN IN "</tt> <tt class="py-op">+</tt><tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">end_time</tt><tt class="py-op">-</tt><tt class="py-name">start_time</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">"s"</tt><tt class="py-op">)</tt> </tt>
-</div><a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">f</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
-<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">test_decorator</tt> </tt>
-<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
-<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-name">test_decorator</tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">)</tt> </tt>
-<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">f</tt> </tt>
-</div><a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"> </tt>
-<a name="print_with_underline"></a><div id="print_with_underline-def"><a name="L53"></a><tt class="py-lineno">53</tt> <a class="py-toggle" href="#" id="print_with_underline-toggle" onclick="return toggle('print_with_underline');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="datk.core.tester-module.html#print_with_underline">print_with_underline</a><tt class="py-op">(</tt><tt class="py-param">text</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="print_with_underline-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="print_with_underline-expanded"><a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">    <tt class="py-keyword">print</tt> <tt class="py-name">text</tt> </tt>
-<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">    <tt class="py-keyword">print</tt> <tt class="py-string">"#"</tt><tt class="py-op">*</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">text</tt><tt class="py-op">)</tt> </tt>
-</div><a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"> </tt>
-<a name="summarize"></a><div id="summarize-def"><a name="L57"></a><tt class="py-lineno">57</tt> <a class="py-toggle" href="#" id="summarize-toggle" onclick="return toggle('summarize');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="datk.core.tester-module.html#summarize">summarize</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="summarize-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="summarize-expanded"><a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">    <tt class="py-keyword">global</tt> <tt id="link-21" class="py-name"><a title="datk.core.imports.num_tests
-datk.core.tester.num_tests
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">                    <tt id="link-19" class="py-name"><a title="datk.core.tester.print_with_underline" class="py-name" href="#" onclick="return doclink('link-19', 'print_with_underline', 'link-14');">print_with_underline</a></tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt> <tt class="py-op">+</tt> <tt class="py-string">" TIMED OUT AFTER "</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">timeout</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">"s"</tt><tt class="py-op">)</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">                <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">                    <tt id="link-20" class="py-name"><a title="datk.core.tester.print_with_underline" class="py-name" href="#" onclick="return doclink('link-20', 'print_with_underline', 'link-14');">print_with_underline</a></tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt> <tt class="py-op">+</tt> <tt class="py-string">" RAN IN "</tt> <tt class="py-op">+</tt><tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">end_time</tt><tt class="py-op">-</tt><tt class="py-name">start_time</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">"s"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">f</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">test_decorator</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt class="py-name">test_decorator</tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">)</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">f</tt> </tt>
+</div><a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"> </tt>
+<a name="print_with_underline"></a><div id="print_with_underline-def"><a name="L60"></a><tt class="py-lineno">60</tt> <a class="py-toggle" href="#" id="print_with_underline-toggle" onclick="return toggle('print_with_underline');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="datk.core.tester-module.html#print_with_underline">print_with_underline</a><tt class="py-op">(</tt><tt class="py-param">text</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="print_with_underline-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="print_with_underline-expanded"><a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">    <tt class="py-keyword">print</tt> <tt class="py-name">text</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">    <tt class="py-keyword">print</tt> <tt class="py-string">"#"</tt><tt class="py-op">*</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">text</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"> </tt>
+<a name="summarize"></a><div id="summarize-def"><a name="L64"></a><tt class="py-lineno">64</tt> <a class="py-toggle" href="#" id="summarize-toggle" onclick="return toggle('summarize');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="datk.core.tester-module.html#summarize">summarize</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="summarize-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="summarize-expanded"><a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">    <tt class="py-docstring">"""Called at the end of a test suite. Prints out summary of failed tests"""</tt> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">    <tt class="py-keyword">global</tt> <tt id="link-21" class="py-name"><a title="datk.core.tester.num_tests
 datk.tests.networks_tests.num_tests
 datk.tests.tests.num_tests" class="py-name" href="#" onclick="return doclink('link-21', 'num_tests', 'link-4');">num_tests</a></tt> </tt>
-<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">    <tt class="py-keyword">global</tt> <tt id="link-22" class="py-name"><a title="datk.core.imports.failed_tests
-datk.core.tester.failed_tests
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">    <tt class="py-keyword">global</tt> <tt id="link-22" class="py-name"><a title="datk.core.tester.failed_tests
 datk.tests.networks_tests.failed_tests
 datk.tests.tests.failed_tests" class="py-name" href="#" onclick="return doclink('link-22', 'failed_tests', 'link-5');">failed_tests</a></tt> </tt>
-<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">     </tt>
-<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">    <tt class="py-keyword">print</tt> <tt id="link-23" class="py-name"><a title="datk.core.imports.num_tests
-datk.core.tester.num_tests
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">     </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">    <tt class="py-keyword">print</tt> <tt id="link-23" class="py-name"><a title="datk.core.tester.num_tests
 datk.tests.networks_tests.num_tests
-datk.tests.tests.num_tests" class="py-name" href="#" onclick="return doclink('link-23', 'num_tests', 'link-4');">num_tests</a></tt><tt class="py-op">,</tt> <tt class="py-string">"tests ran with"</tt><tt class="py-op">,</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt id="link-24" class="py-name"><a title="datk.core.imports.failed_tests
-datk.core.tester.failed_tests
+datk.tests.tests.num_tests" class="py-name" href="#" onclick="return doclink('link-23', 'num_tests', 'link-4');">num_tests</a></tt><tt class="py-op">,</tt> <tt class="py-string">"tests ran with"</tt><tt class="py-op">,</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt id="link-24" class="py-name"><a title="datk.core.tester.failed_tests
 datk.tests.networks_tests.failed_tests
-datk.tests.tests.failed_tests" class="py-name" href="#" onclick="return doclink('link-24', 'failed_tests', 'link-5');">failed_tests</a></tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-string">"failures:"</tt><tt class="py-op">,</tt> <tt class="py-name">sorted</tt><tt class="py-op">(</tt><tt class="py-name">list</tt><tt class="py-op">(</tt><tt id="link-25" class="py-name"><a title="datk.core.imports.failed_tests
-datk.core.tester.failed_tests
+datk.tests.tests.failed_tests" class="py-name" href="#" onclick="return doclink('link-24', 'failed_tests', 'link-5');">failed_tests</a></tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-string">"failures:"</tt><tt class="py-op">,</tt> <tt class="py-name">sorted</tt><tt class="py-op">(</tt><tt class="py-name">list</tt><tt class="py-op">(</tt><tt id="link-25" class="py-name"><a title="datk.core.tester.failed_tests
 datk.tests.networks_tests.failed_tests
 datk.tests.tests.failed_tests" class="py-name" href="#" onclick="return doclink('link-25', 'failed_tests', 'link-5');">failed_tests</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
-<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"> </tt>
-<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">    <tt id="link-26" class="py-name"><a title="datk.core.imports.num_tests
-datk.core.tester.num_tests
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">    <tt id="link-26" class="py-name"><a title="datk.core.tester.num_tests
 datk.tests.networks_tests.num_tests
 datk.tests.tests.num_tests" class="py-name" href="#" onclick="return doclink('link-26', 'num_tests', 'link-4');">num_tests</a></tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
-<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">    <tt id="link-27" class="py-name"><a title="datk.core.imports.failed_tests
-datk.core.tester.failed_tests
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">    <tt id="link-27" class="py-name"><a title="datk.core.tester.failed_tests
 datk.tests.networks_tests.failed_tests
 datk.tests.tests.failed_tests" class="py-name" href="#" onclick="return doclink('link-27', 'failed_tests', 'link-5');">failed_tests</a></tt> <tt class="py-op">=</tt> <tt id="link-28" class="py-name"><a title="datk.core.distalgs.Algorithm.set" class="py-name" href="#" onclick="return doclink('link-28', 'set', 'link-6');">set</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-</div><a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+</div><a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -213,7 +202,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Dec  9 16:09:33 2015
+    Generated by Epydoc 3.0.1 on Thu Dec 10 17:35:03 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
