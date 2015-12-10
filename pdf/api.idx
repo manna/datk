@@ -1,41 +1,39 @@
-\indexentry{datk \textit{(package)}|(hyperpage}{4}
-\indexentry{datk \textit{(package)}|)hyperpage}{4}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}|(hyperpage}{5}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}|)hyperpage}{5}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}|(hyperpage}{6}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.LCR \textit{(class)}|(hyperpage}{6}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.LCR \textit{(class)}|)hyperpage}{7}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsyncLCR \textit{(class)}|(hyperpage}{7}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsyncLCR \textit{(class)}|)hyperpage}{8}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.FloodMax \textit{(class)}|(hyperpage}{8}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.FloodMax \textit{(class)}|)hyperpage}{9}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFS \textit{(class)}|(hyperpage}{9}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFS \textit{(class)}!datk.core.algs.SynchBFS.is\_i0 \textit{(method)}|hyperpage}{10}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFS \textit{(class)}|)hyperpage}{10}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFSAck \textit{(class)}|(hyperpage}{10}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFSAck \textit{(class)}!datk.core.algs.SynchBFSAck.is\_i0 \textit{(method)}|hyperpage}{11}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFSAck \textit{(class)}|)hyperpage}{11}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}|(hyperpage}{11}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.is\_root \textit{(method)}|hyperpage}{12}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.trans\_root \textit{(method)}|hyperpage}{12}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.outpout\_root \textit{(method)}|hyperpage}{12}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.initial\_msg\_to\_parent \textit{(method)}|hyperpage}{12}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.trans\_msg\_to\_parent \textit{(method)}|hyperpage}{13}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}|)hyperpage}{13}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}|(hyperpage}{13}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.is\_root \textit{(method)}|hyperpage}{13}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.trans\_root \textit{(method)}|hyperpage}{14}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.outpout\_root \textit{(method)}|hyperpage}{14}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.initial\_msg\_to\_parent \textit{(method)}|hyperpage}{14}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.trans\_msg\_to\_parent \textit{(method)}|hyperpage}{14}
+\indexentry{datk \textit{(package)}|(hyperpage}{3}
+\indexentry{datk \textit{(package)}|)hyperpage}{3}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}|(hyperpage}{4}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}|)hyperpage}{4}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}|(hyperpage}{5}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.LCR \textit{(class)}|(hyperpage}{5}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.LCR \textit{(class)}|)hyperpage}{6}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsyncLCR \textit{(class)}|(hyperpage}{6}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsyncLCR \textit{(class)}|)hyperpage}{7}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.FloodMax \textit{(class)}|(hyperpage}{7}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.FloodMax \textit{(class)}|)hyperpage}{8}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFS \textit{(class)}|(hyperpage}{8}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFS \textit{(class)}!datk.core.algs.SynchBFS.is\_i0 \textit{(method)}|hyperpage}{9}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFS \textit{(class)}|)hyperpage}{9}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFSAck \textit{(class)}|(hyperpage}{9}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFSAck \textit{(class)}!datk.core.algs.SynchBFSAck.is\_i0 \textit{(method)}|hyperpage}{10}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBFSAck \textit{(class)}|)hyperpage}{10}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}|(hyperpage}{10}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.is\_root \textit{(method)}|hyperpage}{11}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.trans\_root \textit{(method)}|hyperpage}{11}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.output\_root \textit{(method)}|hyperpage}{11}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.initial\_msg\_to\_parent \textit{(method)}|hyperpage}{11}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}!datk.core.algs.SynchConvergecast.trans\_msg\_to\_parent \textit{(method)}|hyperpage}{12}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergecast \textit{(class)}|)hyperpage}{12}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}|(hyperpage}{12}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.is\_root \textit{(method)}|hyperpage}{12}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.trans\_root \textit{(method)}|hyperpage}{13}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.output\_root \textit{(method)}|hyperpage}{13}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.initial\_msg\_to\_parent \textit{(method)}|hyperpage}{13}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}!datk.core.algs.AsynchConvergecast.trans\_msg\_to\_parent \textit{(method)}|hyperpage}{13}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergecast \textit{(class)}|)hyperpage}{14}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergeHeight \textit{(class)}|(hyperpage}{14}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergeHeight \textit{(class)}!datk.core.algs.SynchConvergeHeight.output\_root \textit{(method)}|hyperpage}{15}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchConvergeHeight \textit{(class)}|)hyperpage}{15}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergeHeight \textit{(class)}|(hyperpage}{15}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergeHeight \textit{(class)}!datk.core.algs.AsynchConvergeHeight.output\_root \textit{(method)}|hyperpage}{16}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergeHeight \textit{(class)}|)hyperpage}{16}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBroadcast \textit{(class)}|(hyperpage}{16}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.AsynchConvergeHeight \textit{(class)}|)hyperpage}{17}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBroadcast \textit{(class)}|(hyperpage}{17}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchBroadcast \textit{(class)}|)hyperpage}{18}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchLubyMIS \textit{(class)}|(hyperpage}{18}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.algs \textit{(module)}!datk.core.algs.SynchLubyMIS \textit{(class)}|)hyperpage}{19}
@@ -48,117 +46,115 @@
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}|(hyperpage}{20}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.\_\_init\_\_ \textit{(method)}|hyperpage}{20}
 \indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.link\_to \textit{(method)}|hyperpage}{20}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.bi\_link \textit{(method)}|hyperpage}{20}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.output \textit{(method)}|hyperpage}{20}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.send\_to\_all\_neighbors \textit{(method)}|hyperpage}{20}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.send\_msg \textit{(method)}|hyperpage}{20}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.get\_msgs \textit{(method)}|hyperpage}{20}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.add \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.terminate \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.\_\_str\_\_ \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.\_\_repr\_\_ \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}|)hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}|(hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_getitem\_\_ \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_init\_\_ \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_iter\_\_ \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_len\_\_ \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_repr\_\_ \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.add \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.clone \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.draw \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.index \textit{(method)}|hyperpage}{21}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.run \textit{(method)}|hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.state \textit{(method)}|hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}|)hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}|(hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.\_\_init\_\_ \textit{(method)}|hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.msgs\_i \textit{(method)}|hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.trans\_i \textit{(method)}|hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.halt\_i \textit{(method)}|hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.cleanup\_i \textit{(method)}|hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.cleanup \textit{(method)}|hyperpage}{22}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.\_\_call\_\_ \textit{(method)}|hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.run \textit{(method)}|hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.halt \textit{(method)}|hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.count\_msg \textit{(method)}|hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.set \textit{(method)}|hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.increment \textit{(method)}|hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.has \textit{(method)}|hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.get \textit{(method)}|hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.delete \textit{(method)}|hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}|)hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}|(hyperpage}{23}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.execute \textit{(method)}|hyperpage}{24}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.msgs \textit{(method)}|hyperpage}{24}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.round \textit{(method)}|hyperpage}{24}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.trans \textit{(method)}|hyperpage}{24}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}|)hyperpage}{24}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Do\_Nothing \textit{(class)}|(hyperpage}{24}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Do\_Nothing \textit{(class)}|)hyperpage}{25}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Asynchronous\_Algorithm \textit{(class)}|(hyperpage}{25}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Asynchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Asynchronous\_Algorithm.run\_process \textit{(method)}|hyperpage}{25}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Asynchronous\_Algorithm \textit{(class)}|)hyperpage}{25}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}|(hyperpage}{25}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}!datk.core.distalgs.Compose.\_\_repr\_\_ \textit{(method)}|hyperpage}{27}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}|)hyperpage}{27}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Chain \textit{(class)}|(hyperpage}{27}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Chain \textit{(class)}!datk.core.distalgs.Chain.\_\_repr\_\_ \textit{(method)}|hyperpage}{28}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Chain \textit{(class)}|)hyperpage}{28}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}|)hyperpage}{28}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.imports \textit{(module)}|(hyperpage}{29}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.imports \textit{(module)}|)hyperpage}{29}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}|(hyperpage}{30}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Unidirectional\_Ring \textit{(class)}|(hyperpage}{30}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Unidirectional\_Ring \textit{(class)}|)hyperpage}{30}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Bidirectional\_Ring \textit{(class)}|(hyperpage}{30}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Bidirectional\_Ring \textit{(class)}|)hyperpage}{31}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Unidirectional\_Line \textit{(class)}|(hyperpage}{31}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Unidirectional\_Line \textit{(class)}|)hyperpage}{31}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Bidirectional\_Line \textit{(class)}|(hyperpage}{31}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Bidirectional\_Line \textit{(class)}|)hyperpage}{32}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Complete\_Graph \textit{(class)}|(hyperpage}{32}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Complete\_Graph \textit{(class)}|)hyperpage}{32}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Random\_Line\_Network \textit{(class)}|(hyperpage}{32}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Random\_Line\_Network \textit{(class)}|)hyperpage}{33}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}|)hyperpage}{33}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}|(hyperpage}{34}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}!datk.core.tester.test \textit{(function)}|hyperpage}{34}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}!datk.core.tester.print\_with\_underline \textit{(function)}|hyperpage}{34}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}!datk.core.tester.summarize \textit{(function)}|hyperpage}{34}
-\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}|)hyperpage}{34}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}|(hyperpage}{35}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}|)hyperpage}{35}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}|(hyperpage}{36}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testLeaderElection \textit{(function)}|hyperpage}{36}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testBroadcast \textit{(function)}|hyperpage}{36}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testBFS \textit{(function)}|hyperpage}{36}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testBFSWithChildren \textit{(function)}|hyperpage}{36}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testLubyMIS \textit{(function)}|hyperpage}{36}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}|)hyperpage}{36}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.networks\_tests \textit{(module)}|(hyperpage}{37}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.networks\_tests \textit{(module)}|)hyperpage}{37}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}|(hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.configure\_ipython \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.LCR\_UNI\_RING \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.LCR\_BI\_RING \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.ASYNC\_LCR\_UNI\_RING \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.ASYNC\_LCR\_BI\_RING \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_UNI\_RING \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_BI\_RING \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_BI\_LINE \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_COMPLETE\_GRAPH \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_RANDOM\_GRAPH \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_BFS \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_BFS\_ACK \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_CONVERGE\_HEIGHT \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_BROADCAST\_HEIGHT \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.ASYNCH\_BROADCAST\_HEIGHT \textit{(function)}|hyperpage}{38}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.send\_receive\_msgs \textit{(function)}|hyperpage}{39}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_DO\_NOTHING \textit{(function)}|hyperpage}{39}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.COMPOSE\_SYNCH\_LCR\_AND\_DO\_NOTHING \textit{(function)}|hyperpage}{39}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.COMPOSE\_SYNCH\_LCR \textit{(function)}|hyperpage}{39}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.CHAIN\_BROADCAST\_HEIGHT \textit{(function)}|hyperpage}{39}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_LUBY\_MIS\_BI\_RING \textit{(function)}|hyperpage}{39}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_LUBY\_MIS \textit{(function)}|hyperpage}{39}
-\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}|)hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.bi\_link \textit{(method)}|hyperpage}{21}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.output \textit{(method)}|hyperpage}{21}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.send\_to\_all\_neighbors \textit{(method)}|hyperpage}{21}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.send\_msg \textit{(method)}|hyperpage}{21}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.get\_msgs \textit{(method)}|hyperpage}{21}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.add \textit{(method)}|hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.terminate \textit{(method)}|hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.\_\_str\_\_ \textit{(method)}|hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}!datk.core.distalgs.Process.\_\_repr\_\_ \textit{(method)}|hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Process \textit{(class)}|)hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}|(hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_getitem\_\_ \textit{(method)}|hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_init\_\_ \textit{(method)}|hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_iter\_\_ \textit{(method)}|hyperpage}{22}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_len\_\_ \textit{(method)}|hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.\_\_repr\_\_ \textit{(method)}|hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.add \textit{(method)}|hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.clone \textit{(method)}|hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.draw \textit{(method)}|hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.index \textit{(method)}|hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.run \textit{(method)}|hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}!datk.core.distalgs.Network.state \textit{(method)}|hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Network \textit{(class)}|)hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}|(hyperpage}{23}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.\_\_init\_\_ \textit{(method)}|hyperpage}{24}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.msgs\_i \textit{(method)}|hyperpage}{24}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.trans\_i \textit{(method)}|hyperpage}{24}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.halt\_i \textit{(method)}|hyperpage}{24}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.cleanup\_i \textit{(method)}|hyperpage}{24}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.cleanup \textit{(method)}|hyperpage}{24}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.\_\_call\_\_ \textit{(method)}|hyperpage}{24}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.run \textit{(method)}|hyperpage}{24}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.halt \textit{(method)}|hyperpage}{24}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.count\_msg \textit{(method)}|hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.set \textit{(method)}|hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.increment \textit{(method)}|hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.has \textit{(method)}|hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.get \textit{(method)}|hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}!datk.core.distalgs.Algorithm.delete \textit{(method)}|hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Algorithm \textit{(class)}|)hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}|(hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.execute \textit{(method)}|hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.msgs \textit{(method)}|hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.round \textit{(method)}|hyperpage}{25}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Synchronous\_Algorithm.trans \textit{(method)}|hyperpage}{26}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Synchronous\_Algorithm \textit{(class)}|)hyperpage}{26}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Do\_Nothing \textit{(class)}|(hyperpage}{26}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Do\_Nothing \textit{(class)}|)hyperpage}{26}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Asynchronous\_Algorithm \textit{(class)}|(hyperpage}{26}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Asynchronous\_Algorithm \textit{(class)}!datk.core.distalgs.Asynchronous\_Algorithm.run\_process \textit{(method)}|hyperpage}{27}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Asynchronous\_Algorithm \textit{(class)}|)hyperpage}{27}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}|(hyperpage}{27}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}!datk.core.distalgs.Compose.\_\_repr\_\_ \textit{(method)}|hyperpage}{29}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Compose \textit{(class)}|)hyperpage}{29}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Chain \textit{(class)}|(hyperpage}{29}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Chain \textit{(class)}!datk.core.distalgs.Chain.\_\_repr\_\_ \textit{(method)}|hyperpage}{30}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}!datk.core.distalgs.Chain \textit{(class)}|)hyperpage}{30}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.distalgs \textit{(module)}|)hyperpage}{30}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}|(hyperpage}{31}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Unidirectional\_Ring \textit{(class)}|(hyperpage}{31}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Unidirectional\_Ring \textit{(class)}|)hyperpage}{31}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Bidirectional\_Ring \textit{(class)}|(hyperpage}{31}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Bidirectional\_Ring \textit{(class)}|)hyperpage}{32}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Unidirectional\_Line \textit{(class)}|(hyperpage}{32}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Unidirectional\_Line \textit{(class)}|)hyperpage}{32}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Bidirectional\_Line \textit{(class)}|(hyperpage}{32}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Bidirectional\_Line \textit{(class)}|)hyperpage}{33}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Complete\_Graph \textit{(class)}|(hyperpage}{33}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Complete\_Graph \textit{(class)}|)hyperpage}{33}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Random\_Line\_Network \textit{(class)}|(hyperpage}{33}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}!datk.core.networks.Random\_Line\_Network \textit{(class)}|)hyperpage}{34}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.networks \textit{(module)}|)hyperpage}{34}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}|(hyperpage}{35}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}!datk.core.tester.test \textit{(function)}|hyperpage}{35}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}!datk.core.tester.print\_with\_underline \textit{(function)}|hyperpage}{35}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}!datk.core.tester.summarize \textit{(function)}|hyperpage}{35}
+\indexentry{datk \textit{(package)}!datk.core \textit{(package)}!datk.core.tester \textit{(module)}|)hyperpage}{35}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}|(hyperpage}{36}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}|)hyperpage}{36}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}|(hyperpage}{37}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testLeaderElection \textit{(function)}|hyperpage}{37}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testBroadcast \textit{(function)}|hyperpage}{37}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testBFS \textit{(function)}|hyperpage}{37}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testBFSWithChildren \textit{(function)}|hyperpage}{37}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}!datk.tests.helpers.testLubyMIS \textit{(function)}|hyperpage}{37}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.helpers \textit{(module)}|)hyperpage}{37}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.networks\_tests \textit{(module)}|(hyperpage}{38}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.networks\_tests \textit{(module)}|)hyperpage}{38}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}|(hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.configure\_ipython \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.LCR\_UNI\_RING \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.LCR\_BI\_RING \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.ASYNC\_LCR\_UNI\_RING \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.ASYNC\_LCR\_BI\_RING \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_UNI\_RING \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_BI\_RING \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_BI\_LINE \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_COMPLETE\_GRAPH \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.FLOODMAX\_RANDOM\_GRAPH \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_BFS \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_BFS\_ACK \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_CONVERGE\_HEIGHT \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_BROADCAST\_HEIGHT \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.ASYNCH\_BROADCAST\_HEIGHT \textit{(function)}|hyperpage}{39}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.send\_receive\_msgs \textit{(function)}|hyperpage}{40}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_DO\_NOTHING \textit{(function)}|hyperpage}{40}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.COMPOSE\_SYNCH\_LCR\_AND\_DO\_NOTHING \textit{(function)}|hyperpage}{40}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.COMPOSE\_SYNCH\_LCR \textit{(function)}|hyperpage}{40}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.CHAIN\_BROADCAST\_HEIGHT \textit{(function)}|hyperpage}{40}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_LUBY\_MIS\_BI\_RING \textit{(function)}|hyperpage}{40}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}!datk.tests.tests.SYNCH\_LUBY\_MIS \textit{(function)}|hyperpage}{40}
+\indexentry{datk \textit{(package)}!datk.tests \textit{(package)}!datk.tests.tests \textit{(module)}|)hyperpage}{40}

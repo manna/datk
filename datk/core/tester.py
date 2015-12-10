@@ -9,7 +9,7 @@ failed_tests = set()
 
 def test(f=None, timeout=TIMEOUT, main_thread=False, test=True):
     """
-    Decorator function test to run distributed algorithm tests in safe environment
+    Decorator function test to run distributed algorithm tests in safe environment. Logs failed tests.
 
     @param f: the test (a function) to run.
     @param timeout: the number of seconds to allow the test to run, before timing it out (causing it to fail).
@@ -62,6 +62,7 @@ def print_with_underline(text):
     print "#"*len(text)
 
 def summarize():
+    """Called at the end of a test suite. Prints out summary of failed tests"""
     global num_tests
     global failed_tests
     

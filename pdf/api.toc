@@ -1,82 +1,80 @@
 \contentsline {section}{Contents}{1}{section*.1}
-\contentsline {section}{\numberline {1}Package datk}{4}{section.1}
-\contentsline {subsection}{\numberline {1.1}Modules}{4}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}Variables}{4}{subsection.1.2}
-\contentsline {section}{\numberline {2}Package datk.core}{5}{section.2}
-\contentsline {subsection}{\numberline {2.1}Modules}{5}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Variables}{5}{subsection.2.2}
-\contentsline {section}{\numberline {3}Module datk.core.algs}{6}{section.3}
-\contentsline {subsection}{\numberline {3.1}Variables}{6}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Class LCR}{6}{subsection.3.2}
-\contentsline {subsubsection}{\numberline {3.2.1}Methods}{6}{subsubsection.3.2.1}
-\contentsline {subsection}{\numberline {3.3}Class AsyncLCR}{7}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Methods}{7}{subsubsection.3.3.1}
-\contentsline {subsection}{\numberline {3.4}Class FloodMax}{8}{subsection.3.4}
-\contentsline {subsubsection}{\numberline {3.4.1}Methods}{9}{subsubsection.3.4.1}
-\contentsline {subsection}{\numberline {3.5}Class SynchBFS}{9}{subsection.3.5}
-\contentsline {subsubsection}{\numberline {3.5.1}Methods}{10}{subsubsection.3.5.1}
-\contentsline {subsection}{\numberline {3.6}Class SynchBFSAck}{10}{subsection.3.6}
-\contentsline {subsubsection}{\numberline {3.6.1}Methods}{11}{subsubsection.3.6.1}
-\contentsline {subsection}{\numberline {3.7}Class SynchConvergecast}{12}{subsection.3.7}
-\contentsline {subsubsection}{\numberline {3.7.1}Methods}{12}{subsubsection.3.7.1}
-\contentsline {subsection}{\numberline {3.8}Class AsynchConvergecast}{13}{subsection.3.8}
-\contentsline {subsubsection}{\numberline {3.8.1}Methods}{13}{subsubsection.3.8.1}
+\contentsline {section}{\numberline {1}Package datk}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Modules}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Variables}{3}{subsection.1.2}
+\contentsline {section}{\numberline {2}Package datk.core}{4}{section.2}
+\contentsline {subsection}{\numberline {2.1}Modules}{4}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Variables}{4}{subsection.2.2}
+\contentsline {section}{\numberline {3}Module datk.core.algs}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Variables}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Class LCR}{5}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Methods}{5}{subsubsection.3.2.1}
+\contentsline {subsection}{\numberline {3.3}Class AsyncLCR}{6}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Methods}{6}{subsubsection.3.3.1}
+\contentsline {subsection}{\numberline {3.4}Class FloodMax}{7}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}Methods}{8}{subsubsection.3.4.1}
+\contentsline {subsection}{\numberline {3.5}Class SynchBFS}{8}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {3.5.1}Methods}{9}{subsubsection.3.5.1}
+\contentsline {subsection}{\numberline {3.6}Class SynchBFSAck}{9}{subsection.3.6}
+\contentsline {subsubsection}{\numberline {3.6.1}Methods}{10}{subsubsection.3.6.1}
+\contentsline {subsection}{\numberline {3.7}Class SynchConvergecast}{11}{subsection.3.7}
+\contentsline {subsubsection}{\numberline {3.7.1}Methods}{11}{subsubsection.3.7.1}
+\contentsline {subsection}{\numberline {3.8}Class AsynchConvergecast}{12}{subsection.3.8}
+\contentsline {subsubsection}{\numberline {3.8.1}Methods}{12}{subsubsection.3.8.1}
 \contentsline {subsection}{\numberline {3.9}Class SynchConvergeHeight}{14}{subsection.3.9}
-\contentsline {subsubsection}{\numberline {3.9.1}Methods}{15}{subsubsection.3.9.1}
+\contentsline {subsubsection}{\numberline {3.9.1}Methods}{14}{subsubsection.3.9.1}
 \contentsline {subsection}{\numberline {3.10}Class AsynchConvergeHeight}{15}{subsection.3.10}
 \contentsline {subsubsection}{\numberline {3.10.1}Methods}{16}{subsubsection.3.10.1}
 \contentsline {subsection}{\numberline {3.11}Class SynchBroadcast}{17}{subsection.3.11}
-\contentsline {subsubsection}{\numberline {3.11.1}Methods}{17}{subsubsection.3.11.1}
+\contentsline {subsubsection}{\numberline {3.11.1}Methods}{18}{subsubsection.3.11.1}
 \contentsline {subsection}{\numberline {3.12}Class SynchLubyMIS}{18}{subsection.3.12}
-\contentsline {subsubsection}{\numberline {3.12.1}Methods}{18}{subsubsection.3.12.1}
+\contentsline {subsubsection}{\numberline {3.12.1}Methods}{19}{subsubsection.3.12.1}
 \contentsline {section}{\numberline {4}Module datk.core.distalgs}{20}{section.4}
 \contentsline {subsection}{\numberline {4.1}Variables}{20}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Class Message}{20}{subsection.4.2}
 \contentsline {subsubsection}{\numberline {4.2.1}Methods}{20}{subsubsection.4.2.1}
 \contentsline {subsection}{\numberline {4.3}Class Process}{20}{subsection.4.3}
 \contentsline {subsubsection}{\numberline {4.3.1}Methods}{20}{subsubsection.4.3.1}
-\contentsline {subsection}{\numberline {4.4}Class Network}{21}{subsection.4.4}
-\contentsline {subsubsection}{\numberline {4.4.1}Methods}{21}{subsubsection.4.4.1}
-\contentsline {subsection}{\numberline {4.5}Class Algorithm}{22}{subsection.4.5}
-\contentsline {subsubsection}{\numberline {4.5.1}Methods}{22}{subsubsection.4.5.1}
-\contentsline {subsection}{\numberline {4.6}Class Synchronous\_Algorithm}{23}{subsection.4.6}
-\contentsline {subsubsection}{\numberline {4.6.1}Methods}{24}{subsubsection.4.6.1}
-\contentsline {subsection}{\numberline {4.7}Class Do\_Nothing}{24}{subsection.4.7}
-\contentsline {subsubsection}{\numberline {4.7.1}Methods}{24}{subsubsection.4.7.1}
-\contentsline {subsection}{\numberline {4.8}Class Asynchronous\_Algorithm}{25}{subsection.4.8}
-\contentsline {subsubsection}{\numberline {4.8.1}Methods}{25}{subsubsection.4.8.1}
-\contentsline {subsection}{\numberline {4.9}Class Compose}{25}{subsection.4.9}
-\contentsline {subsubsection}{\numberline {4.9.1}Methods}{26}{subsubsection.4.9.1}
-\contentsline {subsection}{\numberline {4.10}Class Chain}{27}{subsection.4.10}
-\contentsline {subsubsection}{\numberline {4.10.1}Methods}{27}{subsubsection.4.10.1}
-\contentsline {section}{\numberline {5}Module datk.core.imports}{29}{section.5}
-\contentsline {subsection}{\numberline {5.1}Variables}{29}{subsection.5.1}
-\contentsline {section}{\numberline {6}Module datk.core.networks}{30}{section.6}
-\contentsline {subsection}{\numberline {6.1}Variables}{30}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Class Unidirectional\_Ring}{30}{subsection.6.2}
-\contentsline {subsubsection}{\numberline {6.2.1}Methods}{30}{subsubsection.6.2.1}
-\contentsline {subsection}{\numberline {6.3}Class Bidirectional\_Ring}{30}{subsection.6.3}
-\contentsline {subsubsection}{\numberline {6.3.1}Methods}{31}{subsubsection.6.3.1}
-\contentsline {subsection}{\numberline {6.4}Class Unidirectional\_Line}{31}{subsection.6.4}
-\contentsline {subsubsection}{\numberline {6.4.1}Methods}{31}{subsubsection.6.4.1}
-\contentsline {subsection}{\numberline {6.5}Class Bidirectional\_Line}{31}{subsection.6.5}
-\contentsline {subsubsection}{\numberline {6.5.1}Methods}{32}{subsubsection.6.5.1}
-\contentsline {subsection}{\numberline {6.6}Class Complete\_Graph}{32}{subsection.6.6}
-\contentsline {subsubsection}{\numberline {6.6.1}Methods}{32}{subsubsection.6.6.1}
-\contentsline {subsection}{\numberline {6.7}Class Random\_Line\_Network}{32}{subsection.6.7}
-\contentsline {subsubsection}{\numberline {6.7.1}Methods}{33}{subsubsection.6.7.1}
-\contentsline {section}{\numberline {7}Module datk.core.tester}{34}{section.7}
-\contentsline {subsection}{\numberline {7.1}Functions}{34}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Variables}{34}{subsection.7.2}
-\contentsline {section}{\numberline {8}Package datk.tests}{35}{section.8}
-\contentsline {subsection}{\numberline {8.1}Modules}{35}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Variables}{35}{subsection.8.2}
-\contentsline {section}{\numberline {9}Module datk.tests.helpers}{36}{section.9}
-\contentsline {subsection}{\numberline {9.1}Functions}{36}{subsection.9.1}
-\contentsline {subsection}{\numberline {9.2}Variables}{36}{subsection.9.2}
-\contentsline {section}{\numberline {10}Module datk.tests.networks\_tests}{37}{section.10}
-\contentsline {subsection}{\numberline {10.1}Variables}{37}{subsection.10.1}
-\contentsline {section}{\numberline {11}Module datk.tests.tests}{38}{section.11}
-\contentsline {subsection}{\numberline {11.1}Functions}{38}{subsection.11.1}
-\contentsline {subsection}{\numberline {11.2}Variables}{39}{subsection.11.2}
-\contentsline {section}{Index}{40}{section*.2}
+\contentsline {subsection}{\numberline {4.4}Class Network}{22}{subsection.4.4}
+\contentsline {subsubsection}{\numberline {4.4.1}Methods}{22}{subsubsection.4.4.1}
+\contentsline {subsection}{\numberline {4.5}Class Algorithm}{23}{subsection.4.5}
+\contentsline {subsubsection}{\numberline {4.5.1}Methods}{24}{subsubsection.4.5.1}
+\contentsline {subsection}{\numberline {4.6}Class Synchronous\_Algorithm}{25}{subsection.4.6}
+\contentsline {subsubsection}{\numberline {4.6.1}Methods}{25}{subsubsection.4.6.1}
+\contentsline {subsection}{\numberline {4.7}Class Do\_Nothing}{26}{subsection.4.7}
+\contentsline {subsubsection}{\numberline {4.7.1}Methods}{26}{subsubsection.4.7.1}
+\contentsline {subsection}{\numberline {4.8}Class Asynchronous\_Algorithm}{27}{subsection.4.8}
+\contentsline {subsubsection}{\numberline {4.8.1}Methods}{27}{subsubsection.4.8.1}
+\contentsline {subsection}{\numberline {4.9}Class Compose}{27}{subsection.4.9}
+\contentsline {subsubsection}{\numberline {4.9.1}Methods}{28}{subsubsection.4.9.1}
+\contentsline {subsection}{\numberline {4.10}Class Chain}{29}{subsection.4.10}
+\contentsline {subsubsection}{\numberline {4.10.1}Methods}{29}{subsubsection.4.10.1}
+\contentsline {section}{\numberline {5}Module datk.core.networks}{31}{section.5}
+\contentsline {subsection}{\numberline {5.1}Variables}{31}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Class Unidirectional\_Ring}{31}{subsection.5.2}
+\contentsline {subsubsection}{\numberline {5.2.1}Methods}{31}{subsubsection.5.2.1}
+\contentsline {subsection}{\numberline {5.3}Class Bidirectional\_Ring}{31}{subsection.5.3}
+\contentsline {subsubsection}{\numberline {5.3.1}Methods}{32}{subsubsection.5.3.1}
+\contentsline {subsection}{\numberline {5.4}Class Unidirectional\_Line}{32}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}Methods}{32}{subsubsection.5.4.1}
+\contentsline {subsection}{\numberline {5.5}Class Bidirectional\_Line}{32}{subsection.5.5}
+\contentsline {subsubsection}{\numberline {5.5.1}Methods}{33}{subsubsection.5.5.1}
+\contentsline {subsection}{\numberline {5.6}Class Complete\_Graph}{33}{subsection.5.6}
+\contentsline {subsubsection}{\numberline {5.6.1}Methods}{33}{subsubsection.5.6.1}
+\contentsline {subsection}{\numberline {5.7}Class Random\_Line\_Network}{33}{subsection.5.7}
+\contentsline {subsubsection}{\numberline {5.7.1}Methods}{34}{subsubsection.5.7.1}
+\contentsline {section}{\numberline {6}Module datk.core.tester}{35}{section.6}
+\contentsline {subsection}{\numberline {6.1}Functions}{35}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Variables}{35}{subsection.6.2}
+\contentsline {section}{\numberline {7}Package datk.tests}{36}{section.7}
+\contentsline {subsection}{\numberline {7.1}Modules}{36}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Variables}{36}{subsection.7.2}
+\contentsline {section}{\numberline {8}Module datk.tests.helpers}{37}{section.8}
+\contentsline {subsection}{\numberline {8.1}Functions}{37}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Variables}{37}{subsection.8.2}
+\contentsline {section}{\numberline {9}Module datk.tests.networks\_tests}{38}{section.9}
+\contentsline {subsection}{\numberline {9.1}Variables}{38}{subsection.9.1}
+\contentsline {section}{\numberline {10}Module datk.tests.tests}{39}{section.10}
+\contentsline {subsection}{\numberline {10.1}Functions}{39}{subsection.10.1}
+\contentsline {subsection}{\numberline {10.2}Variables}{40}{subsection.10.2}
+\contentsline {section}{Index}{41}{section*.2}

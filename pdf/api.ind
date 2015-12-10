@@ -1,11 +1,10 @@
 \begin{theindex}
 
-  \item datk \textit{(package)}, \hyperpage{4}
-    \subitem datk.core \textit{(package)}, \hyperpage{5}
-      \subsubitem datk.core.algs \textit{(module)}, \hyperpage{6--19}
+  \item datk \textit{(package)}, \hyperpage{2}
+    \subitem datk.core \textit{(package)}, \hyperpage{3}
+      \subsubitem datk.core.algs \textit{(module)}, \hyperpage{4--18}
       \subsubitem datk.core.distalgs \textit{(module)}, 
-		\hyperpage{20--28}
-      \subsubitem datk.core.imports \textit{(module)}, \hyperpage{29}
+		\hyperpage{19--29}
       \subsubitem datk.core.networks \textit{(module)}, 
 		\hyperpage{30--33}
       \subsubitem datk.core.tester \textit{(module)}, \hyperpage{34}

@@ -267,7 +267,7 @@ class SynchConvergecast(Synchronous_Algorithm):
                 p.terminate(self)
     def cleanup_i(self, p): self.delete(p, 'send')
     def trans_root(self, p, msgs):          pass
-    def outpout_root(self, p):              pass
+    def output_root(self, p):               pass
     def initial_msg_to_parent(self, p):     return
     def trans_msg_to_parent(self, p, msgs): return
 
@@ -304,17 +304,43 @@ class AsynchConvergecast(Asynchronous_Algorithm):
         self.delete(p, 'send')
         self.delete(p, 'reports')
 
-    def trans_root(self, p, msgs):          pass
-    def outpout_root(self, p):              pass
-    def initial_msg_to_parent(self, p):     return
-    def trans_msg_to_parent(self, p, msgs): return
+    def trans_root(self, p, msgs):
+        """Determines the state transition the root node should undergo
+        when it receives messages
+
+        @param p: the root Process
+        @param msgs: the messages received by the root Process, from its BFS children
+        """
+        pass
+    def output_root(self, p):
+        """Determines the output action, if any, that the root should perform
+        at the end of the Convergecast.
+        """
+        pass
+    def initial_msg_to_parent(self, p):
+        """Defines the initial message sent from a leaf process to its parent at the
+        beginning of the Convergecast
+
+        @param p: A Process at a leaf of the BFS tree
+        @return: the Message p should send to its state['parent']
+        """
+        return
+    def trans_msg_to_parent(self, p, msgs):
+        """Defines the message a non-leaf, non-root Process should send to its parent
+        when it has received all its children's messages
+
+        @param p: a Process that has both p.state['parent'] != null, and p.state['children'] not empty
+        @param msgs: A list of messages from every child of p (in p.state['children']) 
+        @return: the Message p should send to its state['parent']
+        """
+        return
 
 def _converge_height(Convergecast):
     class _ConvergeHeight(Convergecast):
         """
         A Convergecast Algorithm that results in the root node, p, knowing
         p.state['height'], the height of the tree rooted at p.
-        
+
         Requires:
             - BFS Tree
         Effects:

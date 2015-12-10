@@ -49,34 +49,32 @@
 \BOOKMARK [3][-]{subsubsection.4.9.1}{Methods}{subsection.4.9}% 49
 \BOOKMARK [2][-]{subsection.4.10}{Class Chain}{section.4}% 50
 \BOOKMARK [3][-]{subsubsection.4.10.1}{Methods}{subsection.4.10}% 51
-\BOOKMARK [1][-]{section.5}{Module datk.core.imports}{}% 52
+\BOOKMARK [1][-]{section.5}{Module datk.core.networks}{}% 52
 \BOOKMARK [2][-]{subsection.5.1}{Variables}{section.5}% 53
-\BOOKMARK [1][-]{section.6}{Module datk.core.networks}{}% 54
-\BOOKMARK [2][-]{subsection.6.1}{Variables}{section.6}% 55
-\BOOKMARK [2][-]{subsection.6.2}{Class Unidirectional\137Ring}{section.6}% 56
-\BOOKMARK [3][-]{subsubsection.6.2.1}{Methods}{subsection.6.2}% 57
-\BOOKMARK [2][-]{subsection.6.3}{Class Bidirectional\137Ring}{section.6}% 58
-\BOOKMARK [3][-]{subsubsection.6.3.1}{Methods}{subsection.6.3}% 59
-\BOOKMARK [2][-]{subsection.6.4}{Class Unidirectional\137Line}{section.6}% 60
-\BOOKMARK [3][-]{subsubsection.6.4.1}{Methods}{subsection.6.4}% 61
-\BOOKMARK [2][-]{subsection.6.5}{Class Bidirectional\137Line}{section.6}% 62
-\BOOKMARK [3][-]{subsubsection.6.5.1}{Methods}{subsection.6.5}% 63
-\BOOKMARK [2][-]{subsection.6.6}{Class Complete\137Graph}{section.6}% 64
-\BOOKMARK [3][-]{subsubsection.6.6.1}{Methods}{subsection.6.6}% 65
-\BOOKMARK [2][-]{subsection.6.7}{Class Random\137Line\137Network}{section.6}% 66
-\BOOKMARK [3][-]{subsubsection.6.7.1}{Methods}{subsection.6.7}% 67
-\BOOKMARK [1][-]{section.7}{Module datk.core.tester}{}% 68
-\BOOKMARK [2][-]{subsection.7.1}{Functions}{section.7}% 69
-\BOOKMARK [2][-]{subsection.7.2}{Variables}{section.7}% 70
-\BOOKMARK [1][-]{section.8}{Package datk.tests}{}% 71
-\BOOKMARK [2][-]{subsection.8.1}{Modules}{section.8}% 72
-\BOOKMARK [2][-]{subsection.8.2}{Variables}{section.8}% 73
-\BOOKMARK [1][-]{section.9}{Module datk.tests.helpers}{}% 74
-\BOOKMARK [2][-]{subsection.9.1}{Functions}{section.9}% 75
-\BOOKMARK [2][-]{subsection.9.2}{Variables}{section.9}% 76
-\BOOKMARK [1][-]{section.10}{Module datk.tests.networks\137tests}{}% 77
-\BOOKMARK [2][-]{subsection.10.1}{Variables}{section.10}% 78
-\BOOKMARK [1][-]{section.11}{Module datk.tests.tests}{}% 79
-\BOOKMARK [2][-]{subsection.11.1}{Functions}{section.11}% 80
-\BOOKMARK [2][-]{subsection.11.2}{Variables}{section.11}% 81
-\BOOKMARK [1][-]{section*.2}{Index}{}% 82
+\BOOKMARK [2][-]{subsection.5.2}{Class Unidirectional\137Ring}{section.5}% 54
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Methods}{subsection.5.2}% 55
+\BOOKMARK [2][-]{subsection.5.3}{Class Bidirectional\137Ring}{section.5}% 56
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Methods}{subsection.5.3}% 57
+\BOOKMARK [2][-]{subsection.5.4}{Class Unidirectional\137Line}{section.5}% 58
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Methods}{subsection.5.4}% 59
+\BOOKMARK [2][-]{subsection.5.5}{Class Bidirectional\137Line}{section.5}% 60
+\BOOKMARK [3][-]{subsubsection.5.5.1}{Methods}{subsection.5.5}% 61
+\BOOKMARK [2][-]{subsection.5.6}{Class Complete\137Graph}{section.5}% 62
+\BOOKMARK [3][-]{subsubsection.5.6.1}{Methods}{subsection.5.6}% 63
+\BOOKMARK [2][-]{subsection.5.7}{Class Random\137Line\137Network}{section.5}% 64
+\BOOKMARK [3][-]{subsubsection.5.7.1}{Methods}{subsection.5.7}% 65
+\BOOKMARK [1][-]{section.6}{Module datk.core.tester}{}% 66
+\BOOKMARK [2][-]{subsection.6.1}{Functions}{section.6}% 67
+\BOOKMARK [2][-]{subsection.6.2}{Variables}{section.6}% 68
+\BOOKMARK [1][-]{section.7}{Package datk.tests}{}% 69
+\BOOKMARK [2][-]{subsection.7.1}{Modules}{section.7}% 70
+\BOOKMARK [2][-]{subsection.7.2}{Variables}{section.7}% 71
+\BOOKMARK [1][-]{section.8}{Module datk.tests.helpers}{}% 72
+\BOOKMARK [2][-]{subsection.8.1}{Functions}{section.8}% 73
+\BOOKMARK [2][-]{subsection.8.2}{Variables}{section.8}% 74
+\BOOKMARK [1][-]{section.9}{Module datk.tests.networks\137tests}{}% 75
+\BOOKMARK [2][-]{subsection.9.1}{Variables}{section.9}% 76
+\BOOKMARK [1][-]{section.10}{Module datk.tests.tests}{}% 77
+\BOOKMARK [2][-]{subsection.10.1}{Functions}{section.10}% 78
+\BOOKMARK [2][-]{subsection.10.2}{Variables}{section.10}% 79
+\BOOKMARK [1][-]{section*.2}{Index}{}% 80

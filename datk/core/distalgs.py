@@ -9,7 +9,19 @@ from collections import defaultdict
 from copy import deepcopy
 
 class Message:
+    """
+    A Message
+
+    Attributes:
+        - content: The content of this Message
+        - algorithm: The Algorithm that required the sending of this Message
+        - author: The Process that sent it
+    """
     def __init__(self, algorithm, content= None):
+        """
+        @param algorithm: the Algorithm that required the sending of this Message
+        @param content: The content of this Message. Can be any type, including None.
+        """
         assert isinstance(algorithm, Algorithm), "Message algorithm must be an instance of Algorithm"
         self.content = content
         self.algorithm = algorithm
@@ -37,10 +49,19 @@ class Process:
         if self not in new_out_nbr.in_nbrs:
             new_out_nbr.in_nbrs.append(self)
     def bi_link(self, nbr):
+        """Adds a new out_nbr of the Process, and adds the
+        Process as an out_nbr of that neighbor"""
         self.link_to(nbr)
         nbr.link_to(self)
 
     def output(self, key, val, silent=False):
+        """
+        Sets the publicly visible value of self.state[key] to val
+
+        @param key: The state variable to set
+        @param val: The value to assign to it
+        @param silent: Dictates whether or not to print this event to std out
+        """
         self.state[key] =  val
         if not silent:
             if isinstance(val, list):
@@ -49,9 +70,24 @@ class Process:
                 print str(self)+"."+str(key),"is", val
 
     def send_to_all_neighbors(self, msg):
+        """Sends a message to all out_nbrs
+
+        @param msg: the message to send
+        """
         self.send_msg(msg)
 
     def send_msg(self, msg, out_nbrs=None):
+        """
+        Sends a Message from Process to some subset of out_nbrs
+
+        @param msg: The message to send.
+        @param out_nbrs: The out_nbrs to send the message to. This may be a
+        subset of the Process's out_nbrs, or None, in which case the message
+        will be sent to all out_nbrs
+
+        Effects:
+            - Sets msg.author = self
+        """
         msg.author = self
         if out_nbrs is None:
             out_nbrs = self.out_nbrs
@@ -68,6 +104,15 @@ class Process:
             raise Exception("incorrect type for out_nbrs argument of Process.send_msg()")
 
     def get_msgs(self, algorithm, in_nbrs = None):
+        """Removes all Messages that relate to a particular Algorithm from the Process'
+        incoming channels (or from some subset of incoming channels). Returns them.
+
+        @param algorithm: the algorithm whose messages this returns
+        @param in_nbrs: the in_nbrs of the Process from whose channels we are getting
+        messages. If None, fetches messages from all channels
+        @return: A list of Messages, msgs, such that every message in msgs has Algorithm
+        algorithm, and author in in_nbrs
+        """
         if in_nbrs is None:
             in_nbrs = self.in_nbrs[:]
         elif isinstance(in_nbrs, Process):
@@ -91,13 +136,14 @@ class Process:
             raise Exception("incorrect type for in_nbrs argument of Process.get_msgs()")
 
     def add(self, algorithm):
+        """Causes the Process to wake up with respect to algorithm"""
         self.algs.add(algorithm)
         self.state[algorithm]["diam"] = 10 #TODO Generalize
 
     def terminate(self, algorithm):
+        """Causes the Process to halt execution of algorithm"""
         if algorithm in self.algs:
             self.algs.remove(algorithm)
-
 
     def __str__(self):
         return "P"+str(self.UID)
@@ -132,11 +178,14 @@ class Network:
     def index(self, p):
         return self.processes.index(p)    
     def add(self, algorithm):
+        """Awakens all Processes in the Network with respect to algorithm"""
         for process in self:
             process.add(algorithm)
     def run(self, algorithm):
+        """Runs algorithm on the Network"""
         algorithm(self)
     def draw(self):
+        """Draws the Network"""
         import math
         from matplotlib import pyplot as plt
         n = len(self)
@@ -160,6 +209,9 @@ class Network:
         frame.axes.get_yaxis().set_visible(False)
         plt.show()
     def state(self):
+        """
+        @return: A text representation of the state of all the Processes in the Network 
+        """
         return [(str(process), str(process.state)) for process in self]
     def clone(self):
         return deepcopy(self)
@@ -279,6 +331,7 @@ class Synchronous_Algorithm(Algorithm):
             self.halt()
 
     def round(self):
+        """Executes a single round of the Synchronous Algorithm"""
         self.msgs()
         self.trans()
     def msgs(self):
