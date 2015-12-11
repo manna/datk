@@ -212,7 +212,7 @@ class Network:
         """
         @return: A text representation of the state of all the Processes in the Network 
         """
-        return [(str(process), str(process.state)) for process in self]
+        return [(str(process), str(dict(process.state))) for process in self]
     def clone(self):
         return deepcopy(self)
 
