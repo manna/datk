@@ -138,7 +138,7 @@ class Process:
     def add(self, algorithm):
         """Causes the Process to wake up with respect to algorithm"""
         self.algs.add(algorithm)
-        self.state[algorithm]["diam"] = 10 #TODO Generalize
+        self.state[algorithm]["diam"] = self.state['n']
 
     def terminate(self, algorithm):
         """Causes the Process to halt execution of algorithm"""
@@ -226,10 +226,12 @@ class Algorithm:
     """
     def __init__(self, 
                  network = None,
-                 params = {"draw": False, "silent": False},
+                 params = {},
                  name = None):
 
-        self.params = params
+        self.params = {"draw": False, "silent": False}
+        for param,value in params.items():
+            self.params[param] = value
         self.message_count = 0
 
         self.name = name
@@ -442,5 +444,6 @@ class Chain(Algorithm):
         self.B.run(network, params=params)
         self.message_count = self.A.message_count + self.B.message_count
         self.halt()
+        Algorithm.cleanup(self)
 
     def __repr__(self): return self.name

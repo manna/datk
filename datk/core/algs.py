@@ -112,6 +112,8 @@ class FloodMax(Synchronous_Algorithm):
 
     Requires:
         - Every process, p, has p.state["diam"] >= dist( p, q ), forall q.
+        - Alternatively, a process that does not know state["diam"] will use 
+        state["n"], the size of the network, as a fallback upper bound on diam.
     """
     def msgs_i(self,p):
         if self.r < self.get(p, "diam"):
@@ -125,7 +127,7 @@ class FloodMax(Synchronous_Algorithm):
         seen_uids = msgs + [self.get(p, "send")]
         self.set(p, "send",  max(seen_uids, key = lambda m: m.content))
 
-        if self.r == self.get(p, "diam"):
+        if self.r == self.get(p, 'diam'):
             if self.get(p, "send").content == p.UID:
                 p.output("status", "leader", self.params["silent"])
                 p.terminate(self)
