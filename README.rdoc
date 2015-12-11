@@ -6,7 +6,8 @@ DATK is a Distributed Algorithms Toolkit for Python
 
 Run tests by executing the following command in the repo directory.
 
-$ python -m datk.tests.tests  
+$ python -m datk.tests.tests
+
 $ python -m datk.tests.networks_tests
 
 === Documentation
@@ -16,5 +17,6 @@ Visit amin10.github.com/datk for documentation
 
 === Made with love by:
 
-Amin Manna (manna@mit.edu),  
-Mayuri Sridhar (mayuri@mit.edu),
+Amin Manna (manna@mit.edu)
+
+Mayuri Sridhar (mayuri@mit.edu)
