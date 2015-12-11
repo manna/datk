@@ -7,3 +7,6 @@ Testing:
 Run tests by executing the following command at the top-level directory (where this README is located).
 
 $ python -m datk.tests.tests
+
+
+Visit amin10.github.com/datk for documentation
