@@ -13,7 +13,7 @@ DATK is a Distributed Algorithms Toolkit for Python
     >>> x.draw()
 
 
-![png](output_3_0.png)
+![png](readme/output_3_0.png)
 
     >>> x.state()
 
@@ -30,27 +30,27 @@ DATK is a Distributed Algorithms Toolkit for Python
 
     >>> Bidirectional_Line(6).draw()
 
-![png](output_6_0.png)
+![png](readme/output_6_0.png)
 
 
 #### Random Line Network
 
     >>> Random_Line_Network(16).draw()
 
-![png](output_8_0.png)
+![png](readme/output_8_0.png)
 
 
     >>> Random_Line_Network(16, sparsity=0).draw()
 
-![png](output_9_0.png)
+![png](readme/output_9_0.png)
 
     >>> Random_Line_Network(16, sparsity=0.5).draw()
 
-![png](output_10_0.png)
+![png](readme/output_10_0.png)
 
     >>> Random_Line_Network(16, sparsity=float('inf')).draw()
 
-![png](output_11_0.png)
+![png](readme/output_11_0.png)
 
 
 ### Algorithms
