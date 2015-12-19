@@ -1,18 +1,18 @@
 \begin{theindex}
 
-  \item datk \textit{(package)}, \hyperpage{2}
-    \subitem datk.core \textit{(package)}, \hyperpage{3}
-      \subsubitem datk.core.algs \textit{(module)}, \hyperpage{4--18}
+  \item datk \textit{(package)}, \hyperpage{4}
+    \subitem datk.core \textit{(package)}, \hyperpage{5}
+      \subsubitem datk.core.algs \textit{(module)}, \hyperpage{6--22}
       \subsubitem datk.core.distalgs \textit{(module)}, 
-		\hyperpage{19--29}
+		\hyperpage{23--34}
       \subsubitem datk.core.networks \textit{(module)}, 
-		\hyperpage{30--33}
-      \subsubitem datk.core.tester \textit{(module)}, \hyperpage{34}
-    \subitem datk.tests \textit{(package)}, \hyperpage{35}
-      \subsubitem datk.tests.helpers \textit{(module)}, \hyperpage{36}
+		\hyperpage{35--38}
+      \subsubitem datk.core.tester \textit{(module)}, \hyperpage{39}
+    \subitem datk.tests \textit{(package)}, \hyperpage{40}
+      \subsubitem datk.tests.helpers \textit{(module)}, \hyperpage{41}
       \subsubitem datk.tests.networks\_tests \textit{(module)}, 
-		\hyperpage{37}
+		\hyperpage{42}
       \subsubitem datk.tests.tests \textit{(module)}, 
-		\hyperpage{38--39}
+		\hyperpage{43--44}
 
 \end{theindex}
