@@ -187,7 +187,7 @@ Run tests by executing the following command in the repo directory
     Running _ConvergeHeight on
 
 
-![png](output_28_1.png)
+![png](readme/output_28_1.png)
 
 
     [P3 -> {P4}, P4 -> {P3, P1}, P1 -> {P4, P0, P2, P5}, P0 -> {P1, P2, P5}, P2 -> {P1, P0, P5}, P5 -> {P1, P0, P2}]
