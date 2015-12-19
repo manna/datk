@@ -24,13 +24,16 @@ Run tests by executing the following command in the repo directory
 #### Ring Network
 
 
-    >>> x = Bidirectional_Ring(8)
-    >>> x.draw()
-
+```python
+>>> x = Bidirectional_Ring(8)
+>>> x.draw()
+```
 
 ![png](readme/output_3_0.png)
 
-    >>> x.state()
+```python
+>>> x.state()
+```
 
     [('P4', {'n': 8}),
      ('P1', {'n': 8}),
@@ -43,27 +46,36 @@ Run tests by executing the following command in the repo directory
 
 #### Line Network
 
-    >>> Bidirectional_Line(6).draw()
+```python
+>>> Bidirectional_Line(6).draw()
+```
 
 ![png](readme/output_6_0.png)
 
 
 #### Random Line Network
 
-    >>> Random_Line_Network(16).draw()
+```python
+>>> Random_Line_Network(16).draw()
+```
 
 ![png](readme/output_8_0.png)
 
-
-    >>> Random_Line_Network(16, sparsity=0).draw()
+```python
+>>> Random_Line_Network(16, sparsity=0).draw()
+```
 
 ![png](readme/output_9_0.png)
 
-    >>> Random_Line_Network(16, sparsity=0.5).draw()
+```python
+>>> Random_Line_Network(16, sparsity=0.5).draw()
+```
 
 ![png](readme/output_10_0.png)
 
-    >>> Random_Line_Network(16, sparsity=float('inf')).draw()
+```python
+>>> Random_Line_Network(16, sparsity=float('inf')).draw()
+```
 
 ![png](readme/output_11_0.png)
 
@@ -72,11 +84,15 @@ Run tests by executing the following command in the repo directory
 
 #### A Basic Algorithm: LCR
 
-    >>> x = Unidirectional_Ring(5)
+```python
+>>> x = Unidirectional_Ring(5)
+```
 
 ##### Initial Network State
 
-    >>> x.state()
+```python
+>>> x.state()
+```
 
     [('P2', {'n': 5}),
      ('P4', {'n': 5}),
@@ -86,7 +102,9 @@ Run tests by executing the following command in the repo directory
 
 <!-- -->
 
-    >>> lcr = LCR(x)
+```python
+>>> lcr = LCR(x)
+```
 
     --------------
     Running LCR on
@@ -110,23 +128,27 @@ Run tests by executing the following command in the repo directory
 
 ##### Time Complexity
 
-    >>> print lcr.r, "rounds"
+```python
+>>> print lcr.r, "rounds"
+```
 
     5 rounds
 
 
 ##### Message Complexity
 
-    >>> print lcr.message_count, "messages"
-
+```python
+>>> print lcr.message_count, "messages"
+```
 
     11 messages
 
 
 ##### Final Network State
 
-    >>> x.state()
-
+```python
+>>> x.state()
+```
 
     [('P2', {'n': 5, 'status': 'non-leader'}),
      ('P4', {'n': 5, 'status': 'leader'}),
@@ -137,15 +159,16 @@ Run tests by executing the following command in the repo directory
 
 #### Chaining Algorithms
 
-
+```python
     >>> x = Random_Line_Network(6)
-
+```
 
 <!-- -->
 
-    #Elect a Leader
-    >>> FloodMax(x, params={'verbosity': Algorithm.QUIET})
-
+```python
+# Elect a Leader
+>>> FloodMax(x, params={'verbosity': Algorithm.QUIET})
+```
 
     FloodMax Terminated
     Message Complexity: 80
@@ -154,10 +177,10 @@ Run tests by executing the following command in the repo directory
 
 <!-- -->
 
-
-    #Construct a BFS tree rooted at the Leader 
-    >>> SynchBFS(x)
-
+```python
+# Construct a BFS tree rooted at the Leader 
+>>> SynchBFS(x)
+```
 
     -------------------
     Running SynchBFS on
@@ -179,9 +202,9 @@ Run tests by executing the following command in the repo directory
 
 <!-- -->
 
-
-    >>> SynchConvergeHeight(x, params={'draw':True})
-
+```python
+>>> SynchConvergeHeight(x, params={'draw':True})
+```
 
     --------------------------
     Running _ConvergeHeight on
@@ -203,9 +226,9 @@ Run tests by executing the following command in the repo directory
 
 <!-- -->
 
-
-    >>> x.state()
-    
+```python
+>>> x.state()
+```
 
     [('P3', {'n': 6, 'parent': P4 -> {P3, P1}, 'status': 'non-leader'}),
      ('P4', {'n': 6, 'parent': P1 -> {P4, P0, P2, P5}, 'status': 'non-leader'}),
@@ -218,10 +241,11 @@ Run tests by executing the following command in the repo directory
 
 #### Equivalently, chain them like this:
 
-
-    >>> x = Random_Line_Network(6)
-    >>> A = Chain(FloodMax(), Chain(SynchBFS(), SynchConvergeHeight()), params={'verbosity':Algorithm.QUIET})
-    >>> A(x)
+```python
+>>> x = Random_Line_Network(6)
+>>> A = Chain(FloodMax(), Chain(SynchBFS(), SynchConvergeHeight()), params={'verbosity':Algorithm.QUIET})
+>>> A(x)
+```
 
     FloodMax Terminated
     Message Complexity: 50
@@ -238,9 +262,9 @@ Run tests by executing the following command in the repo directory
 
 <!-- -->
 
-
-    >>> x.state()
-
+```python
+>>> x.state()
+```
 
     [('P1', {'n': 6, 'parent': P5 -> {P1, P3}, 'status': 'non-leader'}),
      ('P5', {'height': 4, 'n': 6, 'parent': None, 'status': 'leader'}),
@@ -267,9 +291,9 @@ Run tests by executing the following command in the repo directory
 ![png](readme/output_35_2.png)
 
 
-
-    >>> benchmark(SynchLubyMIS, Random_Line_Network, testLubyMIS)
-
+```python
+>>> benchmark(SynchLubyMIS, Random_Line_Network, testLubyMIS)
+```
 
     Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE
 
