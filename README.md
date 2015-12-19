@@ -112,15 +112,17 @@ DATK is a Distributed Algorithms Toolkit for Python
 
 ##### Final Network State
 
-    >>> x.state()
+'''python
+>>> x.state()
+'''
 
-
-    [('P2', {'n': 5, 'status': 'non-leader'}),
-     ('P4', {'n': 5, 'status': 'leader'}),
-     ('P1', {'n': 5, 'status': 'non-leader'}),
-     ('P0', {'n': 5, 'status': 'non-leader'}),
-     ('P3', {'n': 5, 'status': 'non-leader'})]
-
+'''python
+[('P2', {'n': 5, 'status': 'non-leader'}),
+ ('P4', {'n': 5, 'status': 'leader'}),
+ ('P1', {'n': 5, 'status': 'non-leader'}),
+ ('P0', {'n': 5, 'status': 'non-leader'}),
+ ('P3', {'n': 5, 'status': 'non-leader'})]
+'''
 
 ## Testing
 

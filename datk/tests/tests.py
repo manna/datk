@@ -35,7 +35,7 @@ def configure_ipython():
   else:
     return True
 
-in_ipython = configure_ipython()
+configure_ipython()
 
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
 
@@ -136,7 +136,7 @@ def SYNCH_BROADCAST_HEIGHT():
 
     SynchConvergeHeight(x)
 
-    SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "verbosity" : Algorithm.QUIET})
+    SynchBroadcast(x, {"attr":"height", "draw":False, "verbosity" : Algorithm.QUIET})
     testBroadcast(x, 'height')
 
 @test
@@ -151,7 +151,7 @@ def ASYNCH_BROADCAST_HEIGHT():
 
     AsynchConvergeHeight(x)
 
-    SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "verbosity" : Algorithm.QUIET})
+    SynchBroadcast(x, {"attr":"height", "draw":False, "verbosity" : Algorithm.QUIET})
     testBroadcast(x, 'height')
 
 @test
