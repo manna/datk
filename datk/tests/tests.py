@@ -19,10 +19,12 @@ from helpers import *
 
 def configure_ipython():
   """
-  Convenient helper function to determine if environment is ipython.
-  Note that drawing is only safe in ipython qtconsole with matplotlib inline
-  If environment is IPython, returns True and configures IPython.
-  Else returns False.
+  Convenient helper function to determine if environment is IPython.
+
+  Sets matplotlib inline, if indeed in IPython
+  Note that drawing is only safe in IPython qtconsole with matplotlib inline
+  
+  @return: True iff environment is IPython
   """
   try:
     __IPYTHON__
@@ -35,121 +37,121 @@ def configure_ipython():
 
 in_ipython = configure_ipython()
 
-test_params = {"draw":False, "silent" : True}
+Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
 
 @test
 def LCR_UNI_RING():
     r = Unidirectional_Ring(6)
-    LCR(r, params=test_params)
+    LCR(r)
     testLeaderElection(r)
 
 @test
 def LCR_BI_RING():
     r = Bidirectional_Ring(6)
-    LCR(r, params = test_params)
+    LCR(r)
     testLeaderElection(r)
 
 @test
 def ASYNC_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
-    AsyncLCR(r, params = test_params)
+    AsyncLCR(r)
     testLeaderElection(r)
 
 @test
 def ASYNC_LCR_BI_RING():
     r = Bidirectional_Ring(6)
-    AsyncLCR(r, params = test_params)
+    AsyncLCR(r)
     testLeaderElection(r)
 
 @test
 def FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
-    FloodMax(r, params = test_params)
+    FloodMax(r)
     testLeaderElection(r)
 
 @test
 def FLOODMAX_BI_RING():
     r = Bidirectional_Ring(4)
-    FloodMax(r, params = test_params)
+    FloodMax(r)
     testLeaderElection(r)
 
 @test
 def FLOODMAX_BI_LINE():
     l = Bidirectional_Line(4)
-    FloodMax(l, params = test_params)
+    FloodMax(l)
     testLeaderElection(l)
 
 @test
 def FLOODMAX_COMPLETE_GRAPH():
     g = Complete_Graph(10)
-    FloodMax(g, params = test_params)
+    FloodMax(g)
     testLeaderElection(g)
 
 @test
 def FLOODMAX_RANDOM_GRAPH():
     g = Random_Line_Network(16)
-    FloodMax(g, params = test_params)
+    FloodMax(g)
     testLeaderElection(g)
 
 @test
 def SYNCH_BFS():
     x = Random_Line_Network(10)
-    FloodMax(x, test_params)
+    FloodMax(x)
     testLeaderElection(x)
 
-    SynchBFS(x, test_params)
+    SynchBFS(x)
     testBFS(x)
 
 @test
 def SYNCH_BFS_ACK():
     x = Bidirectional_Line(6, lambda t:t)
 
-    FloodMax(x, test_params)
+    FloodMax(x)
     testLeaderElection(x)
 
-    SynchBFSAck(x, test_params)
+    SynchBFSAck(x)
     testBFSWithChildren(x)
 
 @test
 def SYNCH_CONVERGE_HEIGHT():
     x = Random_Line_Network(10)
 
-    FloodMax(x, test_params)
+    FloodMax(x)
     testLeaderElection(x)
 
-    SynchBFS(x, test_params)
+    SynchBFS(x)
     testBFS(x)
 
-    SynchConvergeHeight(x, test_params)
+    SynchConvergeHeight(x)
 
 @test
 def SYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
-    FloodMax(x, test_params)
+    FloodMax(x)
     testLeaderElection(x)
 
-    SynchBFSAck(x, test_params)
+    SynchBFSAck(x)
     testBFSWithChildren(x)
 
-    SynchConvergeHeight(x, test_params)
+    SynchConvergeHeight(x)
 
-    SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "silent" : True})
+    SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "verbosity" : Algorithm.QUIET})
     testBroadcast(x, 'height')
 
 @test
 def ASYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
-    FloodMax(x, test_params)
+    FloodMax(x)
     testLeaderElection(x)
 
-    SynchBFSAck(x, test_params)
+    SynchBFSAck(x)
     testBFSWithChildren(x)
 
-    AsynchConvergeHeight(x, test_params)
+    AsynchConvergeHeight(x)
 
-    SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "silent" : True})
+    SynchBroadcast(x, {"attr":"height", "draw":in_ipython, "verbosity" : Algorithm.QUIET})
     testBroadcast(x, 'height')
 
 @test
@@ -185,7 +187,7 @@ def send_receive_msgs():
 def SYNCH_DO_NOTHING():
     x = Random_Line_Network(5)
     state = x.state()
-    assert Do_Nothing(x, params=test_params).message_count == 0
+    assert Do_Nothing(x).message_count == 0
     assert state == x.state()
 
 @test
@@ -193,12 +195,12 @@ def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
     x = Unidirectional_Ring(5)
     x1 = x.clone()
 
-    A = LCR(params = test_params)
+    A = LCR()
     A(x)
     testLeaderElection(x)
 
-    C = Compose(LCR(params = test_params), Do_Nothing())
-    C(x1, params=test_params)
+    C = Compose(LCR(), Do_Nothing())
+    C(x1)
     testLeaderElection(x1)
 
     assert C.message_count == A.message_count, "Wrong message count"
@@ -210,14 +212,14 @@ def COMPOSE_SYNCH_LCR():
     x2 = x.clone()
 
     A = LCR()
-    A(x, params = test_params)
+    A(x)
     testLeaderElection(x)
 
-    B = Compose(LCR(name="B1", params = test_params), LCR(name="B2", params = test_params))
+    B = Compose(LCR(name="B1"), LCR(name="B2"))
     B(x1)
     testLeaderElection(x1)
 
-    C = Compose(Compose(LCR(params = test_params), LCR(params = test_params)), LCR(params = test_params))
+    C = Compose(Compose(LCR(), LCR()), LCR())
     C(x2)
     testLeaderElection(x2)
 
@@ -229,7 +231,7 @@ def CHAIN_BROADCAST_HEIGHT():
     fm = FloodMax()
     bfs = SynchBFSAck()
     converge = SynchConvergeHeight()
-    broadcast = SynchBroadcast(params ={"attr":"height","draw":in_ipython, "silent":True})
+    broadcast = SynchBroadcast(params ={"attr":"height"})
 
     A = Chain(Chain(fm, bfs), Chain(converge, broadcast))
     x = Random_Line_Network(10)
@@ -241,7 +243,7 @@ def CHAIN_BROADCAST_HEIGHT():
 @test
 def SYNCH_LUBY_MIS_BI_RING():
     x = Bidirectional_Ring(10, lambda t:t)
-    SynchLubyMIS(x, params=test_params)
+    SynchLubyMIS(x)
     testLubyMIS(x)
 
 @test

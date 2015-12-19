@@ -54,16 +54,16 @@ class Process:
         self.link_to(nbr)
         nbr.link_to(self)
 
-    def output(self, key, val, silent=False):
+    def output(self, key, val, verbose=True):
         """
         Sets the publicly visible value of self.state[key] to val
 
         @param key: The state variable to set
         @param val: The value to assign to it
-        @param silent: Dictates whether or not to print this event to std out
+        @param verbose: Dictates whether or not to print this event to STDOUT
         """
         self.state[key] =  val
-        if not silent:
+        if verbose:
             if isinstance(val, list):
                 print str(self)+"."+str(key), "are", [str(v) for v in val]
             else: 
@@ -217,19 +217,27 @@ class Network:
         return deepcopy(self)
 
 class Algorithm:
-    """
-    Abstract superclass for a distributed algorithm.
+    """Abstract superclass for a distributed algorithm."""
 
-    @param network: [Optional] network. If specified, algorithm is immediately executed on network.
-    @param params: [Optional] runtime parameters.
-    @param name: [Optional] name of the Algorithm instance. Defaults to class name.
+    """Verbosity levels
+    
+    Random updates >= VERBOSE
+    Process outputs >= DEFAULT
+    Algorithm results >= QUIET
+    SILENT : No output whatsoever
     """
-    def __init__(self, 
-                 network = None,
-                 params = {},
-                 name = None):
+    SILENT, QUIET, DEFAULT, VERBOSE = 0, 1, 2, 3
 
-        self.params = {"draw": False, "silent": False}
+    """Default initialization of self.params"""
+    DEFAULT_PARAMS = {'draw' : False, 'verbosity': DEFAULT}
+
+    def __init__(self, network = None, params = {}, name = None):
+        """
+        @param network: [Optional] network. If specified, algorithm is immediately executed on network.
+        @param params: [Optional] runtime parameters.
+        @param name: [Optional] name of the Algorithm instance. Defaults to class name.
+        """
+        self.params = deepcopy(Algorithm.DEFAULT_PARAMS)
         for param,value in params.items():
             self.params[param] = value
         self.message_count = 0
@@ -277,12 +285,13 @@ class Algorithm:
             self.params[param] = value
 
         self.message_count = 0
-        header = "Running " + self.name + " on"
-        print len(header)*"-"
-        print header
-        if 'draw' in self.params and self.params['draw']:
-            network.draw()
-        print str(network)
+        if self.params['verbosity'] >= Algorithm.DEFAULT:
+            header = "Running " + self.name + " on"
+            print len(header)*"-"
+            print header
+            if 'draw' in self.params and self.params['draw']:
+                network.draw()
+            print str(network)
 
         self.network = network
         network.add(self)
@@ -291,11 +300,14 @@ class Algorithm:
         if all([self.halt_i(process) for process in self.network]):
             self.halted = True
             self.cleanup()
+            if self.params['verbosity'] >= Algorithm.QUIET:
+                self.print_algorithm_terminated()
 
-            print "Algorithm Terminated"
-            msg_complexity = "Message Complexity: " + str(self.message_count)
-            print msg_complexity
-            print "-"*len(msg_complexity)
+    def print_algorithm_terminated(self):
+        print self.name+" Terminated"
+        msg_complexity = "Message Complexity: " + str(self.message_count)
+        print msg_complexity
+        print "-"*len(msg_complexity)
 
     def count_msg(self, message_count):
         self.message_count += message_count
@@ -312,6 +324,16 @@ class Algorithm:
     def delete(self, process, state):
         if self.has(process, state):
             del process.state[self][state]
+    def output(self, process, key, val):
+        """
+        Sets the publicly visible value of process.state[key] to val
+
+        This command is verbose if Algorithm's verbosity is >= DEFAULT
+
+        @param key: The state variable to set
+        @param val: The value to assign to it
+        """
+        process.output(key, val, self.params['verbosity'] >= Algorithm.DEFAULT)
 
 class Synchronous_Algorithm(Algorithm):
     """
@@ -327,7 +349,7 @@ class Synchronous_Algorithm(Algorithm):
         self.r = 0
         while not self.halted:
             self.r+=1
-            if not self.params['silent']:
+            if self.params['verbosity'] >= Algorithm.DEFAULT:
                 print "Round",self.r
             self.round()
             self.halt()
@@ -347,6 +369,13 @@ class Synchronous_Algorithm(Algorithm):
                 self.trans_i(process)
             except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
                 self.trans_i(process, process.get_msgs(self))
+    def print_algorithm_terminated(self):
+        print self.name+" Terminated"
+        msg_complexity = "Message Complexity: " + str(self.message_count)
+        print msg_complexity
+        time_complexity = "Time Complexity: " + str(self.r)
+        print time_complexity
+        print "-"*len(time_complexity)
 
 class Do_Nothing(Synchronous_Algorithm):
     def trans_i(self, p, messages): p.terminate(self)
@@ -386,13 +415,13 @@ class Compose(Synchronous_Algorithm):
     A Synchonous_Algorithm that is the composition of two synchronous algorithms
     running in parallel.
     """
-    def __init__(self, A, B, name = None, params = {"draw": False, "silent": False}):
+    def __init__(self, A, B, name = None, params = None):
         assert isinstance(A,Synchronous_Algorithm), "Not a Synchronous_Algorithm"
         assert isinstance(B,Synchronous_Algorithm), "Not a Synchronous_Algorithm"
         self.A=A
         self.B=B
         self.message_count = 0
-        self.params = params
+        self.params = params or deepcopy(Algorithm.DEFAULT_PARAMS)
         if name is None:
             name = self.name="Compose("+self.A.name+","+self.B.name+")"
 
@@ -429,10 +458,10 @@ class Chain(Algorithm):
     """
     An Algorithm that is the result of sequentially running two algorithms
     """
-    def __init__(self, A, B, name = None, params = {"draw": False, "silent": False}):
+    def __init__(self, A, B, name = None, params = None):
         assert isinstance(A,Algorithm), "Not an Algorithm"
         assert isinstance(B,Algorithm), "Not an Algorithm"
-        self.params = params
+        self.params = params or deepcopy(Algorithm.DEFAULT_PARAMS)
         self.A = A
         self.B = B
         
@@ -440,8 +469,8 @@ class Chain(Algorithm):
 
     def run(self, network, params = {}):
         Algorithm.run(self, network, params)
-        self.A.run(network, params=params)
-        self.B.run(network, params=params)
+        self.A.run(network, params=self.params)
+        self.B.run(network, params=self.params)
         self.message_count = self.A.message_count + self.B.message_count
         self.halt()
         Algorithm.cleanup(self)

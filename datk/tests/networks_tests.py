@@ -14,6 +14,12 @@ To run tests, execute the following commands:
 $ cd ../..
 $ python -m datk.tests.networks_tests """)
 
+try:
+    __IPYTHON__
+    ip = get_ipython()
+    ip.magic("%matplotlib inline") 
+except NameError:
+    pass
 
 @test(main_thread=True)
 def DRAW_RANDOM():

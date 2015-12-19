@@ -27,16 +27,16 @@ class LCR(Synchronous_Algorithm):
         self.set(p,"send", None)
         p.send_msg(msg, p.out_nbrs[-1])
 
-    def trans_i(self, p, msgs): #TODO replace params['silent'] with verbosity levels.
+    def trans_i(self, p, msgs):
         if len(msgs) == 0:
             self.set(p,"send", None)
         else:
             msg = msgs.pop()
             if msg.content == p.UID:
-                p.output("status", "leader", self.params["silent"])
+                self.output(p,"status", "leader")
             elif msg.content > p.UID:
                 self.set(p,"send", msg)
-                p.output("status", "non-leader", self.params["silent"])
+                self.output(p,"status", "non-leader")
             else:
                 self.set(p, "send",  None)
         if self.r == p.state['n']: p.terminate(self)
@@ -91,10 +91,10 @@ class AsyncLCR(Asynchronous_Algorithm):
                 p.terminate(self)
                 return
             elif msg.content == p.UID:
-                p.output("status", "leader", self.params["silent"])
+                self.output(p,"status", "leader")
             elif msg.content > p.UID:
                 self.get(p, "sends").append(msg)
-                p.output("status", "non-leader", self.params["silent"])
+                self.output(p,"status", "non-leader")
 
     def cleanup_i(self, p): self.delete(p, 'sends')
 
@@ -129,10 +129,10 @@ class FloodMax(Synchronous_Algorithm):
 
         if self.r == self.get(p, 'diam'):
             if self.get(p, "send").content == p.UID:
-                p.output("status", "leader", self.params["silent"])
+                self.output(p,"status", "leader")
                 p.terminate(self)
             else:
-                p.output("status", "non-leader", self.params["silent"])
+                self.output(p,"status", "non-leader")
                 p.terminate(self)
 
     def cleanup_i(self,p): self.delete(p, 'send')
@@ -163,7 +163,7 @@ class SynchBFS(Synchronous_Algorithm):
 
     def msgs_i(self, p):
         if self.is_i0(p) and self.r == 1:
-            p.output("parent",  None, self.params["silent"])
+            self.output(p,"parent",  None)
             p.send_msg(SynchBFS.Search(self, p))
         if self.has(p, "recently_marked"):
             p.send_msg(SynchBFS.Search(self, p))
@@ -171,7 +171,7 @@ class SynchBFS(Synchronous_Algorithm):
     def trans_i(self, p, msgs):
         if len(msgs)> 0:
             if "parent" not in p.state:
-                p.output("parent",  msgs[0].content, self.params["silent"])
+                self.output(p,"parent",  msgs[0].content)
                 self.set(p, "recently_marked",  True)
                 return
         if "parent" in p.state:
@@ -209,13 +209,13 @@ class SynchBFSAck(Synchronous_Algorithm):
 
     def msgs_i(self, p):
         if self.is_i0(p) and self.r == 1:
-            p.output( "parent",  None, self.params["silent"])
+            self.output(p, "parent",  None)
             self.set(p, "recently_marked",  True)
             p.send_msg(SynchBFSAck.Search(self, p))
         elif self.has(p, "recently_marked"):
             p.send_msg(SynchBFSAck.Search(self, p))
             p.send_msg(SynchBFSAck.AckParent(self, p), p.state['parent'] )
-            if not self.params["silent"]:
+            if self.params["verbosity"]>=Algorithm.VERBOSE:
                 print p,"ack", p.state['parent']
     def trans_i(self, p, msgs):
         search_msgs = [m.content for m in msgs if isinstance(m, SynchBFSAck.Search)]
@@ -223,17 +223,17 @@ class SynchBFSAck(Synchronous_Algorithm):
 
         if 'parent' not in p.state:
             if len(search_msgs)> 0:
-                p.output( "parent",  search_msgs[0], self.params["silent"])
+                self.output(p, "parent",  search_msgs[0])
                 self.set(p, "recently_marked",  True)
-                if not self.params["silent"]:
+                if self.params["verbosity"]>=Algorithm.VERBOSE:
                     print str(p), "chooses parent"
         else:
             if self.has(p, "recently_marked"):
                 self.delete(p, "recently_marked")
             elif "children" not in p.state:
-                p.output("children",  ack_msgs, self.params["silent"])
+                self.output(p,"children",  ack_msgs)
                 p.terminate(self)
-                if not self.params["silent"]:
+                if self.params["verbosity"]>=Algorithm.VERBOSE:
                     print p,"knows children"
 
 #Convergecast
@@ -351,7 +351,7 @@ def _converge_height(Convergecast):
         def trans_root(self, p, msgs):      #Updates height
             self.set(p, 'height', max(msgs)) 
         def output_root(self, p):           #Decides height
-            p.output('height', self.get(p, 'height'), self.params['silent']) 
+            self.output(p,'height', self.get(p, 'height')) 
         def initial_msg_to_parent(self, p):
             return Message(self, 1)
         def trans_msg_to_parent(self, p, msgs):
@@ -395,7 +395,7 @@ class SynchBroadcast(Synchronous_Algorithm):
             p.terminate(self)
         else:
             if len (msgs) == 1:
-                p.output(attr,  msgs[0], self.params["silent"])
+                self.output(p,attr,  msgs[0])
                 if len(p.state['children']) > 0:
                     self.set(p, 'send',  msgs[0])
                 else:
@@ -447,11 +447,11 @@ class SynchLubyMIS(Synchronous_Algorithm):
         if self.r%3 ==1:
             if len(values) == 0 or self.get(p, 'val') > max(values):
                 self.set(p, 'status', 'winner')
-                p.output('MIS', True, self.params['silent'])
+                self.output(p, 'MIS', True)
         if self.r%3 ==2:
             if 'winner' in values:
                 self.set(p, 'status', 'loser')
-                p.output('MIS', False, self.params['silent'])
+                self.output(p,'MIS', False)
         if self.r%3 == 0:
             rem_nbrs = self.get(p, 'rem_nbrs')
             for m in msgs:
