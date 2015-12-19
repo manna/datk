@@ -253,6 +253,20 @@ Run tests by executing the following command in the repo directory
 
 ### Benchmarking Algorithms
 
+```python
+>>> benchmark(LCR, Bidirectional_Ring, testLeaderElection)
+```
+
+    Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE
+
+
+![png](readme/output_35_1.png)
+
+
+
+![png](readme/output_35_2.png)
+
+
 
     >>> benchmark(SynchLubyMIS, Random_Line_Network, testLubyMIS)
 
