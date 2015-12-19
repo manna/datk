@@ -138,16 +138,14 @@ Run tests by executing the following command in the repo directory
 #### Chaining Algorithms
 
 
-'''python
-x = Random_Line_Network(6)
-'''
+    x = Random_Line_Network(6)
+
 
 <!-- -->
 
-'''python
-#Elect a Leader
->>> FloodMax(x, params={'verbosity': Algorithm.QUIET})
-'''
+    #Elect a Leader
+    >>> FloodMax(x, params={'verbosity': Algorithm.QUIET})
+
 
     FloodMax Terminated
     Message Complexity: 80
@@ -156,10 +154,10 @@ x = Random_Line_Network(6)
 
 <!-- -->
 
-'''python
-#Construct a BFS tree rooted at the Leader 
->>> SynchBFS(x)
-'''
+
+    #Construct a BFS tree rooted at the Leader 
+    >>> SynchBFS(x)
+
 
     -------------------
     Running SynchBFS on
@@ -181,9 +179,9 @@ x = Random_Line_Network(6)
 
 <!-- -->
 
-'''python
->>> SynchConvergeHeight(x, params={'draw':True})
-'''
+
+    >>> SynchConvergeHeight(x, params={'draw':True})
+
 
     --------------------------
     Running _ConvergeHeight on
@@ -205,9 +203,9 @@ x = Random_Line_Network(6)
 
 <!-- -->
 
-'''python
->>> x.state()
-'''
+
+    >>> x.state()
+    
 
     [('P3', {'n': 6, 'parent': P4 -> {P3, P1}, 'status': 'non-leader'}),
      ('P4', {'n': 6, 'parent': P1 -> {P4, P0, P2, P5}, 'status': 'non-leader'}),
@@ -221,11 +219,9 @@ x = Random_Line_Network(6)
 #### Equivalently, chain them like this:
 
 
-'''python
-x = Random_Line_Network(6)
-A = Chain(FloodMax(), Chain(SynchBFS(), SynchConvergeHeight()), params={'verbosity':Algorithm.QUIET})
-A(x)
-'''
+    x = Random_Line_Network(6)
+    A = Chain(FloodMax(), Chain(SynchBFS(), SynchConvergeHeight()),     params={'verbosity':Algorithm.QUIET})
+    A(x)
 
     FloodMax Terminated
     Message Complexity: 50
@@ -243,9 +239,7 @@ A(x)
 <!-- -->
 
 
-'''python
-x.state()
-'''
+    x.state()
 
 
     [('P1', {'n': 6, 'parent': P5 -> {P1, P3}, 'status': 'non-leader'}),
@@ -260,9 +254,8 @@ x.state()
 ### Benchmarking Algorithms
 
 
-'''python
-benchmark(SynchLubyMIS, Random_Line_Network, testLubyMIS)
-'''
+    benchmark(SynchLubyMIS, Random_Line_Network, testLubyMIS)
+
 
     Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE
 
