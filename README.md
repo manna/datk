@@ -150,6 +150,7 @@ Run tests by executing the following command in the repo directory
 >>> x.state()
 ```
 
+
     [('P2', {'n': 5, 'status': 'non-leader'}),
      ('P4', {'n': 5, 'status': 'leader'}),
      ('P1', {'n': 5, 'status': 'non-leader'}),
@@ -160,7 +161,7 @@ Run tests by executing the following command in the repo directory
 #### Chaining Algorithms
 
 ```python
-    >>> x = Random_Line_Network(6)
+>>> x = Random_Line_Network(6)
 ```
 
 <!-- -->
