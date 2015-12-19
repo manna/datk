@@ -26,9 +26,11 @@ class Message:
         self.content = content
         self.algorithm = algorithm
         self.author = None
+
     def __str__(self):
         return self.__class__.__name__+"("+str(self.content)+")"
     
+
 class Process:
     """A computing element located at a node of a network graph.
     Processes are identical except for their UID"""
@@ -48,6 +50,7 @@ class Process:
             self.out_nbrs.append(new_out_nbr)
         if self not in new_out_nbr.in_nbrs:
             new_out_nbr.in_nbrs.append(self)
+
     def bi_link(self, nbr):
         """Adds a new out_nbr of the Process, and adds the
         Process as an out_nbr of that neighbor"""
@@ -147,13 +150,17 @@ class Process:
 
     def __str__(self):
         return "P"+str(self.UID)
+
     def __repr__(self):
         return "P" + str(self.UID) + " -> {"+", ".join([str(process) for process in self.out_nbrs]) + "}" 
 
+
 class Network:
     """ A collection of Processes that know n, the # of processes in the network."""
+    
     def __init__(self, processes):
         self.processes = processes
+
     def __init__(self, n, index_to_UID = None):
         """
         Creates a network of n disconnected Processes,
@@ -167,23 +174,16 @@ class Network:
             self.processes = [Process(index_to_UID(i)) for i in range(n)]
         for process in self:
             process.state['n'] = n
-    def __getitem__(self, i):
-        return self.processes[i]
-    def __len__(self):
-        return len(self.processes)
-    def __repr__(self):
-        return str(self.processes)
-    def __iter__(self):
-        return iter(self.processes)
-    def index(self, p):
-        return self.processes.index(p)    
+    
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
         for process in self:
             process.add(algorithm)
+    
     def run(self, algorithm):
         """Runs algorithm on the Network"""
         algorithm(self)
+    
     def draw(self):
         """Draws the Network"""
         import math
@@ -208,13 +208,31 @@ class Network:
         frame.axes.get_xaxis().set_visible(False)
         frame.axes.get_yaxis().set_visible(False)
         plt.show()
+    
     def state(self):
         """
         @return: A text representation of the state of all the Processes in the Network 
         """
         return [(str(process), dict(process.state)) for process in self]
+    
     def clone(self):
         return deepcopy(self)
+
+    def __getitem__(self, i):
+        return self.processes[i]
+    
+    def __len__(self):
+        return len(self.processes)
+    
+    def __repr__(self):
+        return str(self.processes)
+    
+    def __iter__(self):
+        return iter(self.processes)
+    
+    def index(self, p):
+        return self.processes.index(p)    
+    
 
 class Algorithm:
     """Abstract superclass for a distributed algorithm."""
@@ -251,13 +269,16 @@ class Algorithm:
     def msgs_i(self, p):
         """Determines what messages a Process, p, will send."""
         pass
+    
     def trans_i(self, p, msgs):
         """Determines what state transition a Process, p, will perform,
         having received messages, msgs"""
         pass
+    
     def halt_i(self, p):
         """Returns True iff Process p has halted execution of the algorithm"""
         return self not in p.algs
+    
     def cleanup_i(self,p):
         """Determines what final state transition a Process, p, will perform,
         after the algorithm terminates."""
@@ -314,16 +335,21 @@ class Algorithm:
 
     def set(self, process, state, value):
         process.state[self][state] = value
+    
     def increment(self, process, state, inc=1):
         process.state[self][state] += inc
+    
     def has(self, process, state):
         return state in process.state[self]
+    
     def get(self, process, state):
         if self.has(process, state):
             return process.state[self][state]
+    
     def delete(self, process, state):
         if self.has(process, state):
             del process.state[self][state]
+    
     def output(self, process, key, val):
         """
         Sets the publicly visible value of process.state[key] to val
@@ -334,6 +360,7 @@ class Algorithm:
         @param val: The value to assign to it
         """
         process.output(key, val, self.params['verbosity'] >= Algorithm.DEFAULT)
+
 
 class Synchronous_Algorithm(Algorithm):
     """
@@ -358,10 +385,12 @@ class Synchronous_Algorithm(Algorithm):
         """Executes a single round of the Synchronous Algorithm"""
         self.msgs()
         self.trans()
+    
     def msgs(self):
         for process in self.network:
             if self.halt_i(process): continue
             self.msgs_i(process)
+    
     def trans(self):
         for process in self.network:
             if self.halt_i(process): continue
@@ -369,6 +398,7 @@ class Synchronous_Algorithm(Algorithm):
                 self.trans_i(process)
             except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
                 self.trans_i(process, process.get_msgs(self))
+    
     def print_algorithm_terminated(self):
         print self.name+" Terminated"
         msg_complexity = "Message Complexity: " + str(self.message_count)
@@ -377,14 +407,17 @@ class Synchronous_Algorithm(Algorithm):
         print time_complexity
         print "-"*len(time_complexity)
 
+
 class Do_Nothing(Synchronous_Algorithm):
     def trans_i(self, p, messages): p.terminate(self)
+
     
 class Asynchronous_Algorithm(Algorithm):
     """
     We assume that the separate Processes take steps
     in an arbitrary order, at arbitrary relative speeds.
     """
+
     def run(self, network, params = {}):
         Algorithm.run(self, network, params=params)
 
@@ -409,13 +442,21 @@ class Asynchronous_Algorithm(Algorithm):
                 self.trans_i(process, process.get_msgs(self))
             if self.halt_i(process):
                 break
+
     
 class Compose(Synchronous_Algorithm):
     """
     A Synchonous_Algorithm that is the composition of two synchronous algorithms
     running in parallel.
     """
+    
     def __init__(self, A, B, name = None, params = None):
+        """
+        @param A: an instance of Synchronous_Algorithm
+        @param B: an instance of Synchronous_Algorithm
+        @param name: [Optional] name of the Algorithm. Defaults to Compose(name of A, name of B)
+        @param params: [Optional] Runtime parameters
+        """
         assert isinstance(A,Synchronous_Algorithm), "Not a Synchronous_Algorithm"
         assert isinstance(B,Synchronous_Algorithm), "Not a Synchronous_Algorithm"
         self.A=A
@@ -454,11 +495,19 @@ class Compose(Synchronous_Algorithm):
     
     def __repr__(self): return self.name
 
+
 class Chain(Algorithm):
     """
     An Algorithm that is the result of sequentially running two algorithms
     """
+
     def __init__(self, A, B, name = None, params = None):
+        """
+        @param A: an instance of Algorithm
+        @param B: an instance of Algorithm
+        @param name: [Optional] name of the Algorithm. Defaults to Chain(A.name, B.name)
+        @param params: [Optional] Runtime parameters
+        """
         assert isinstance(A,Algorithm), "Not an Algorithm"
         assert isinstance(B,Algorithm), "Not an Algorithm"
         self.params = params or deepcopy(Algorithm.DEFAULT_PARAMS)
