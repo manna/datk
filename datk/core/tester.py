@@ -1,7 +1,6 @@
 from threading import Thread, Lock
 from time import sleep, time
 from distalgs import Process, Algorithm
-from math import log
 
 TIMEOUT = 5
 
@@ -97,14 +96,21 @@ def benchmark(Algorithm, Network, test):
         size = []
         time = []
         comm = []
-        n = 2
+        n, lgn = 2, 1
         max_time = 0
         max_comm = 0
+        print "Sampling n = ...",
         while max(max_time, max_comm) < 10000 and n < 500:
-            print "Sampling n="+str(n)
+
+            #Progress
+            if n == 2:
+                print "\b\b\b\b"+str(n)+"...",
+            else:
+                print "\b\b\b\b, "+str(n)+"...",
+
             cur_times = []
             cur_comms = []
-            for i in range( max(4, 2+int(log(n))) ):
+            for i in xrange( max(4, 2+lgn) ):
                 A = Algorithm(params={'draw': False, 'verbosity': Algorithm.SILENT})
                 x = Network(n)
                 A(x)
@@ -123,8 +129,10 @@ def benchmark(Algorithm, Network, test):
                     max_time = max(max_time, A.r)
                     max_comm = max(max_comm, A.message_count)
 
-            #TODO here, decide whether need more samples for this n, based on cur_times and cur_comms stdev(1-stdev)
+            #TODO here, decide whether need more samples for this n, based on cur_times and cur_comms variance
             n*=2
+            lgn += 1
+        print " DONE"
         return size, time, comm
     
     def averages(x,y):
@@ -174,6 +182,5 @@ def benchmark(Algorithm, Network, test):
     data = sample(Algorithm, Network, test)
     if data == None: return
     size, time, comm = data
-    print len(time)
     plot(size, time, Algorithm.__name__ + ' Time Complexity')
     plot(size, comm, Algorithm.__name__ + ' Communication Complexity')

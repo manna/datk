@@ -9,72 +9,89 @@
 \BOOKMARK [2][-]{subsection.3.1}{Variables}{section.3}% 9
 \BOOKMARK [2][-]{subsection.3.2}{Class LCR}{section.3}% 10
 \BOOKMARK [3][-]{subsubsection.3.2.1}{Methods}{subsection.3.2}% 11
-\BOOKMARK [2][-]{subsection.3.3}{Class AsyncLCR}{section.3}% 12
-\BOOKMARK [3][-]{subsubsection.3.3.1}{Methods}{subsection.3.3}% 13
-\BOOKMARK [2][-]{subsection.3.4}{Class FloodMax}{section.3}% 14
-\BOOKMARK [3][-]{subsubsection.3.4.1}{Methods}{subsection.3.4}% 15
-\BOOKMARK [2][-]{subsection.3.5}{Class SynchBFS}{section.3}% 16
-\BOOKMARK [3][-]{subsubsection.3.5.1}{Methods}{subsection.3.5}% 17
-\BOOKMARK [2][-]{subsection.3.6}{Class SynchBFSAck}{section.3}% 18
-\BOOKMARK [3][-]{subsubsection.3.6.1}{Methods}{subsection.3.6}% 19
-\BOOKMARK [2][-]{subsection.3.7}{Class SynchConvergecast}{section.3}% 20
-\BOOKMARK [3][-]{subsubsection.3.7.1}{Methods}{subsection.3.7}% 21
-\BOOKMARK [2][-]{subsection.3.8}{Class AsynchConvergecast}{section.3}% 22
-\BOOKMARK [3][-]{subsubsection.3.8.1}{Methods}{subsection.3.8}% 23
-\BOOKMARK [2][-]{subsection.3.9}{Class SynchConvergeHeight}{section.3}% 24
-\BOOKMARK [3][-]{subsubsection.3.9.1}{Methods}{subsection.3.9}% 25
-\BOOKMARK [2][-]{subsection.3.10}{Class AsynchConvergeHeight}{section.3}% 26
-\BOOKMARK [3][-]{subsubsection.3.10.1}{Methods}{subsection.3.10}% 27
-\BOOKMARK [2][-]{subsection.3.11}{Class SynchBroadcast}{section.3}% 28
-\BOOKMARK [3][-]{subsubsection.3.11.1}{Methods}{subsection.3.11}% 29
-\BOOKMARK [2][-]{subsection.3.12}{Class SynchLubyMIS}{section.3}% 30
-\BOOKMARK [3][-]{subsubsection.3.12.1}{Methods}{subsection.3.12}% 31
-\BOOKMARK [1][-]{section.4}{Module datk.core.distalgs}{}% 32
-\BOOKMARK [2][-]{subsection.4.1}{Variables}{section.4}% 33
-\BOOKMARK [2][-]{subsection.4.2}{Class Message}{section.4}% 34
-\BOOKMARK [3][-]{subsubsection.4.2.1}{Methods}{subsection.4.2}% 35
-\BOOKMARK [2][-]{subsection.4.3}{Class Process}{section.4}% 36
-\BOOKMARK [3][-]{subsubsection.4.3.1}{Methods}{subsection.4.3}% 37
-\BOOKMARK [2][-]{subsection.4.4}{Class Network}{section.4}% 38
-\BOOKMARK [3][-]{subsubsection.4.4.1}{Methods}{subsection.4.4}% 39
-\BOOKMARK [2][-]{subsection.4.5}{Class Algorithm}{section.4}% 40
-\BOOKMARK [3][-]{subsubsection.4.5.1}{Methods}{subsection.4.5}% 41
-\BOOKMARK [2][-]{subsection.4.6}{Class Synchronous\137Algorithm}{section.4}% 42
-\BOOKMARK [3][-]{subsubsection.4.6.1}{Methods}{subsection.4.6}% 43
-\BOOKMARK [2][-]{subsection.4.7}{Class Do\137Nothing}{section.4}% 44
-\BOOKMARK [3][-]{subsubsection.4.7.1}{Methods}{subsection.4.7}% 45
-\BOOKMARK [2][-]{subsection.4.8}{Class Asynchronous\137Algorithm}{section.4}% 46
-\BOOKMARK [3][-]{subsubsection.4.8.1}{Methods}{subsection.4.8}% 47
-\BOOKMARK [2][-]{subsection.4.9}{Class Compose}{section.4}% 48
-\BOOKMARK [3][-]{subsubsection.4.9.1}{Methods}{subsection.4.9}% 49
-\BOOKMARK [2][-]{subsection.4.10}{Class Chain}{section.4}% 50
-\BOOKMARK [3][-]{subsubsection.4.10.1}{Methods}{subsection.4.10}% 51
-\BOOKMARK [1][-]{section.5}{Module datk.core.networks}{}% 52
-\BOOKMARK [2][-]{subsection.5.1}{Variables}{section.5}% 53
-\BOOKMARK [2][-]{subsection.5.2}{Class Unidirectional\137Ring}{section.5}% 54
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Methods}{subsection.5.2}% 55
-\BOOKMARK [2][-]{subsection.5.3}{Class Bidirectional\137Ring}{section.5}% 56
-\BOOKMARK [3][-]{subsubsection.5.3.1}{Methods}{subsection.5.3}% 57
-\BOOKMARK [2][-]{subsection.5.4}{Class Unidirectional\137Line}{section.5}% 58
-\BOOKMARK [3][-]{subsubsection.5.4.1}{Methods}{subsection.5.4}% 59
-\BOOKMARK [2][-]{subsection.5.5}{Class Bidirectional\137Line}{section.5}% 60
-\BOOKMARK [3][-]{subsubsection.5.5.1}{Methods}{subsection.5.5}% 61
-\BOOKMARK [2][-]{subsection.5.6}{Class Complete\137Graph}{section.5}% 62
-\BOOKMARK [3][-]{subsubsection.5.6.1}{Methods}{subsection.5.6}% 63
-\BOOKMARK [2][-]{subsection.5.7}{Class Random\137Line\137Network}{section.5}% 64
-\BOOKMARK [3][-]{subsubsection.5.7.1}{Methods}{subsection.5.7}% 65
-\BOOKMARK [1][-]{section.6}{Module datk.core.tester}{}% 66
-\BOOKMARK [2][-]{subsection.6.1}{Functions}{section.6}% 67
-\BOOKMARK [2][-]{subsection.6.2}{Variables}{section.6}% 68
-\BOOKMARK [1][-]{section.7}{Package datk.tests}{}% 69
-\BOOKMARK [2][-]{subsection.7.1}{Modules}{section.7}% 70
-\BOOKMARK [2][-]{subsection.7.2}{Variables}{section.7}% 71
-\BOOKMARK [1][-]{section.8}{Module datk.tests.helpers}{}% 72
-\BOOKMARK [2][-]{subsection.8.1}{Functions}{section.8}% 73
-\BOOKMARK [2][-]{subsection.8.2}{Variables}{section.8}% 74
-\BOOKMARK [1][-]{section.9}{Module datk.tests.networks\137tests}{}% 75
-\BOOKMARK [2][-]{subsection.9.1}{Variables}{section.9}% 76
-\BOOKMARK [1][-]{section.10}{Module datk.tests.tests}{}% 77
-\BOOKMARK [2][-]{subsection.10.1}{Functions}{section.10}% 78
-\BOOKMARK [2][-]{subsection.10.2}{Variables}{section.10}% 79
-\BOOKMARK [1][-]{section*.2}{Index}{}% 80
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Class Variables}{subsection.3.2}% 12
+\BOOKMARK [2][-]{subsection.3.3}{Class AsyncLCR}{section.3}% 13
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Methods}{subsection.3.3}% 14
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Class Variables}{subsection.3.3}% 15
+\BOOKMARK [2][-]{subsection.3.4}{Class FloodMax}{section.3}% 16
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Methods}{subsection.3.4}% 17
+\BOOKMARK [3][-]{subsubsection.3.4.2}{Class Variables}{subsection.3.4}% 18
+\BOOKMARK [2][-]{subsection.3.5}{Class SynchBFS}{section.3}% 19
+\BOOKMARK [3][-]{subsubsection.3.5.1}{Methods}{subsection.3.5}% 20
+\BOOKMARK [3][-]{subsubsection.3.5.2}{Class Variables}{subsection.3.5}% 21
+\BOOKMARK [2][-]{subsection.3.6}{Class SynchBFSAck}{section.3}% 22
+\BOOKMARK [3][-]{subsubsection.3.6.1}{Methods}{subsection.3.6}% 23
+\BOOKMARK [3][-]{subsubsection.3.6.2}{Class Variables}{subsection.3.6}% 24
+\BOOKMARK [2][-]{subsection.3.7}{Class SynchConvergecast}{section.3}% 25
+\BOOKMARK [3][-]{subsubsection.3.7.1}{Methods}{subsection.3.7}% 26
+\BOOKMARK [3][-]{subsubsection.3.7.2}{Class Variables}{subsection.3.7}% 27
+\BOOKMARK [2][-]{subsection.3.8}{Class AsynchConvergecast}{section.3}% 28
+\BOOKMARK [3][-]{subsubsection.3.8.1}{Methods}{subsection.3.8}% 29
+\BOOKMARK [3][-]{subsubsection.3.8.2}{Class Variables}{subsection.3.8}% 30
+\BOOKMARK [2][-]{subsection.3.9}{Class SynchConvergeHeight}{section.3}% 31
+\BOOKMARK [3][-]{subsubsection.3.9.1}{Methods}{subsection.3.9}% 32
+\BOOKMARK [3][-]{subsubsection.3.9.2}{Class Variables}{subsection.3.9}% 33
+\BOOKMARK [2][-]{subsection.3.10}{Class AsynchConvergeHeight}{section.3}% 34
+\BOOKMARK [3][-]{subsubsection.3.10.1}{Methods}{subsection.3.10}% 35
+\BOOKMARK [3][-]{subsubsection.3.10.2}{Class Variables}{subsection.3.10}% 36
+\BOOKMARK [2][-]{subsection.3.11}{Class SynchBroadcast}{section.3}% 37
+\BOOKMARK [3][-]{subsubsection.3.11.1}{Methods}{subsection.3.11}% 38
+\BOOKMARK [3][-]{subsubsection.3.11.2}{Class Variables}{subsection.3.11}% 39
+\BOOKMARK [2][-]{subsection.3.12}{Class SynchLubyMIS}{section.3}% 40
+\BOOKMARK [3][-]{subsubsection.3.12.1}{Methods}{subsection.3.12}% 41
+\BOOKMARK [3][-]{subsubsection.3.12.2}{Class Variables}{subsection.3.12}% 42
+\BOOKMARK [1][-]{section.4}{Module datk.core.distalgs}{}% 43
+\BOOKMARK [2][-]{subsection.4.1}{Variables}{section.4}% 44
+\BOOKMARK [2][-]{subsection.4.2}{Class Message}{section.4}% 45
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Methods}{subsection.4.2}% 46
+\BOOKMARK [2][-]{subsection.4.3}{Class Process}{section.4}% 47
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Methods}{subsection.4.3}% 48
+\BOOKMARK [2][-]{subsection.4.4}{Class Network}{section.4}% 49
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Methods}{subsection.4.4}% 50
+\BOOKMARK [2][-]{subsection.4.5}{Class Algorithm}{section.4}% 51
+\BOOKMARK [3][-]{subsubsection.4.5.1}{Methods}{subsection.4.5}% 52
+\BOOKMARK [3][-]{subsubsection.4.5.2}{Class Variables}{subsection.4.5}% 53
+\BOOKMARK [2][-]{subsection.4.6}{Class Synchronous\137Algorithm}{section.4}% 54
+\BOOKMARK [3][-]{subsubsection.4.6.1}{Methods}{subsection.4.6}% 55
+\BOOKMARK [3][-]{subsubsection.4.6.2}{Class Variables}{subsection.4.6}% 56
+\BOOKMARK [2][-]{subsection.4.7}{Class Do\137Nothing}{section.4}% 57
+\BOOKMARK [3][-]{subsubsection.4.7.1}{Methods}{subsection.4.7}% 58
+\BOOKMARK [3][-]{subsubsection.4.7.2}{Class Variables}{subsection.4.7}% 59
+\BOOKMARK [2][-]{subsection.4.8}{Class Asynchronous\137Algorithm}{section.4}% 60
+\BOOKMARK [3][-]{subsubsection.4.8.1}{Methods}{subsection.4.8}% 61
+\BOOKMARK [3][-]{subsubsection.4.8.2}{Class Variables}{subsection.4.8}% 62
+\BOOKMARK [2][-]{subsection.4.9}{Class Compose}{section.4}% 63
+\BOOKMARK [3][-]{subsubsection.4.9.1}{Methods}{subsection.4.9}% 64
+\BOOKMARK [3][-]{subsubsection.4.9.2}{Class Variables}{subsection.4.9}% 65
+\BOOKMARK [2][-]{subsection.4.10}{Class Chain}{section.4}% 66
+\BOOKMARK [3][-]{subsubsection.4.10.1}{Methods}{subsection.4.10}% 67
+\BOOKMARK [3][-]{subsubsection.4.10.2}{Class Variables}{subsection.4.10}% 68
+\BOOKMARK [1][-]{section.5}{Module datk.core.networks}{}% 69
+\BOOKMARK [2][-]{subsection.5.1}{Variables}{section.5}% 70
+\BOOKMARK [2][-]{subsection.5.2}{Class Unidirectional\137Ring}{section.5}% 71
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Methods}{subsection.5.2}% 72
+\BOOKMARK [2][-]{subsection.5.3}{Class Bidirectional\137Ring}{section.5}% 73
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Methods}{subsection.5.3}% 74
+\BOOKMARK [2][-]{subsection.5.4}{Class Unidirectional\137Line}{section.5}% 75
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Methods}{subsection.5.4}% 76
+\BOOKMARK [2][-]{subsection.5.5}{Class Bidirectional\137Line}{section.5}% 77
+\BOOKMARK [3][-]{subsubsection.5.5.1}{Methods}{subsection.5.5}% 78
+\BOOKMARK [2][-]{subsection.5.6}{Class Complete\137Graph}{section.5}% 79
+\BOOKMARK [3][-]{subsubsection.5.6.1}{Methods}{subsection.5.6}% 80
+\BOOKMARK [2][-]{subsection.5.7}{Class Random\137Line\137Network}{section.5}% 81
+\BOOKMARK [3][-]{subsubsection.5.7.1}{Methods}{subsection.5.7}% 82
+\BOOKMARK [1][-]{section.6}{Module datk.core.tester}{}% 83
+\BOOKMARK [2][-]{subsection.6.1}{Functions}{section.6}% 84
+\BOOKMARK [2][-]{subsection.6.2}{Variables}{section.6}% 85
+\BOOKMARK [1][-]{section.7}{Package datk.tests}{}% 86
+\BOOKMARK [2][-]{subsection.7.1}{Modules}{section.7}% 87
+\BOOKMARK [2][-]{subsection.7.2}{Variables}{section.7}% 88
+\BOOKMARK [1][-]{section.8}{Module datk.tests.helpers}{}% 89
+\BOOKMARK [2][-]{subsection.8.1}{Functions}{section.8}% 90
+\BOOKMARK [2][-]{subsection.8.2}{Variables}{section.8}% 91
+\BOOKMARK [1][-]{section.9}{Module datk.tests.networks\137tests}{}% 92
+\BOOKMARK [2][-]{subsection.9.1}{Variables}{section.9}% 93
+\BOOKMARK [1][-]{section.10}{Module datk.tests.tests}{}% 94
+\BOOKMARK [2][-]{subsection.10.1}{Functions}{section.10}% 95
+\BOOKMARK [2][-]{subsection.10.2}{Variables}{section.10}% 96
+\BOOKMARK [1][-]{section*.2}{Index}{}% 97
