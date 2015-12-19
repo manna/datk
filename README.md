@@ -63,16 +63,15 @@ DATK is a Distributed Algorithms Toolkit for Python
 
     >>> x.state()
 
-
     [('P2', {'n': 5}),
      ('P4', {'n': 5}),
      ('P1', {'n': 5}),
      ('P0', {'n': 5}),
      ('P3', {'n': 5})]
 
+<!-- -->
 
     >>> lcr = LCR(x)
-
 
     --------------
     Running LCR on
@@ -98,7 +97,6 @@ DATK is a Distributed Algorithms Toolkit for Python
 
     >>> print lcr.r, "rounds"
 
-
     5 rounds
 
 
@@ -112,17 +110,15 @@ DATK is a Distributed Algorithms Toolkit for Python
 
 ##### Final Network State
 
-'''python
->>> x.state()
-'''
+    >>> x.state()
 
-'''python
-[('P2', {'n': 5, 'status': 'non-leader'}),
- ('P4', {'n': 5, 'status': 'leader'}),
- ('P1', {'n': 5, 'status': 'non-leader'}),
- ('P0', {'n': 5, 'status': 'non-leader'}),
- ('P3', {'n': 5, 'status': 'non-leader'})]
-'''
+
+    [('P2', {'n': 5, 'status': 'non-leader'}),
+     ('P4', {'n': 5, 'status': 'leader'}),
+     ('P1', {'n': 5, 'status': 'non-leader'}),
+     ('P0', {'n': 5, 'status': 'non-leader'}),
+     ('P3', {'n': 5, 'status': 'non-leader'})]
+
 
 ## Testing
 
