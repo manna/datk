@@ -2,6 +2,21 @@
 
 DATK is a Distributed Algorithms Toolkit for Python
 
+
+## Documentation
+
+Visit [amin10.github.com/datk](http://amin10.github.io/datk/) for documentation
+
+
+## Testing
+
+Run tests by executing the following command in the repo directory
+
+    $ python -m datk.tests.tests
+
+    $ python -m datk.tests.networks_tests
+
+
 ## Usage
 
 ### Networks
@@ -120,17 +135,142 @@ DATK is a Distributed Algorithms Toolkit for Python
      ('P3', {'n': 5, 'status': 'non-leader'})]
 
 
-## Testing
+#### Chaining Algorithms
 
-Run tests by executing the following command in the repo directory
 
-    $ python -m datk.tests.tests
+'''python
+x = Random_Line_Network(6)
+'''
 
-    $ python -m datk.tests.networks_tests
+<!-- -->
 
-## Documentation
+'''python
+#Elect a Leader
+>>> FloodMax(x, params={'verbosity': Algorithm.QUIET})
+'''
 
-Visit [amin10.github.com/datk](http://amin10.github.io/datk/) for documentation
+    FloodMax Terminated
+    Message Complexity: 80
+    Time Complexity: 6
+    ------------------
+
+<!-- -->
+
+'''python
+#Construct a BFS tree rooted at the Leader 
+>>> SynchBFS(x)
+'''
+
+    -------------------
+    Running SynchBFS on
+    [P3 -> {P4}, P4 -> {P3, P1}, P1 -> {P4, P0, P2, P5}, P0 -> {P1, P2, P5}, P2 -> {P1, P0, P5}, P5 -> {P1, P0, P2}]
+    Round 1
+    P5.parent is None
+    P1.parent is P5
+    P0.parent is P5
+    P2.parent is P5
+    Round 2
+    P4.parent is P1
+    Round 3
+    P3.parent is P4
+    Round 4
+    SynchBFS Terminated
+    Message Complexity: 16
+    Time Complexity: 4
+    ------------------
+
+<!-- -->
+
+'''python
+>>> SynchConvergeHeight(x, params={'draw':True})
+'''
+
+    --------------------------
+    Running _ConvergeHeight on
+
+
+![png](output_28_1.png)
+
+
+    [P3 -> {P4}, P4 -> {P3, P1}, P1 -> {P4, P0, P2, P5}, P0 -> {P1, P2, P5}, P2 -> {P1, P0, P5}, P5 -> {P1, P0, P2}]
+    Round 1
+    Round 2
+    Round 3
+    Round 4
+    P5.height is 3
+    _ConvergeHeight Terminated
+    Message Complexity: 8
+    Time Complexity: 4
+    ------------------
+
+<!-- -->
+
+'''python
+>>> x.state()
+'''
+
+    [('P3', {'n': 6, 'parent': P4 -> {P3, P1}, 'status': 'non-leader'}),
+     ('P4', {'n': 6, 'parent': P1 -> {P4, P0, P2, P5}, 'status': 'non-leader'}),
+     ('P1', {'n': 6, 'parent': P5 -> {P1, P0, P2}, 'status': 'non-leader'}),
+     ('P0', {'n': 6, 'parent': P5 -> {P1, P0, P2}, 'status': 'non-leader'}),
+     ('P2', {'n': 6, 'parent': P5 -> {P1, P0, P2}, 'status': 'non-leader'}),
+     ('P5', {'height': 3, 'n': 6, 'parent': None, 'status': 'leader'})]
+
+
+
+#### Equivalently, chain them like this:
+
+
+'''python
+x = Random_Line_Network(6)
+A = Chain(FloodMax(), Chain(SynchBFS(), SynchConvergeHeight()), params={'verbosity':Algorithm.QUIET})
+A(x)
+'''
+
+    FloodMax Terminated
+    Message Complexity: 50
+    Time Complexity: 6
+    ------------------
+    SynchBFS Terminated
+    Message Complexity: 10
+    Time Complexity: 5
+    ------------------
+    _ConvergeHeight Terminated
+    Message Complexity: 11
+    Time Complexity: 5
+    ------------------
+
+<!-- -->
+
+
+'''python
+x.state()
+'''
+
+
+    [('P1', {'n': 6, 'parent': P5 -> {P1, P3}, 'status': 'non-leader'}),
+     ('P5', {'height': 4, 'n': 6, 'parent': None, 'status': 'leader'}),
+     ('P3', {'n': 6, 'parent': P5 -> {P1, P3}, 'status': 'non-leader'}),
+     ('P4', {'n': 6, 'parent': P3 -> {P5, P4}, 'status': 'non-leader'}),
+     ('P0', {'n': 6, 'parent': P4 -> {P3, P0}, 'status': 'non-leader'}),
+     ('P2', {'n': 6, 'parent': P0 -> {P4, P2}, 'status': 'non-leader'})]
+
+
+
+### Benchmarking Algorithms
+
+
+'''python
+benchmark(SynchLubyMIS, Random_Line_Network, testLubyMIS)
+'''
+
+    Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE
+
+
+![png](readme/output_34_1.png)
+
+
+![png](readme/output_34_2.png)
 
 
 ## Made with love by:
