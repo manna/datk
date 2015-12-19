@@ -138,7 +138,7 @@ Run tests by executing the following command in the repo directory
 #### Chaining Algorithms
 
 
-    x = Random_Line_Network(6)
+    >>> x = Random_Line_Network(6)
 
 
 <!-- -->
@@ -219,9 +219,9 @@ Run tests by executing the following command in the repo directory
 #### Equivalently, chain them like this:
 
 
-    x = Random_Line_Network(6)
-    A = Chain(FloodMax(), Chain(SynchBFS(), SynchConvergeHeight()),     params={'verbosity':Algorithm.QUIET})
-    A(x)
+    >>> x = Random_Line_Network(6)
+    >>> A = Chain(FloodMax(), Chain(SynchBFS(), SynchConvergeHeight()), params={'verbosity':Algorithm.QUIET})
+    >>> A(x)
 
     FloodMax Terminated
     Message Complexity: 50
@@ -239,7 +239,7 @@ Run tests by executing the following command in the repo directory
 <!-- -->
 
 
-    x.state()
+    >>> x.state()
 
 
     [('P1', {'n': 6, 'parent': P5 -> {P1, P3}, 'status': 'non-leader'}),
@@ -254,7 +254,7 @@ Run tests by executing the following command in the repo directory
 ### Benchmarking Algorithms
 
 
-    benchmark(SynchLubyMIS, Random_Line_Network, testLubyMIS)
+    >>> benchmark(SynchLubyMIS, Random_Line_Network, testLubyMIS)
 
 
     Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE
