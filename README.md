@@ -35,7 +35,8 @@ Run tests by executing the following command in the repo directory
 >>> x.state()
 ```
 
-<pre>
+<div>
+<pre><code>
 [('P4', {'n': 8}),
  ('P1', {'n': 8}),
  ('P2', {'n': 8}),
@@ -44,7 +45,8 @@ Run tests by executing the following command in the repo directory
  ('P7', {'n': 8}),
  ('P6', {'n': 8}),
  ('P3', {'n': 8})]
-</pre>
+</code></pre>
+<div>
 
 #### Line Network
 
