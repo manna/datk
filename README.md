@@ -110,8 +110,8 @@ Run tests by executing the following command in the repo directory
 >>> lcr = LCR(x)
 ```
 
-<div><samp>
---------------
+<samp>
+\--------------
 Running LCR on  
 [P2 -> {P4}, P4 -> {P1}, P1 -> {P0}, P0 -> {P3}, P3 -> {P2}]  
 Round 1  
@@ -128,8 +128,8 @@ Round 5
 P4.status is leader  
 Algorithm Terminated  
 Message Complexity: 11  
-----------------------
-</samp></div>
+\----------------------
+</samp>
 
 
 ##### Time Complexity
@@ -185,7 +185,7 @@ Message Complexity: 11
 FloodMax Terminated  
 Message Complexity: 80  
 Time Complexity: 6  
-------------------
+\------------------
 </samp>
 
 
@@ -195,7 +195,7 @@ Time Complexity: 6
 ```
 
 <samp>
--------------------  
+\-------------------  
 Running SynchBFS on  
 [P3 -> {P4}, P4 -> {P3, P1}, P1 -> {P4, P0, P2, P5}, P0 -> {P1, P2, P5}, P2 -> {P1, P0, P5},   P5 -> {P1, P0, P2}]  
 Round 1  
@@ -211,7 +211,7 @@ Round 4
 SynchBFS Terminated  
 Message Complexity: 16  
 Time Complexity: 4  
-------------------
+\------------------
 </samp>
 
 
@@ -220,7 +220,7 @@ Time Complexity: 4
 ```
 
 <samp>
---------------------------
+\--------------------------
 Running _ConvergeHeight on  
 ![png](readme/output_28_1.png)  
 [P3 -> {P4}, P4 -> {P3, P1}, P1 -> {P4, P0, P2, P5}, P0 -> {P1, P2, P5}, P2 -> {P1, P0, P5},   P5 -> {P1, P0, P2}]  
@@ -232,7 +232,7 @@ P5.height is 3
 _ConvergeHeight Terminated  
 Message Complexity: 8  
 Time Complexity: 4  
-------------------
+\------------------
 </samp>
 
 
@@ -258,20 +258,21 @@ Time Complexity: 4
 >>> A(x)
 ```
 
-<div><samp>
+
+<samp>
 FloodMax Terminated  
 Message Complexity: 50  
 Time Complexity: 6  
-------------------  
+\------------------  
 SynchBFS Terminated  
 Message Complexity: 10  
 Time Complexity: 5  
-------------------  
+\------------------  
 _ConvergeHeight Terminated  
 Message Complexity: 11  
 Time Complexity: 5  
-------------------
-</samp></div>
+\------------------
+</samp>
 
 
 ```python
