@@ -158,13 +158,14 @@ Message Complexity: 11
 >>> x.state()
 ```
 
-<samp style='white-space:pre-wrap'>
+<div><samp style='white-space:pre-wrap'>
 [('P2', {'n': 5, 'status': 'non-leader'}),
  ('P4', {'n': 5, 'status': 'leader'}),
  ('P1', {'n': 5, 'status': 'non-leader'}),
  ('P0', {'n': 5, 'status': 'non-leader'}),
  ('P3', {'n': 5, 'status': 'non-leader'})]
-</samp>
+</samp></div>
+
 
 #### Chaining Algorithms
 
