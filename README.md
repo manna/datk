@@ -35,14 +35,14 @@ Run tests by executing the following command in the repo directory
 >>> x.state()
 ```
 
-<samp style='white-space:pre-wrap'>
-[('P4', {'n': 8}),
- ('P1', {'n': 8}),
- ('P2', {'n': 8}),
- ('P5', {'n': 8}),
- ('P0', {'n': 8}),
- ('P7', {'n': 8}),
- ('P6', {'n': 8}),
+<samp>
+[('P4', {'n': 8}),  
+ ('P1', {'n': 8}),  
+ ('P2', {'n': 8}),  
+ ('P5', {'n': 8}),  
+ ('P0', {'n': 8}),  
+ ('P7', {'n': 8}),  
+ ('P6', {'n': 8}),  
  ('P3', {'n': 8})]
 </samp>
 
@@ -97,11 +97,11 @@ Run tests by executing the following command in the repo directory
 >>> x.state()
 ```
 
-<samp style='white-space:pre-wrap'>
-[('P2', {'n': 5}),
- ('P4', {'n': 5}),
- ('P1', {'n': 5}),
- ('P0', {'n': 5}),
+<samp>
+[('P2', {'n': 5}),  
+ ('P4', {'n': 5}),  
+ ('P1', {'n': 5}),  
+ ('P0', {'n': 5}),  
  ('P3', {'n': 5})]
 </samp>
 
@@ -110,24 +110,24 @@ Run tests by executing the following command in the repo directory
 >>> lcr = LCR(x)
 ```
 
-<samp style='white-space:pre-wrap'>
+<samp>
 --------------
-Running LCR on
-[P2 -> {P4}, P4 -> {P1}, P1 -> {P0}, P0 -> {P3}, P3 -> {P2}]
-Round 1
-P2.status is non-leader
-P1.status is non-leader
-P0.status is non-leader
-Round 2
-P0.status is non-leader
-Round 3
-P3.status is non-leader
-Round 4
-P2.status is non-leader
-Round 5
-P4.status is leader
-Algorithm Terminated
-Message Complexity: 11
+Running LCR on  
+[P2 -> {P4}, P4 -> {P1}, P1 -> {P0}, P0 -> {P3}, P3 -> {P2}]  
+Round 1  
+P2.status is non-leader  
+P1.status is non-leader  
+P0.status is non-leader  
+Round 2  
+P0.status is non-leader  
+Round 3  
+P3.status is non-leader  
+Round 4  
+P2.status is non-leader  
+Round 5  
+P4.status is leader  
+Algorithm Terminated  
+Message Complexity: 11  
 ----------------------
 </samp>
 
@@ -138,7 +138,7 @@ Message Complexity: 11
 >>> print lcr.r, "rounds"
 ```
 
-<samp style='white-space:pre-wrap'>
+<samp>
 5 rounds
 </samp>
 
@@ -148,7 +148,7 @@ Message Complexity: 11
 >>> print lcr.message_count, "messages"
 ```
 
-<samp style='white-space:pre-wrap'>
+<samp>
 11 messages
 </samp>
 
@@ -158,15 +158,14 @@ Message Complexity: 11
 >>> x.state()
 ```
 
-<div>
-    <samp style='white-space:pre-wrap'>
-    [('P2', {'n': 5, 'status': 'non-leader'}),
-     ('P4', {'n': 5, 'status': 'leader'}),
-     ('P1', {'n': 5, 'status': 'non-leader'}),
-     ('P0', {'n': 5, 'status': 'non-leader'}),
-     ('P3', {'n': 5, 'status': 'non-leader'})]
-    </samp>
-</div>
+
+<samp>
+[('P2', {'n': 5, 'status': 'non-leader'}),  
+ ('P4', {'n': 5, 'status': 'leader'}),  
+ ('P1', {'n': 5, 'status': 'non-leader'}),  
+ ('P0', {'n': 5, 'status': 'non-leader'}),  
+ ('P3', {'n': 5, 'status': 'non-leader'})]
+</samp>
 
 
 #### Chaining Algorithms
@@ -182,10 +181,10 @@ Message Complexity: 11
 >>> FloodMax(x, params={'verbosity': Algorithm.QUIET})
 ```
 
-<samp style='white-space:pre-wrap'>
-FloodMax Terminated
-Message Complexity: 80
-Time Complexity: 6
+<samp>
+FloodMax Terminated  
+Message Complexity: 80  
+Time Complexity: 6  
 ------------------
 </samp>
 
@@ -195,23 +194,23 @@ Time Complexity: 6
 >>> SynchBFS(x)
 ```
 
-<samp style='white-space:pre-wrap'>
--------------------
-Running SynchBFS on
-[P3 -> {P4}, P4 -> {P3, P1}, P1 -> {P4, P0, P2, P5}, P0 -> {P1, P2, P5}, P2 -> {P1, P0, P5}, P5 -> {P1, P0, P2}]
-Round 1
-P5.parent is None
-P1.parent is P5
-P0.parent is P5
-P2.parent is P5
-Round 2
-P4.parent is P1
-Round 3
-P3.parent is P4
-Round 4
-SynchBFS Terminated
-Message Complexity: 16
-Time Complexity: 4
+<samp>
+-------------------  
+Running SynchBFS on  
+[P3 -> {P4}, P4 -> {P3, P1}, P1 -> {P4, P0, P2, P5}, P0 -> {P1, P2, P5}, P2 -> {P1, P0, P5},   P5 -> {P1, P0, P2}]  
+Round 1  
+P5.parent is None  
+P1.parent is P5  
+P0.parent is P5  
+P2.parent is P5  
+Round 2  
+P4.parent is P1  
+Round 3  
+P3.parent is P4  
+Round 4  
+SynchBFS Terminated  
+Message Complexity: 16  
+Time Complexity: 4  
 ------------------
 </samp>
 
@@ -220,19 +219,19 @@ Time Complexity: 4
 >>> SynchConvergeHeight(x, params={'draw':True})
 ```
 
-<samp style='white-space:pre-wrap'>
+<samp>
 --------------------------
-Running _ConvergeHeight on
-![png](readme/output_28_1.png)
-[P3 -> {P4}, P4 -> {P3, P1}, P1 -> {P4, P0, P2, P5}, P0 -> {P1, P2, P5}, P2 -> {P1, P0, P5}, P5 -> {P1, P0, P2}]
-Round 1
-Round 2
-Round 3
-Round 4
-P5.height is 3
-_ConvergeHeight Terminated
-Message Complexity: 8
-Time Complexity: 4
+Running _ConvergeHeight on  
+![png](readme/output_28_1.png)  
+[P3 -> {P4}, P4 -> {P3, P1}, P1 -> {P4, P0, P2, P5}, P0 -> {P1, P2, P5}, P2 -> {P1, P0, P5},   P5 -> {P1, P0, P2}]  
+Round 1  
+Round 2  
+Round 3  
+Round 4  
+P5.height is 3  
+_ConvergeHeight Terminated  
+Message Complexity: 8  
+Time Complexity: 4  
 ------------------
 </samp>
 
@@ -241,12 +240,12 @@ Time Complexity: 4
 >>> x.state()
 ```
 
-<samp style='white-space:pre-wrap'>
-[('P3', {'n': 6, 'parent': P4 -> {P3, P1}, 'status': 'non-leader'}),
- ('P4', {'n': 6, 'parent': P1 -> {P4, P0, P2, P5}, 'status': 'non-leader'}),
- ('P1', {'n': 6, 'parent': P5 -> {P1, P0, P2}, 'status': 'non-leader'}),
- ('P0', {'n': 6, 'parent': P5 -> {P1, P0, P2}, 'status': 'non-leader'}),
- ('P2', {'n': 6, 'parent': P5 -> {P1, P0, P2}, 'status': 'non-leader'}),
+<samp>
+[('P3', {'n': 6, 'parent': P4 -> {P3, P1}, 'status': 'non-leader'}),  
+ ('P4', {'n': 6, 'parent': P1 -> {P4, P0, P2, P5}, 'status': 'non-leader'}),  
+ ('P1', {'n': 6, 'parent': P5 -> {P1, P0, P2}, 'status': 'non-leader'}),  
+ ('P0', {'n': 6, 'parent': P5 -> {P1, P0, P2}, 'status': 'non-leader'}),  
+ ('P2', {'n': 6, 'parent': P5 -> {P1, P0, P2}, 'status': 'non-leader'}),  
  ('P5', {'height': 3, 'n': 6, 'parent': None, 'status': 'leader'})]
 </samp>
 
@@ -259,18 +258,18 @@ Time Complexity: 4
 >>> A(x)
 ```
 
-<samp style='white-space:pre-wrap'>
-FloodMax Terminated
-Message Complexity: 50
-Time Complexity: 6
-------------------
-SynchBFS Terminated
-Message Complexity: 10
-Time Complexity: 5
-------------------
-_ConvergeHeight Terminated
-Message Complexity: 11
-Time Complexity: 5
+<samp>
+FloodMax Terminated  
+Message Complexity: 50  
+Time Complexity: 6  
+------------------  
+SynchBFS Terminated  
+Message Complexity: 10  
+Time Complexity: 5  
+------------------  
+_ConvergeHeight Terminated  
+Message Complexity: 11  
+Time Complexity: 5  
 ------------------
 </samp>
 
@@ -279,12 +278,12 @@ Time Complexity: 5
 >>> x.state()
 ```
 
-<samp style='white-space:pre-wrap'>
-[('P1', {'n': 6, 'parent': P5 -> {P1, P3}, 'status': 'non-leader'}),
- ('P5', {'height': 4, 'n': 6, 'parent': None, 'status': 'leader'}),
- ('P3', {'n': 6, 'parent': P5 -> {P1, P3}, 'status': 'non-leader'}),
- ('P4', {'n': 6, 'parent': P3 -> {P5, P4}, 'status': 'non-leader'}),
- ('P0', {'n': 6, 'parent': P4 -> {P3, P0}, 'status': 'non-leader'}),
+<samp>
+[('P1', {'n': 6, 'parent': P5 -> {P1, P3}, 'status': 'non-leader'}),  
+ ('P5', {'height': 4, 'n': 6, 'parent': None, 'status': 'leader'}),  
+ ('P3', {'n': 6, 'parent': P5 -> {P1, P3}, 'status': 'non-leader'}),  
+ ('P4', {'n': 6, 'parent': P3 -> {P5, P4}, 'status': 'non-leader'}),  
+ ('P0', {'n': 6, 'parent': P4 -> {P3, P0}, 'status': 'non-leader'}),  
  ('P2', {'n': 6, 'parent': P0 -> {P4, P2}, 'status': 'non-leader'})]
 </samp>
 
@@ -295,9 +294,9 @@ Time Complexity: 5
 >>> benchmark(LCR, Bidirectional_Ring, testLeaderElection)
 ```
 
-<samp style='white-space:pre-wrap'>
-Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE
-![png](readme/output_35_1.png)
+<samp>
+Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE  
+![png](readme/output_35_1.png)  
 ![png](readme/output_35_2.png)
 </samp>
 
@@ -306,9 +305,9 @@ Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE
 >>> benchmark(SynchLubyMIS, Random_Line_Network, testLubyMIS)
 ```
 
-<samp style='white-space:pre-wrap'>
-Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE
-![png](readme/output_34_1.png)
+<samp>
+Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE  
+![png](readme/output_34_1.png)  
 ![png](readme/output_34_2.png)
 </samp>
 
