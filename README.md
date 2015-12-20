@@ -110,7 +110,7 @@ Run tests by executing the following command in the repo directory
 >>> lcr = LCR(x)
 ```
 
-<samp>
+<div><samp>
 --------------
 Running LCR on  
 [P2 -> {P4}, P4 -> {P1}, P1 -> {P0}, P0 -> {P3}, P3 -> {P2}]  
@@ -129,7 +129,7 @@ P4.status is leader
 Algorithm Terminated  
 Message Complexity: 11  
 ----------------------
-</samp>
+</samp></div>
 
 
 ##### Time Complexity
@@ -258,7 +258,7 @@ Time Complexity: 4
 >>> A(x)
 ```
 
-<samp>
+<div><samp>
 FloodMax Terminated  
 Message Complexity: 50  
 Time Complexity: 6  
@@ -271,7 +271,7 @@ _ConvergeHeight Terminated
 Message Complexity: 11  
 Time Complexity: 5  
 ------------------
-</samp>
+</samp></div>
 
 
 ```python
