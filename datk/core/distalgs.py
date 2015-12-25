@@ -1,7 +1,5 @@
 import random
 from random import shuffle
-import threading
-from threading import Thread
 from time import sleep
 import pdb
 import collections
@@ -514,28 +512,22 @@ class Asynchronous_Algorithm(Algorithm):
 
     def run(self, network, params = {}):
         Algorithm.run(self, network, params=params)
+        self.execute()
 
-        threads = []
-        for process in network.processes:
-            thread = Thread(target = self.run_process, args = (process,))
-            threads.append(thread)
-            thread.start()
+    def execute(self):
+        self.halted = False
+        while not self.halted:
+            index = random.randint(0, len(self.network.processes)-1)
+            self.run_process(self.network.processes[index])
+            self.halt()
 
-        for thread in threads: thread.join()
-        self.halt()
-    
     def run_process(self, process):
-        while True:
-            sleep((random.random()+1.)/5.)
+        if not self.halt_i(process):
             self.msgs_i(process)
-            if self.halt_i(process):
-                break
             try: #Checks if function trans_i(self, p) is defined
                 self.trans_i(process)
             except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
                 self.trans_i(process, process.get_msgs(self))
-            if self.halt_i(process):
-                break
 
     
 class Compose(Synchronous_Algorithm):
