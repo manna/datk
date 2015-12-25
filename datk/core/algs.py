@@ -36,12 +36,12 @@ class LCR(Synchronous_Algorithm):
                 self.output(p,"status", "leader")
             elif msg.content > p.UID:
                 self.set(p,"send", msg)
-                self.output(p,"status", "non-leader")
+                if not self.has(p, "decided"):
+                    self.set(p, "decided", None)
+                    self.output(p,"status", "non-leader")
             else:
                 self.set(p, "send",  None)
         if self.r == p.state['n']: p.terminate(self)
-    
-    def cleanup_i(self, p): self.delete(p, 'send')
 
 class AsyncLCR(Asynchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in an Asynchronous Ring Network 
@@ -94,9 +94,9 @@ class AsyncLCR(Asynchronous_Algorithm):
                 self.output(p,"status", "leader")
             elif msg.content > p.UID:
                 self.get(p, "sends").append(msg)
-                self.output(p,"status", "non-leader")
-
-    def cleanup_i(self, p): self.delete(p, 'sends')
+                if not self.has(p, 'decided'):
+                    self.set(p, 'decided', None)
+                    self.output(p,"status", "non-leader")
 
 #Leader Election Algorithms for general Networks:
 
@@ -134,8 +134,6 @@ class FloodMax(Synchronous_Algorithm):
             else:
                 self.output(p,"status", "non-leader")
                 p.terminate(self)
-
-    def cleanup_i(self,p): self.delete(p, 'send')
    
 #Construct BFS Tree
 
@@ -267,7 +265,6 @@ class SynchConvergecast(Synchronous_Algorithm):
                 self.set(p, 'send', self.trans_msg_to_parent(p, msgs) )
             else:
                 p.terminate(self)
-    def cleanup_i(self, p): self.delete(p, 'send')
     def trans_root(self, p, msgs):          pass
     def output_root(self, p):               pass
     def initial_msg_to_parent(self, p):     return
@@ -301,10 +298,6 @@ class AsynchConvergecast(Asynchronous_Algorithm):
             elif len(p.state['children']) != 0:
                 trans_msg = self.trans_msg_to_parent(p, self.get(p, 'reports'))
                 self.set(p, 'send', trans_msg)
-
-    def cleanup_i(self, p):
-        self.delete(p, 'send')
-        self.delete(p, 'reports')
 
     def trans_root(self, p, msgs):
         """Determines the state transition the root node should undergo
@@ -356,9 +349,6 @@ def _converge_height(Convergecast, name):
             return Message(self, 1)
         def trans_msg_to_parent(self, p, msgs):
             return Message(self, 1 + max(msgs))
-        def cleanup_i(self, p):
-            Convergecast.cleanup_i(self,p)
-            self.delete(p, 'height')
     return _ConvergeHeight
 
 SynchConvergeHeight = _converge_height(SynchConvergecast, "SynchConvergeHeight")
@@ -400,7 +390,6 @@ class SynchBroadcast(Synchronous_Algorithm):
                     self.set(p, 'send',  msgs[0])
                 else:
                     p.terminate(self)
-    def cleanup_i(self, p): self.delete(p, 'send')
 
 #Maximal Independent Set
 class SynchLubyMIS(Synchronous_Algorithm):

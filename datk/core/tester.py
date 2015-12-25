@@ -1,6 +1,6 @@
 from threading import Thread, Lock
 from time import sleep, time
-from distalgs import Process, Algorithm
+from distalgs import Process, Algorithm, Synchronous_Algorithm
 
 TIMEOUT = 5
 
@@ -73,22 +73,22 @@ def summarize():
     _failed_tests = set()
 
 import matplotlib.pyplot as plt
-def benchmark(Algorithm, Network, test):
+def benchmark(Algorithm_, Network_, test):
     """
     Benchmarks the Algorithm on a given class of Networks. Samples variable network size, and plots results.
 
-    @param Algorithm: a subclass of SynchronousAlgorithm, the algorithm to test.
-    @param Network: a subclass of Network, the network on which to benchmark the algorithm.
+    @param Algorithm_: a subclass of Synchronous_Algorithm, the algorithm to test.
+    @param Network_: a subclass of Network, the network on which to benchmark the algorithm.
     @param test: a function that may throw an assertion error 
-    """
-
-    def sample(Algorithm, Network, test):
+    """                     
+    
+    def sample(Algorithm_, Network_, test):
         """
         Runs the Algorithm on Networks of the given type, varying n.
-        After every execution, runs test on the resultant Network.
+        After every execution, runs test on the resultant Network_.
 
-        @param Algorithm: a subclass of SynchronousAlgorithm, the algorithm to test.
-        @param Network: a subclass of Network, the network on which to benchmark the algorithm.
+        @param Algorithm_: a subclass of Synchronous_Algorithm, the algorithm to test.
+        @param Network_: a subclass of Network, the network on which to benchmark the algorithm.
         @param test: a function that may throw an assertion error 
         @return: (size, time, comm) where size is a list of values of network size,
         and time and comm are lists of corresponding values of time and communication complexities.
@@ -111,8 +111,8 @@ def benchmark(Algorithm, Network, test):
             cur_times = []
             cur_comms = []
             for i in xrange( max(4, 2+lgn) ):
-                A = Algorithm(params={'draw': False, 'verbosity': Algorithm.SILENT})
-                x = Network(n)
+                A = Algorithm_(params={'draw': False, 'verbosity': Algorithm.SILENT})
+                x = Network_(n)
                 A(x)
                 try:
                     test(x)
@@ -120,21 +120,22 @@ def benchmark(Algorithm, Network, test):
                     print "Algorithm Failed"
                     return None
                 else:
-                    cur_times.append(A.r)
-                    cur_comms.append(A.message_count)
-
                     size.append(n)
-                    time.append(A.r)
+                    cur_comms.append(A.message_count)
                     comm.append(A.message_count)
-                    max_time = max(max_time, A.r)
+
+                    if issubclass(Algorithm_, Synchronous_Algorithm):
+                        cur_times.append(A.r)
+                        time.append(A.r)
+                        max_time = max(max_time, A.r)
                     max_comm = max(max_comm, A.message_count)
 
             #TODO here, decide whether need more samples for this n, based on cur_times and cur_comms variance
             n*=2
             lgn += 1
         print " DONE"
-        return size, time, comm
-    
+        return size, comm, time
+
     def averages(x,y):
         """
         Groups x's with the same value, averages corresponding y values.
@@ -177,10 +178,13 @@ def benchmark(Algorithm, Network, test):
         ax.set_ylim( ymin=0 )
         ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         ax.set_title(title)
-        ax.set_xlabel(Network.__name__ +' size')
+        ax.set_xlabel(Network_.__name__ +' size')
 
-    data = sample(Algorithm, Network, test)
+    data = sample(Algorithm_, Network_, test)
     if data == None: return
-    size, time, comm = data
-    plot(size, time, Algorithm.__name__ + ' Time Complexity')
-    plot(size, comm, Algorithm.__name__ + ' Communication Complexity')
+    size, comm, time = data
+    
+    if issubclass(Algorithm_, Synchronous_Algorithm):
+        plot(size, time, Algorithm_.__name__ + ' Time Complexity')
+
+    plot(size, comm, Algorithm_.__name__ + ' Communication Complexity')

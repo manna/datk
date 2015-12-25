@@ -524,6 +524,7 @@ class Asynchronous_Algorithm(Algorithm):
     def run_process(self, process):
         if not self.halt_i(process):
             self.msgs_i(process)
+        if not self.halt_i(process):
             try: #Checks if function trans_i(self, p) is defined
                 self.trans_i(process)
             except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
