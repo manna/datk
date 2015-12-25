@@ -337,7 +337,7 @@ class AsynchConvergecast(Asynchronous_Algorithm):
         """
         return
 
-def _converge_height(Convergecast):
+def _converge_height(Convergecast, name):
     class _ConvergeHeight(Convergecast):
         """
         A Convergecast Algorithm that results in the root node, p, knowing
@@ -361,8 +361,8 @@ def _converge_height(Convergecast):
             self.delete(p, 'height')
     return _ConvergeHeight
 
-SynchConvergeHeight = _converge_height(SynchConvergecast)
-AsynchConvergeHeight = _converge_height(AsynchConvergecast)
+SynchConvergeHeight = _converge_height(SynchConvergecast, "SynchConvergeHeight")
+AsynchConvergeHeight = _converge_height(AsynchConvergecast, "AsynchConvergeHeight")
 
 #Broadcast
 class SynchBroadcast(Synchronous_Algorithm):

@@ -48,6 +48,8 @@ class Complete_Graph(Network):
         for i in range(n-1):
             for j in range(i+1,n):
                 self[i].bi_link(self[j])
+    def draw(self, style='circular'):
+        Network.draw(self, style=style)
 
 class Random_Line_Network(Network):
     """A Network of n processes arranged randomly at the vertices of a connected

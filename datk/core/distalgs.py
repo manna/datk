@@ -7,6 +7,11 @@ import pdb
 import collections
 from collections import defaultdict
 from copy import deepcopy
+import numpy as np
+import math
+from matplotlib import pyplot as plt
+
+from helpers import memoize
 
 class Message:
     """
@@ -184,19 +189,33 @@ class Network:
         """Runs algorithm on the Network"""
         algorithm(self)
     
-    def draw(self):
-        """Draws the Network"""
-        import math
-        from matplotlib import pyplot as plt
-        n = len(self)
+    def draw(self, style='spectral'):
+        """
+        Draws the network
 
-        vals = []
+        @param style:
+            - 'spectral' draws graph in a spectral graph layout
+                - http://www.math.ucsd.edu/~fan/research/cb/ch1.pdf
+                - http://research.microsoft.com/apps/pubs/default.aspx?id=69611
+                - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
+            - 'circular' draws graph in a circular layout
+        """
+        if style == 'spectral':
+            n = len(self)
+            L = self._laplacian()
+            w, v = np.linalg.eig(L)
+            v = v.T
 
-        for k in range(n):
-            vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
-            
-            plt.xlim([-1.2, 1.2]) 
-            plt.ylim([-1.2, 1.2]) 
+            idx = w.argsort()
+            v = v[idx]
+            x_vals, y_vals = v[1], v[2]
+            vals = zip(x_vals, y_vals)
+        if style == 'circular':
+            n = len(self)
+            vals = []
+            for k in range(n):
+                vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
+
         plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
 
         def line(v1, v2):
@@ -204,11 +223,13 @@ class Network:
         for i in range(n):
             for nbr in self[i].out_nbrs:
                 line(vals[i], vals[self.index(nbr)])
+
         frame = plt.gca()
         frame.axes.get_xaxis().set_visible(False)
         frame.axes.get_yaxis().set_visible(False)
         plt.show()
-    
+
+
     def state(self):
         """
         @return: A text representation of the state of all the Processes in the Network 
@@ -217,6 +238,79 @@ class Network:
     
     def clone(self):
         return deepcopy(self)
+
+    @memoize
+    def adjacency_matrix(self):
+        """
+        Returns the (symmetric) n,n adjacency matrix of the undirected graph that
+        has a vertex for every Process of this network, and an edge between
+        vertices i and j, if Process self[i] is an in_nbr or out_nbr of Process
+        self[j].
+
+        Memoized because Networks are assumed to be static.
+
+        @return: Matrix, A, such that A[i][j] = 1
+        if self[i] is an in_nbr or out_nbr of self[j], else 0.
+        """
+        A = np.zeros(shape=(len(self), len(self)))
+        for i in xrange(len(self)):
+            i_nbrs = set(self[i].in_nbrs+self[i].out_nbrs)
+            for j in xrange(len(self)):
+                if self[j] in i_nbrs:
+                    A[i][j] = 1.
+        return A
+
+    def adjacent(self, i, j):
+        """
+        Checks whether the processes at index i and j are linked
+
+        Alternately, checks if Processes i and j are linked.
+
+        @returns True iff Processes self[i] (or i) and self[j] (or j) are adjacent
+        """
+        if isinstance(i, Process) and isinstance(j, Process):
+            i, j = self.index(i), self.index(j)
+        assert isinstance(i, int) and isinstance(j, int), "i and j must be integer Process indices"
+
+        return self.adjacency_matrix()[i][j]==1
+    
+    @memoize
+    def degrees(self):
+        """
+        @return size n array containing the degree of each process, ordered by index.
+        """
+        A = self.adjacency_matrix()
+        D = np.zeros(shape=(len(self),))
+
+        for i in xrange(len(self)):
+            D[i] = sum(A[i])
+        return D
+
+    def degree(self, p):
+        """Returns the number of other Processes Process p is connected to.
+
+        Alternately, if p is an integer in 0..n-1, returns the degree of Process self[p]
+        """
+        if isinstance(p, Process):
+            p = self.index(p)
+        assert isinstance(p, int) and p>=0 and p<len(self), "p must be a Process or an integer Process index"
+        return self.degrees()[p]
+
+    @memoize
+    def _laplacian(self):
+        """
+        @return: the Laplacian, L. A symmetric n,n matrix associated with the graph,
+        where L[i][j] = deg(i) if i = j, -1 if adjacent(i,j), and 0 otherwise
+        """
+        D = self.degrees()
+        L = np.zeros(shape=(len(self), len(self)))
+        for i in xrange(len(self)):
+            for j in xrange(len(self)):
+                if i == j and D[i] != 0:
+                    L[i][j] = 1
+                elif self.adjacent(i,j):
+                    L[i][j] = -1./((D[i]*D[j])**0.5) #-w_{i,j}/ in a weighted graph
+        return L
 
     def __getitem__(self, i):
         return self.processes[i]
