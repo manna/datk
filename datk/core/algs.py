@@ -298,7 +298,7 @@ class AsynchConvergecast(Asynchronous_Algorithm):
                 self.trans_root(p, self.get(p, 'reports'))
                 self.output_root(p)
                 p.terminate(self)
-            else:
+            elif len(p.state['children']) != 0:
                 trans_msg = self.trans_msg_to_parent(p, self.get(p, 'reports'))
                 self.set(p, 'send', trans_msg)
 
@@ -349,13 +349,13 @@ def _converge_height(Convergecast):
             - Root Process knows height of tree in state["height"]
         """
         def trans_root(self, p, msgs):      #Updates height
-            self.set(p, 'height', max(msgs)) 
+            self.set(p, 'height', max(msgs))
         def output_root(self, p):           #Decides height
             self.output(p,'height', self.get(p, 'height')) 
         def initial_msg_to_parent(self, p):
             return Message(self, 1)
         def trans_msg_to_parent(self, p, msgs):
-            return Message(self, 1 + max(msgs))    
+            return Message(self, 1 + max(msgs))
         def cleanup_i(self, p):
             Convergecast.cleanup_i(self,p)
             self.delete(p, 'height')
