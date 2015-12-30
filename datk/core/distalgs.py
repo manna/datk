@@ -6,6 +6,7 @@ import collections
 from collections import defaultdict
 from copy import deepcopy
 import numpy as np
+from scipy.linalg import eig
 import math
 from matplotlib import pyplot as plt
 
@@ -194,20 +195,21 @@ class Network:
         @param style:
             - 'spectral' draws graph in a spectral graph layout
                 - http://www.math.ucsd.edu/~fan/research/cb/ch1.pdf
-                - http://research.microsoft.com/apps/pubs/default.aspx?id=69611
                 - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
             - 'circular' draws graph in a circular layout
         """
         if style == 'spectral':
             n = len(self)
             L = self._laplacian()
-            w, v = np.linalg.eig(L)
+            D = np.diag(self.degrees())
+            w, v = eig(L, D)
             v = v.T
 
             idx = w.argsort()
             v = v[idx]
             x_vals, y_vals = v[1], v[2]
             vals = zip(x_vals, y_vals)
+
         if style == 'circular':
             n = len(self)
             vals = []
@@ -237,7 +239,7 @@ class Network:
     def clone(self):
         return deepcopy(self)
 
-    @memoize
+    # @memoize
     def adjacency_matrix(self):
         """
         Returns the (symmetric) n,n adjacency matrix of the undirected graph that
@@ -264,7 +266,7 @@ class Network:
 
         Alternately, checks if Processes i and j are linked.
 
-        @returns True iff Processes self[i] (or i) and self[j] (or j) are adjacent
+        @return: True iff Processes self[i] (or i) and self[j] (or j) are adjacent
         """
         if isinstance(i, Process) and isinstance(j, Process):
             i, j = self.index(i), self.index(j)
@@ -272,16 +274,17 @@ class Network:
 
         return self.adjacency_matrix()[i][j]==1
     
-    @memoize
+    # @memoize
     def degrees(self):
         """
-        @return size n array containing the degree of each process, ordered by index.
+        @return: the size n array containing the degree of each process, ordered by index.
         """
         A = self.adjacency_matrix()
         D = np.zeros(shape=(len(self),))
 
         for i in xrange(len(self)):
             D[i] = sum(A[i])
+
         return D
 
     def degree(self, p):
@@ -294,20 +297,22 @@ class Network:
         assert isinstance(p, int) and p>=0 and p<len(self), "p must be a Process or an integer Process index"
         return self.degrees()[p]
 
-    @memoize
+    # @memoize
     def _laplacian(self):
         """
         @return: the Laplacian, L. A symmetric n,n matrix associated with the graph,
         where L[i][j] = deg(i) if i = j, -1 if adjacent(i,j), and 0 otherwise
         """
-        D = self.degrees()
+        D = np.diag(self.degrees())
         L = np.zeros(shape=(len(self), len(self)))
+        
         for i in xrange(len(self)):
             for j in xrange(len(self)):
-                if i == j and D[i] != 0:
-                    L[i][j] = 1
+                if i == j:
+                    L[i][j] = D[i][i]
                 elif self.adjacent(i,j):
-                    L[i][j] = -1./((D[i]*D[j])**0.5) #-w_{i,j}/ in a weighted graph
+                    L[i][j] = -1. #-w_{i,j}/ in a weighted graph
+        
         return L
 
     def __getitem__(self, i):
@@ -515,21 +520,66 @@ class Asynchronous_Algorithm(Algorithm):
         self.execute()
 
     def execute(self):
-        self.halted = False
+
+        halted_processes = set()
+        msg_enabled = set(deepcopy(self.network.processes))
+        trans_enabled = set()
+
+        def halt_process(process):
+            halted_processes.add(process)
+            try:
+                msg_enabled.remove(process)
+            except KeyError:
+                pass
+            try:
+                trans_enabled.remove(process)
+            except KeyError:
+                pass
+
+        def trans_process(process):
+            if process not in halted_processes:
+                try: #Checks if function trans_i(self, p) is defined
+                    self.trans_i(process)
+                except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
+                    self.trans_i(process, process.get_msgs(self))
+
+                trans_enabled.remove(process)
+                msg_enabled.add(process)
+                for nbr in process.out_nbrs:
+                    if nbr not in halted_processes:
+                        msg_enabled.add(nbr)
+                        trans_enabled.add(nbr)
+
+                if self.halt_i(process):
+                    halt_process(process)            
+
+        def msg_process(process):
+            if process not in halted_processes:
+                self.msgs_i(process)
+
+                msg_enabled.remove(process)
+                trans_enabled.add(process)
+                for nbr in process.out_nbrs:
+                    if nbr not in halted_processes:
+                        msg_enabled.add(nbr)
+                        trans_enabled.add(nbr)
+
+                if self.halt_i(process):
+                    halt_process(process)
+
+        self.halted=False
+        # while len(halted_processes) < len(self.network.processes):
         while not self.halted:
-            index = random.randint(0, len(self.network.processes)-1)
-            self.run_process(self.network.processes[index])
+            if msg_enabled or trans_enabled:
+                r = random.randrange(len(msg_enabled) + len(trans_enabled))
+                if r < len(msg_enabled):
+                    msg_process(list(msg_enabled)[r])
+                else:
+                    trans_process(list(trans_enabled)[r-len(msg_enabled)])
+            else:
+                raise Exception("No enabled actions, but not all processes halted")
             self.halt()
-
-    def run_process(self, process):
-        if not self.halt_i(process):
-            self.msgs_i(process)
-        if not self.halt_i(process):
-            try: #Checks if function trans_i(self, p) is defined
-                self.trans_i(process)
-            except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
-                self.trans_i(process, process.get_msgs(self))
-
+        
     
 class Compose(Synchronous_Algorithm):
     """

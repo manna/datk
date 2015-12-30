@@ -93,7 +93,10 @@ class AsyncLCR(Asynchronous_Algorithm):
             elif msg.content == p.UID:
                 self.output(p,"status", "leader")
             elif msg.content > p.UID:
+                if self.get(p, 'sends') is None:
+                    self.set(p, 'sends', [Message(self, p.UID)])
                 self.get(p, "sends").append(msg)
+
                 if not self.has(p, 'decided'):
                     self.set(p, 'decided', None)
                     self.output(p,"status", "non-leader")
