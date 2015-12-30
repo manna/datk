@@ -544,9 +544,9 @@ class Asynchronous_Algorithm(Algorithm):
 
                 trans_enabled.remove(process)
                 msg_enabled.add(process)
+
                 for nbr in process.out_nbrs:
                     if nbr not in halted_processes:
-                        msg_enabled.add(nbr)
                         trans_enabled.add(nbr)
 
                 if self.halt_i(process):
@@ -556,12 +556,11 @@ class Asynchronous_Algorithm(Algorithm):
             if process not in halted_processes:
                 self.msgs_i(process)
 
-                msg_enabled.remove(process)
-                trans_enabled.add(process)
+                msg_enabled.remove(process)                
                 for nbr in process.out_nbrs:
                     if nbr not in halted_processes:
-                        msg_enabled.add(nbr)
                         trans_enabled.add(nbr)
+
                 if self.halt_i(process):
                     halt_process(process)
 

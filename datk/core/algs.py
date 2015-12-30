@@ -292,6 +292,8 @@ class AsynchConvergecast(Asynchronous_Algorithm):
 
     def trans_i(self, p, msgs):
         msgs = [m.content for m in msgs]
+        if not self.has(p, 'reports'):
+            self.set(p, 'reports', [])
         self.increment(p,'reports', msgs)
         if len(p.state['children']) == len(self.get(p, 'reports')):
             if self.is_root(p):
