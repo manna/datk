@@ -77,26 +77,26 @@ class AsyncLCR(Asynchronous_Algorithm):
             p.send_msg(msg, p.out_nbrs[-1])
             if verbose:
                 print p,"sends",msg
+            if self.has(p, "terminate_after_send"):
+                p.terminate(self)
 
     def trans_i(self, p, verbose=False):
         msgs = p.get_msgs(self)
+        if self.get(p, 'sends') is None:
+            self.set(p, 'sends', [Message(self, p.UID)])
+        
         if verbose:
             print str(p) + " received " + str(p.in_channel)
         while len(msgs) > 0:
             msg = msgs.pop()
             if isinstance(msg, AsyncLCR.Leader_Declaration):
-                p.send_msg(msg, p.out_nbrs[-1])
-                if verbose:
-                    print p,"sends",msg
-                p.terminate(self)
+                self.get(p, "sends").append(msg)
+                self.set(p, "terminate_after_send", None)
                 return
             elif msg.content == p.UID:
                 self.output(p,"status", "leader")
             elif msg.content > p.UID:
-                if self.get(p, 'sends') is None:
-                    self.set(p, 'sends', [Message(self, p.UID)])
                 self.get(p, "sends").append(msg)
-
                 if not self.has(p, 'decided'):
                     self.set(p, 'decided', None)
                     self.output(p,"status", "non-leader")
@@ -354,6 +354,7 @@ def _converge_height(Convergecast, name):
             return Message(self, 1)
         def trans_msg_to_parent(self, p, msgs):
             return Message(self, 1 + max(msgs))
+    _ConvergeHeight.__name__ = name
     return _ConvergeHeight
 
 SynchConvergeHeight = _converge_height(SynchConvergecast, "SynchConvergeHeight")

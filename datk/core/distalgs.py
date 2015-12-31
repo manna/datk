@@ -545,9 +545,11 @@ class Asynchronous_Algorithm(Algorithm):
                 trans_enabled.remove(process)
                 msg_enabled.add(process)
 
-                for nbr in process.out_nbrs:
-                    if nbr not in halted_processes:
-                        trans_enabled.add(nbr)
+                # Uncomment this to allow message sending during self.trans_i
+                # Warning: Causes significant slowdown
+                # for nbr in process.out_nbrs:
+                #     if nbr not in halted_processes:
+                #         trans_enabled.add(nbr)
 
                 if self.halt_i(process):
                     halt_process(process)            
