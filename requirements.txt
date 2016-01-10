@@ -1,5 +1,1 @@
-libblas-dev
-liblapack-dev
-libatlas-base-dev
-gfortran
 SciPy>=0.9.0
