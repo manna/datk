@@ -16,6 +16,9 @@ To run tests, execute the following commands:
 $ nosetests n_tests.py """)
 from helpers import *
 
+def test_broken_to_test_travis():
+    assert False
+
 def test_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     LCR(r)
