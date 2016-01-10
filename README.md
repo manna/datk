@@ -1,9 +1,6 @@
-# README
+# DATK: Distributed Algorithms Toolkit for Python
 
 [![Build Status](https://travis-ci.org/amin10/datk.svg?branch=master)](https://travis-ci.org/amin10/datk)
-
-DATK is a Distributed Algorithms Toolkit for Python
-
 
 ## Documentation
 
