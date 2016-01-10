@@ -60,7 +60,7 @@ def test(f=None, timeout=TIMEOUT, main_thread=False, test=True):
 
 def print_with_underline(text):
     print text
-    print "#"*len(text)
+    print "="*len(text)
 
 def summarize():
     """Called at the end of a test suite. Prints out summary of failed tests"""

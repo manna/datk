@@ -1,7 +1,7 @@
 """
 Algorithm Test Suite
 
-Tests algorithms defined in algs.py
+Tests algorithms defined in algs.py, compatible with nosetests
 """
 
 try:
@@ -13,88 +13,55 @@ except ImportError:
     raise ImportError(
 """ Imports failed\n
 To run tests, execute the following commands:
-$ cd ../..
-$ python -m datk.tests.tests """)
+$ nosetests n_tests.py """)
 from helpers import *
 
-def configure_ipython():
-  """
-  Convenient helper function to determine if environment is IPython.
-
-  Sets matplotlib inline, if indeed in IPython
-  Note that drawing is only safe in IPython qtconsole with matplotlib inline
-  
-  @return: True iff environment is IPython
-  """
-  try:
-    __IPYTHON__
-    ip = get_ipython()
-    ip.magic("%matplotlib inline") 
-  except NameError:
-    return False
-  else:
-    return True
-
-configure_ipython()
-
-Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
-
-@test
-def LCR_UNI_RING():
+def test_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     LCR(r)
     assertLeaderElection(r)
 
-@test
-def LCR_BI_RING():
+def test_LCR_BI_RING():
     r = Bidirectional_Ring(6)
     LCR(r)
     assertLeaderElection(r)
 
-@test
-def ASYNC_LCR_UNI_RING():
+def test_ASYNC_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     AsyncLCR(r)
     assertLeaderElection(r)
 
-@test
-def ASYNC_LCR_BI_RING():
+def test_ASYNC_LCR_BI_RING():
     r = Bidirectional_Ring(6)
     AsyncLCR(r)
     assertLeaderElection(r)
 
-@test
-def FLOODMAX_UNI_RING():
+def test_FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
     FloodMax(r)
     assertLeaderElection(r)
 
-@test
-def FLOODMAX_BI_RING():
+def test_FLOODMAX_BI_RING():
     r = Bidirectional_Ring(4)
     FloodMax(r)
     assertLeaderElection(r)
 
-@test
-def FLOODMAX_BI_LINE():
+def test_FLOODMAX_BI_LINE():
     l = Bidirectional_Line(4)
     FloodMax(l)
     assertLeaderElection(l)
 
-@test
-def FLOODMAX_COMPLETE_GRAPH():
+def test_FLOODMAX_COMPLETE_GRAPH():
     g = Complete_Graph(10)
     FloodMax(g)
     assertLeaderElection(g)
 
-@test
-def FLOODMAX_RANDOM_GRAPH():
+def test_FLOODMAX_RANDOM_GRAPH():
     g = Random_Line_Network(16)
     FloodMax(g)
     assertLeaderElection(g)
 
-@test
-def SYNCH_BFS():
+def test_SYNCH_BFS():
     x = Random_Line_Network(10)
     FloodMax(x)
     assertLeaderElection(x)
@@ -102,8 +69,7 @@ def SYNCH_BFS():
     SynchBFS(x)
     assertBFS(x)
 
-@test
-def SYNCH_BFS_ACK():
+def test_SYNCH_BFS_ACK():
     x = Bidirectional_Line(6, lambda t:t)
 
     FloodMax(x)
@@ -112,8 +78,7 @@ def SYNCH_BFS_ACK():
     SynchBFSAck(x)
     assertBFSWithChildren(x)
 
-@test
-def SYNCH_CONVERGE_HEIGHT():
+def test_SYNCH_CONVERGE_HEIGHT():
     x = Random_Line_Network(10)
 
     FloodMax(x)
@@ -124,8 +89,7 @@ def SYNCH_CONVERGE_HEIGHT():
 
     SynchConvergeHeight(x)
 
-@test
-def SYNCH_BROADCAST_HEIGHT():
+def test_SYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
     FloodMax(x)
@@ -139,8 +103,7 @@ def SYNCH_BROADCAST_HEIGHT():
     SynchBroadcast(x, {"attr":"height", "draw":False, "verbosity" : Algorithm.QUIET})
     assertBroadcast(x, 'height')
 
-@test
-def ASYNCH_BROADCAST_HEIGHT():
+def test_ASYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
     FloodMax(x)
@@ -154,8 +117,7 @@ def ASYNCH_BROADCAST_HEIGHT():
     SynchBroadcast(x, {"attr":"height", "draw":False, "verbosity" : Algorithm.QUIET})
     assertBroadcast(x, 'height')
 
-@test
-def send_receive_msgs():
+def test_send_receive_msgs():
     A = LCR()
     a1 = Message(A)
     a2 = Message(A)
@@ -183,15 +145,13 @@ def send_receive_msgs():
     assert x[1].get_msgs(A) == [a3]
     assert x[1].get_msgs(A) == []
 
-@test
-def SYNCH_DO_NOTHING():
+def test_SYNCH_DO_NOTHING():
     x = Random_Line_Network(5)
     state = x.state()
     assert Do_Nothing(x).message_count == 0
     assert state == x.state()
 
-@test
-def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
+def test_COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
     x = Unidirectional_Ring(5)
     x1 = x.clone()
 
@@ -205,8 +165,7 @@ def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
 
     assert C.message_count == A.message_count, "Wrong message count"
 
-@test
-def COMPOSE_SYNCH_LCR():
+def test_COMPOSE_SYNCH_LCR():
     x = Unidirectional_Ring(10)
     x1 = x.clone()
     x2 = x.clone()
@@ -226,8 +185,7 @@ def COMPOSE_SYNCH_LCR():
     assert B.message_count == 2*A.message_count, "Compose LCR LCR wrong message count"
     assert C.message_count == 3*A.message_count, "Compose LCR LCR LCR wrong message count"
 
-@test
-def CHAIN_BROADCAST_HEIGHT():
+def test_CHAIN_BROADCAST_HEIGHT():
     fm = FloodMax()
     bfs = SynchBFSAck()
     converge = SynchConvergeHeight()
@@ -240,16 +198,12 @@ def CHAIN_BROADCAST_HEIGHT():
     assertBFSWithChildren(x)
     assertBroadcast(x, 'height')
 
-@test
-def SYNCH_LUBY_MIS_BI_RING():
+def test_SYNCH_LUBY_MIS_BI_RING():
     x = Bidirectional_Ring(10, lambda t:t)
     SynchLubyMIS(x)
     assertLubyMIS(x)
 
-@test
-def SYNCH_LUBY_MIS():
+def test_SYNCH_LUBY_MIS():
     x = Random_Line_Network(10)
     SynchLubyMIS(x)
     assertLubyMIS(x)
-
-summarize()

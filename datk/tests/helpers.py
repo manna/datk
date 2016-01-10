@@ -3,7 +3,7 @@ Helper functions for tests in tests.py
 """
 from datk.core.distalgs import Process
 
-def testLeaderElection(
+def assertLeaderElection(
     network,
     isLeader = lambda p: "status" in p.state and p.state["status"]=="leader",
     isNonleader = lambda p: "status" in p.state and p.state["status"]=="non-leader"
@@ -13,13 +13,13 @@ def testLeaderElection(
     assert sum([isLeader(p) for p in network]) == 1 , "Leader Election Failed"
     assert sum([isNonleader(p) for p in network]) == len(network)-1, "Leader Election Failed"
 
-def testBroadcast(network, attr):
+def assertBroadcast(network, attr):
     """Asserts that p.state[attr] is identical for all processes p"""
     for p in network:
         assert attr in p.state
     assert len(set([p.state[attr] for p in network])) == 1, "Broadcasting " + attr + " failed."
 
-def testBFS(network):
+def assertBFS(network):
     """Asserts that every Process, p, knows 'parent', and there 
      exists exactly one Process where 'parent' is None"""
     found_root = False
@@ -33,7 +33,7 @@ def testBFS(network):
         else:
             assert isinstance(p.state['parent'], Process), "BFS FAILED"
 
-def testBFSWithChildren(network):
+def assertBFSWithChildren(network):
     """Asserts that every Process, p, knows 'parent' and 'children', and there
     exists exactly one Process where 'parent' is None"""
     found_root = False
@@ -48,7 +48,7 @@ def testBFSWithChildren(network):
             assert isinstance(p.state['parent'], Process), "BFS FAILED"
             assert p in p.state['parent'].state['children'], "BFS FAILED"
 
-def testLubyMIS(network):
+def assertLubyMIS(network):
     """Asserts that every process knows a boolean value, 'MIS', and that the Processes
     where 'MIS' is True form a set that is both independent and maximal."""
     for process in network:
