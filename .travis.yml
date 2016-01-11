@@ -27,7 +27,7 @@ install:
 
 # Run test
 script:
-    - nosetests
+    - nosetests datk/tests/n_tests.py
   # - nosetests --with-cov --cov datk --cov-config .coveragerc --logging-level=INFO
 
 # # Calculate coverage
