@@ -22,7 +22,7 @@ install:
   - conda info -a
   - conda install anaconda-client
   # Replace dep1 dep2 ... with your dependencies
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION nose numpy scipy
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION nose numpy scipy matplotlib
   - source activate test-environment
 
 # Run test
