@@ -29,6 +29,6 @@ install:
 script:
     - nosetests --with-cov datk.tests.n_tests --logging-level=INFO
 
-# # Calculate coverage
-# after_success:
-#   - coveralls --config_file .coveragerc
+# Calculate coverage
+after_success:
+  - coveralls --config_file .coveragerc
