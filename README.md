@@ -1,6 +1,7 @@
 # DATK: Distributed Algorithms Toolkit for Python
 
 [![Build Status](https://travis-ci.org/amin10/datk.svg?branch=master)](https://travis-ci.org/amin10/datk)
+[![Coverage Status](https://coveralls.io/repos/amin10/datk/badge.svg?branch=master&service=github)](https://coveralls.io/github/amin10/datk?branch=master)
 
 ## Documentation
 
