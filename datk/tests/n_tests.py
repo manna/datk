@@ -4,16 +4,10 @@ Algorithm Test Suite
 Tests algorithms defined in algs.py, compatible with nosetests
 """
 
-# try:
 from datk.core.distalgs import *
 from datk.core.networks import *
 from datk.core.algs import *
 from datk.core.tester import *
-# except ImportError:
-#     raise ImportError(
-# """ Imports failed\n
-# To run tests, execute the following commands:
-# $ nosetests n_tests.py """)
 from helpers import *
 
 def test_LCR_UNI_RING():
