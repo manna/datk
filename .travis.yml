@@ -27,8 +27,9 @@ install:
 
 # Run test
 script:
-  - nosetests --with-cov --cov datk --cov-config .coveragerc --logging-level=INFO
+    - nosetests
+  # - nosetests --with-cov --cov datk --cov-config .coveragerc --logging-level=INFO
 
-# Calculate coverage
-after_success:
-  - coveralls --config_file .coveragerc
+# # Calculate coverage
+# after_success:
+#   - coveralls --config_file .coveragerc
