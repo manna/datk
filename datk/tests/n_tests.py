@@ -1,7 +1,7 @@
 """
 Algorithm Test Suite
 
-Tests algorithms defined in algs.py, compatible with nosetests
+Tests algorithms defined in algs.py, for use with nosetests
 """
 
 from datk.core.distalgs import *
