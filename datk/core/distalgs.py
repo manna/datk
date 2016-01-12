@@ -353,8 +353,7 @@ class Algorithm:
         @param name: [Optional] name of the Algorithm instance. Defaults to class name.
         """
         self.params = deepcopy(Algorithm.DEFAULT_PARAMS)
-        for param,value in params.items():
-            self.params[param] = value
+        self.params.update(params)
         self.message_count = 0
 
         self.name = name
