@@ -240,7 +240,7 @@ def COMPOSE_SYNCH_LCR():
 
 @test
 def CHAIN_BROADCAST_HEIGHT():
-    fm = FloodMax()
+    fm = SynchFloodMax()
     bfs = SynchBFSAck()
     converge = SynchConvergeHeight()
     broadcast = SynchBroadcast(params ={"attr":"height"})
