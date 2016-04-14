@@ -64,6 +64,18 @@ def ASYNC_LCR_BI_RING():
     assertLeaderElection(r)
 
 @test
+def HS_UNI_RING():
+    r = Unidirectional_Ring(6)
+    SynchHS(r)
+    assertLeaderElection(r)
+
+@test
+def HS_BI_RING():
+    r = Bidirectional_Ring(6)
+    SynchHS(r)
+    assertLeaderElection(r)
+
+@test
 def FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
     FloodMax(r)
