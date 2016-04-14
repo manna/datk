@@ -78,37 +78,37 @@ def HS_BI_RING():
 @test
 def FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
-    FloodMax(r)
+    SynchFloodMax(r)
     assertLeaderElection(r)
 
 @test
 def FLOODMAX_BI_RING():
     r = Bidirectional_Ring(4)
-    FloodMax(r)
+    SynchFloodMax(r)
     assertLeaderElection(r)
 
 @test
 def FLOODMAX_BI_LINE():
     l = Bidirectional_Line(4)
-    FloodMax(l)
+    SynchFloodMax(l)
     assertLeaderElection(l)
 
 @test
 def FLOODMAX_COMPLETE_GRAPH():
     g = Complete_Graph(10)
-    FloodMax(g)
+    SynchFloodMax(g)
     assertLeaderElection(g)
 
 @test
 def FLOODMAX_RANDOM_GRAPH():
     g = Random_Line_Network(16)
-    FloodMax(g)
+    SynchFloodMax(g)
     assertLeaderElection(g)
 
 @test
 def SYNCH_BFS():
     x = Random_Line_Network(10)
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFS(x)
@@ -118,7 +118,7 @@ def SYNCH_BFS():
 def SYNCH_BFS_ACK():
     x = Bidirectional_Line(6, lambda t:t)
 
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFSAck(x)
@@ -128,7 +128,7 @@ def SYNCH_BFS_ACK():
 def SYNCH_CONVERGE_HEIGHT():
     x = Random_Line_Network(10)
 
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFS(x)
@@ -140,7 +140,7 @@ def SYNCH_CONVERGE_HEIGHT():
 def SYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFSAck(x)
@@ -155,7 +155,7 @@ def SYNCH_BROADCAST_HEIGHT():
 def ASYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFSAck(x)
