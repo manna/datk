@@ -101,42 +101,13 @@ class AsyncLCR(Asynchronous_Algorithm):
                     self.set(p, 'decided', None)
                     self.output(p,"status", "non-leader")
 
-#Leader Election Algorithms for general Networks:
-
+#TODO: Synchronous FloodMax
 class FloodMax(Synchronous_Algorithm):
-    """
-    UID flooding algorithm for Leader Election in a general network
+    pass
 
-    Every process maintains a record of the maximum UID it has seen so far
-    (initially its own). At each round, each process propagates this maximum
-    on all of its outgoing edges. After diam rounds, if the maximum value seen
-    is the process's own UID, the process elects itself the leader; otherwise,
-    it is a non-leader.
-
-    Requires:
-        - Every process, p, has p.state["diam"] >= dist( p, q ), forall q.
-        - Alternatively, a process that does not know state["diam"] will use 
-        state["n"], the size of the network, as a fallback upper bound on diam.
-    """
-    def msgs_i(self,p):
-        if self.r < self.get(p, "diam"):
-            if not self.has(p, "send"):
-                self.set(p, "send",  Message(self, p.UID))
-            p.send_msg(self.get(p, "send"))
-
-    def trans_i(self, p, msgs, verbose=False):
-        if verbose:
-            print p, "received", p.in_channel
-        seen_uids = msgs + [self.get(p, "send")]
-        self.set(p, "send",  max(seen_uids, key = lambda m: m.content))
-
-        if self.r == self.get(p, 'diam'):
-            if self.get(p, "send").content == p.UID:
-                self.output(p,"status", "leader")
-                p.terminate(self)
-            else:
-                self.output(p,"status", "non-leader")
-                p.terminate(self)
+#TODO: Synchronous HS
+class HS(Synchronous_Algorithm):
+    pass
    
 #Construct BFS Tree
 
