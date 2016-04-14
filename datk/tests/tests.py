@@ -76,6 +76,19 @@ def HS_BI_RING():
     assertLeaderElection(r)
 
 @test
+def TS_UNI_RING():
+    r = Unidirectional_Ring(6)
+    SynchTimeSlice(r)
+    assertLeaderElection(r)
+
+@test
+def TS_BI_RING():
+    r = Bidirectional_Ring(6)
+    SynchTimeSlice(r)
+    assertLeaderElection(r)
+
+
+@test
 def FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
     SynchFloodMax(r)

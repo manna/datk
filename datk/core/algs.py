@@ -138,6 +138,10 @@ class SynchFloodMax(Synchronous_Algorithm):
 #TODO: Synchronous HS
 class SynchHS(Synchronous_Algorithm):
     pass
+
+#TODO: Synchronous TimeSlice
+class SynchTimeSlice(Synchronous_Algorithm):
+    pass
    
 #Construct BFS Tree
 
