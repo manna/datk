@@ -2,7 +2,7 @@ from threading import Thread, Lock
 from time import sleep, time
 from distalgs import Process, Algorithm, Synchronous_Algorithm
 
-TIMEOUT = 5
+TIMEOUT = 10
 
 _lock = Lock()
 _num_tests = 0
