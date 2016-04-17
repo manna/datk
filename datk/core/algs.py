@@ -4,7 +4,7 @@ from distalgs import *
 
 class LCR(Synchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Ring Network 
-    
+
     Each Process sends its identifier around the ring.
     When a Process receives an incoming identifier, it compares that identifier to its own.
     If the incoming identifier is greater than its own, it keeps passing the identifier;
@@ -45,7 +45,7 @@ class LCR(Synchronous_Algorithm):
 
 class AsyncLCR(Asynchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in an Asynchronous Ring Network 
-    
+
     Each Process sends its identifier around the ring.
     When a Process receives incoming identifier(s), it compares their largest to its own.
     If that incoming identifier is greater than its own, it keeps passing that identifier;
@@ -84,7 +84,7 @@ class AsyncLCR(Asynchronous_Algorithm):
         msgs = p.get_msgs(self)
         if self.get(p, 'sends') is None:
             self.set(p, 'sends', [Message(self, p.UID)])
-        
+
         if verbose:
             print str(p) + " received " + str(p.in_channel)
         while len(msgs) > 0:
@@ -135,14 +135,86 @@ class SynchFloodMax(Synchronous_Algorithm):
                 self.output(p,"status", "non-leader")
                 p.terminate(self)
 
-#TODO: Synchronous HS
+
 class SynchHS(Synchronous_Algorithm):
-    pass
+    def msgs_i(self, p):
+
+        msg = self.get(p, "send_plus")
+        if msg is None:
+            return
+        self.set(p, "send_plus", None)
+        p.send_msg(msg, p.out_nbrs[-1])
+
+        msg = self.get(p, "send_minus")
+        if msg is None:
+            return
+        self.set(p, "send_minus", None)
+        p.send_msg(msg, p.out_nbrs[0])
+
+
+    def trans_i(self, p, msgs):
+        send_plus = None
+        send_minus = None
+        if not self.has(p, "phase"):
+            self.set(p, "phase", 0)
+
+        if len(msgs) == 0 and self.get(p, "phase") == 0:
+            send_plus = Message(self, (p.UID, "out", math.pow(2, self.get(p,"phase"))))
+            send_minus = Message(self, (p.UID, "out", math.pow(2, self.get(p,"phase"))))
+
+        elif len(msgs) == 0:
+            self.set(p, "send_plus", None)
+            self.set(p, "send_minus", None)
+
+        else:
+            minus_msg = [x for x in msgs if p.out_nbrs.index(x.author) == 0][-1]
+            plus_msg = [x for x in msgs if p.out_nbrs.index(x.author) == 1][-1]
+            print minus_msg, plus_msg
+
+            if minus_msg.content[1] == "out" :
+                if minus_msg.content[0] == p.UID:
+                    self.output(p, "status", "leader")
+                elif minus_msg.content[0] > p.UID and minus_msg.content[2] > 1:
+                    send_plus = Message(self, (minus_msg.content[0], "out", minus_msg.content[2] - 1))
+                elif minus_msg.content[0] > p.UID and minus_msg.content[2] == 1:
+                    send_minus = Message(self, (minus_msg.content[0], "in", 1))
+
+            if plus_msg.content[1] == "out" :
+                if plus_msg.content[0] == p.UID:
+                    self.output(p, "status", "leader")
+                elif plus_msg.content[0] > p.UID and plus_msg.content[2] > 1:
+                    send_minus= Message(self, (plus_msg.content[0], "out", plus_msg.content[2] - 1))
+                elif plus_msg.content[0] > p.UID and plus_msg.content[2] == 1:
+                    send_plus = Message(self, (plus_msg.content[0], "in", 1))
+
+            if minus_msg.content[1] == "in" and minus_msg.content[0] != p.UID:
+                send_plus = Message(self, (minus_msg.content[0], "in", 1))
+
+            if plus_msg.content[1] == "in" and plus_msg.content[0] != p.UID:
+                send_minus = Message(self, (plus_msg.content[0], "in", 1))
+
+            if plus_msg.content == (p.UID, "in", 1) and minus_msg.content == (p.UID, "in", 1):
+                if self.has(p, "phase"):
+                    self.set(p, "phase", self.get(p, "phase")+1)
+                else:
+                    self.set(p, "phase", 0)
+                send_plus = Message(self, (p.UID, "out", math.pow(2, self.get(p, "phase"))))
+                send_minus = Message(self, (p.UID, "out", math.pow(2, self.get(p, "phase"))))
+
+            self.set(p, "send_plus", send_plus)
+            self.set(p, "send_minus", send_minus)
+            print self.get(p, "phase")
+
+            if not self.has(p, "decided"):
+                self.set(p, "decided", None)
+                self.output(p,"status", "non-leader")
+        if (self.get(p, "phase")+1) == (1 + math.ceil(math.log(2, p.state['n']))):
+            p.terminate(self)
 
 #TODO: Synchronous TimeSlice
 class SynchTimeSlice(Synchronous_Algorithm):
     pass
-   
+
 class SynchVariableSpeeds(Synchronous_Algorithm):
     pass
 
