@@ -8,7 +8,7 @@ try:
     from datk.core.distalgs import *
     from datk.core.networks import *
     from datk.core.algs import *
-    from datk.core.tester import *
+    from datk.core.tester import Tester
 except ImportError:
     raise ImportError(
 """ Imports failed\n
@@ -38,6 +38,8 @@ def configure_ipython():
 configure_ipython()
 
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
+tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = False)
+test=tester.test
 
 @test
 def LCR_UNI_RING():
@@ -282,4 +284,4 @@ def SYNCH_LUBY_MIS():
     SynchLubyMIS(x)
     assertLubyMIS(x)
 
-summarize()
+tester.summarize()

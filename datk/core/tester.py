@@ -2,75 +2,81 @@ from threading import Thread, Lock
 from time import sleep, time
 from distalgs import Process, Algorithm, Synchronous_Algorithm
 
-TIMEOUT = 10
-
-_lock = Lock()
-_num_tests = 0
-_failed_tests = set()
-
-def test(f=None, timeout=TIMEOUT, main_thread=False, test=True):
-    """
-    Decorator function test to run distributed algorithm tests in safe environment. Logs failed tests.
-
-    @param f: the test (a function) to run.
-    @param timeout: the number of seconds to allow the test to run, before timing it out (causing it to fail).
-    @param main_thread: True iff the test cannot run on a thread other than the main thread.
-    @param test: If false, skips testing this function. Useful because it can be set to default to false, and then set to True for a select few tests currently being tested.
-    """
-    if not test: return lambda f: f
-
-    def test_decorator(f):
-        global _lock
-
-        def test_f():
-            global _num_tests
-            global _failed_tests
-            try:
-                f()
-            except Exception, e:
-                _failed_tests.add(f.__name__)
-                print_with_underline("TEST "+f.__name__+" FAILED.")
-                raise e
-            finally:
-                _num_tests+=1
-        with _lock:
-            if main_thread:
-                status = "Running test "+f.__name__+" on main thread."
-                print status
-                test_f()
-                print "#"*len(status)
-            else:
-                t = Thread(target = test_f)
-                t.daemon = True
-                
-                start_time = time()
-                t.start()
-                t.join(timeout)
-                end_time = time()
-                if end_time - start_time >= timeout:
-                    _failed_tests.add(f.__name__)
-                    print_with_underline(f.__name__ + " TIMED OUT AFTER " + str(timeout) + "s")
-                else:
-                    print_with_underline(f.__name__ + " RAN IN " +str(end_time-start_time) + "s")
-    if f is None:
-        return test_decorator
-    else:
-        test_decorator(f)
-        return f
-
 def print_with_underline(text):
     print text
     print "="*len(text)
 
-def summarize():
-    """Called at the end of a test suite. Prints out summary of failed tests"""
-    global _num_tests
-    global _failed_tests
-    
-    print _num_tests, "tests ran with", len(_failed_tests), "failures:", sorted(list(_failed_tests))
+class Tester:
+    def __init__(self, DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = False):
+        self.DEFAULT_TIMEOUT = DEFAULT_TIMEOUT
+        self.TEST_BY_DEFAULT = TEST_BY_DEFAULT
+        self.MAIN_THREAD_BY_DEFAULT = MAIN_THREAD_BY_DEFAULT
 
-    _num_tests = 0
-    _failed_tests = set()
+        self._lock = Lock()
+        self._num_tests = 0
+        self._failed_tests = set()
+
+    def test(self, f=None, timeout=None, main_thread=None, test=None):
+        """
+        Decorator function test to run distributed algorithm tests in safe environment. Logs failed tests.
+
+        @param f: the test (a function) to run.
+        @param timeout: the number of seconds to allow the test to run, before timing it out (causing it to fail).
+        @param main_thread: True iff the test cannot run on a thread other than the main thread.
+        @param test: If false, skips testing this function. Useful because it can be set to default to false, and then set to True for a select few tests currently being tested.
+        """
+        if timeout is None:
+            timeout = self.DEFAULT_TIMEOUT
+        if main_thread is None:
+            main_thread = self.MAIN_THREAD_BY_DEFAULT
+        if test is None:
+            test = self.TEST_BY_DEFAULT
+
+        if not test: return lambda f: f
+
+        def test_decorator(f):
+
+            def test_f():
+                try:
+                    f()
+                except Exception, e:
+                    self._failed_tests.add(f.__name__)
+                    print_with_underline("TEST "+f.__name__+" FAILED.")
+                    raise e
+                finally:
+                    self._num_tests+=1
+            with self._lock:
+                if main_thread:
+                    status = "Running test "+f.__name__+" on main thread."
+                    print status
+                    test_f()
+                    print "#"*len(status)
+                else:
+                    t = Thread(target = test_f)
+                    t.daemon = True
+                    
+                    start_time = time()
+                    t.start()
+                    t.join(timeout)
+                    end_time = time()
+                    if end_time - start_time >= timeout:
+                        self._failed_tests.add(f.__name__)
+                        print_with_underline(f.__name__ + " TIMED OUT AFTER " + str(timeout) + "s")
+                    else:
+                        print_with_underline(f.__name__ + " RAN IN " +str(end_time-start_time) + "s")
+        if f is None:
+            return test_decorator
+        else:
+            test_decorator(f)
+            return f
+
+    def summarize(self):
+        """Called at the end of a test suite. Prints out summary of failed tests"""
+        
+        print self._num_tests, "tests ran with", len(self._failed_tests), "failures:", sorted(list(self._failed_tests))
+
+        self._num_tests = 0
+        self._failed_tests = set()
 
 import matplotlib.pyplot as plt
 def benchmark(Algorithm_, Network_, test):
