@@ -143,8 +143,10 @@ class SynchHS(Synchronous_Algorithm):
 class SynchTimeSlice(Synchronous_Algorithm):
     pass
    
-#Construct BFS Tree
+class SynchVariableSpeeds(Synchronous_Algorithm):
+    pass
 
+#Construct BFS Tree
 class SynchBFS(Synchronous_Algorithm):
     """Constructs a BFS tree with the 'leader' Process at its root
 
