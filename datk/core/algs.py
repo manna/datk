@@ -158,6 +158,13 @@ class SynchHS(Synchronous_Algorithm):
         - Exactly one process has state['status'] is 'leader'
     """
     def msgs_i(self, p):
+        # initialize messages if needed
+        if not self.has(p, "send_plus"):
+            self.set(p, 'send_plus', Message(self, p.UID, "out", 1))
+
+        if not self.has(p, "send_minus"):
+            self.set(p, 'send_minus', Message(self, p.UID, "out", 1))
+
        # send the current value of send+ to process i + 1
         msg = self.get(p, "send_plus")
         if msg is None:
@@ -172,6 +179,8 @@ class SynchHS(Synchronous_Algorithm):
         self.set(p, "send_minus", None)
         p.send_msg(msg, p.out_nbrs[0])
 
+    def get_phase(self, p):
+        return self.get(p, "phase")
 
     def trans_i(self, p, msgs):
         # send+ := null
@@ -179,28 +188,27 @@ class SynchHS(Synchronous_Algorithm):
         send_plus = None
         send_minus = None
 
+        u = p.UID
+
         # initialize the phase of process p to phase 0
         if not self.has(p, "phase"):
             self.set(p, "phase", 0)
 
         # if there are no messages to send, initialize send+ and send-
         # to contain the triple consisting of i's UID, out, and 1
-        if len(msgs) == 0 and self.get(p, "phase") == 0:
-            send_plus = Message(self, (p.UID, "out", 1))
-            send_minus = Message(self, (p.UID, "out", 1))
+        if len(msgs) == 0 and get_phase(p) == 0:
+            send_plus = Message(self, (u, "out", 1))
+            send_minus = Message(self, (u, "out", 1))
 
         else:
             # create temp vars to keep track of send+ and send- messages sent by process p in round i
             minus_msg = [x for x in msgs if p.out_nbrs.index(x.author) == 0][-1]
             plus_msg = [x for x in msgs if p.out_nbrs.index(x.author) == 1][-1]
-            print minus_msg, plus_msg
 
-            u = p.UID
             v_plus = plus_msg.content[0]
             h_plus = plus_msg.content[2]
             v_minus = minus_msg.content[0]
             h_minus = minus_msg.content[2]
-
 
             # message from i-1 is (v, out, h)
             if minus_msg.content[1] == "out" :
@@ -249,18 +257,18 @@ class SynchHS(Synchronous_Algorithm):
             if plus_msg.content == (u, "in", 1) and minus_msg.content == (u, "in", 1):
                 # phase := phase + 1
                 if self.has(p, "phase"):
-                    self.set(p, "phase", self.get(p, "phase")+1)
+                    self.set(p, "phase", get_phase(p)+1)
                 # if does p not have phase attribute, set it to 0
                 else:
                     self.set(p, "phase", 0)
-                # create msg => send+ := (u, out, 2 phase)
-                # create msg => send- := (u, out, 2 phase)
-                send_plus = Message(self, (u, "out", math.pow(2, self.get(p, "phase"))))
-                send_minus = Message(self, (u, "out", math.pow(2, self.get(p, "phase"))))
+                # create msg => send+ := (u, out, 2**phase)
+                # create msg => send- := (u, out, 2**phase)
+                send_plus = Message(self, (u, "out", math.pow(2, get_phase(p))))
+                send_minus = Message(self, (u, "out", math.pow(2, get_phase(p))))
+
             # add messages to be sent
             self.set(p, "send_plus", send_plus)
             self.set(p, "send_minus", send_minus)
-            print self.get(p, "phase")
 
             # set the nodes to be non-leaders if they were not already elected
             if not self.has(p, "decided"):
@@ -270,7 +278,7 @@ class SynchHS(Synchronous_Algorithm):
         # terminate algorithm if total number of phases so far = 1+ ceil(log(n))
         # total number of phases so far = (current phase + 1) to include phase 0
         max_num_phases = 1 + math.ceil(math.log(2, p.state['n']))
-        total_phases = self.get(p, "phase")
+        total_phases = get_phase(p)
 
         if total_phases == max_num_phases:
             p.terminate(self)
