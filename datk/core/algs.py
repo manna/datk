@@ -1,5 +1,4 @@
 from distalgs import *
-
 #Leader Election Algorithms for Ring networks:
 
 class LCR(Synchronous_Algorithm):
@@ -278,7 +277,24 @@ class SynchHS(Synchronous_Algorithm):
 
 #TODO: Synchronous TimeSlice
 class SynchTimeSlice(Synchronous_Algorithm):
-    pass
+    """The TimeSlice algorithm in a Synchronous Ring Network """
+    def msgs_i(self, p):
+        if self.r == (p.UID-1)*p.state['n']+1 and not self.has(p, "decided"): # check if logic is correct for this
+            self.set(p, 'decided', None)
+            self.output(p,"status", "leader")
+            msg = Message(self, p.UID)
+            p.send_msg( msg) 
+            p.terminate(self)
+
+
+    def trans_i(self, p, msgs):
+        if len(msgs) > 0:
+            msg = msgs[0] # modify this
+            if (self.r - 1)/p.state['n'] == msg.content-1 and not self.has(p,"decided"):
+                self.set(p, 'decided', None)
+                self.output(p,"status", "non-leader")
+                p.send_msg(msg)
+                p.terminate(self)
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
     pass
@@ -599,30 +615,3 @@ class SynchLubyMIS(Synchronous_Algorithm):
             self.set(p, 'rem_nbrs', rem_nbrs)
             if self.get(p, 'status') in ['winner', 'loser']:
                 p.terminate(self)
-
-
-class TimeSlice(Synchronous_Algorithm):
-    """The TimeSlice algorithm in a Synchronous Ring Network """
-    def msgs_i(self, p):
-        if self.r == (p.UID-1)*self.state['n']+1:
-            if not self.has(p, "decided"): # check if logic is correct for this
-                self.set(p, 'decided', None)
-                self.output(p,"status", "leader")
-                p.send_msg( Message(self, self.get(p, 'val')), self.get(p, 'rem_nbrs') ) 
-
-    def trans_i(self, p, msgs):
-        msg = msgs.pop()
-        if (self.r - 1)/self.state['n'] == msg.content and not self.has(p,"decided"):
-            self.set(p, 'decided', None)
-            self.output(p,"status", "non-leader")
-
-
-        # if msg.content == p.UID:
-        #     self.output(p,"status", "leader")
-        # elif msg.content > p.UID:
-        #     self.set(p,"send", msg)
-        #     if not self.has(p, "decided"):
-        #         self.set(p, "decided", None)
-        #         self.output(p,"status", "non-leader")
-        # else:
-        #     self.set(p, "send",  None)
