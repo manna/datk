@@ -32,32 +32,32 @@ def test_ASYNC_LCR_BI_RING():
 
 def test_FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
-    FloodMax(r)
+    SynchFloodMax(r)
     assertLeaderElection(r)
 
 def test_FLOODMAX_BI_RING():
     r = Bidirectional_Ring(4)
-    FloodMax(r)
+    SynchFloodMax(r)
     assertLeaderElection(r)
 
 def test_FLOODMAX_BI_LINE():
     l = Bidirectional_Line(4)
-    FloodMax(l)
+    SynchFloodMax(l)
     assertLeaderElection(l)
 
 def test_FLOODMAX_COMPLETE_GRAPH():
     g = Complete_Graph(10)
-    FloodMax(g)
+    SynchFloodMax(g)
     assertLeaderElection(g)
 
 def test_FLOODMAX_RANDOM_GRAPH():
     g = Random_Line_Network(16)
-    FloodMax(g)
+    SynchFloodMax(g)
     assertLeaderElection(g)
 
 def test_SYNCH_BFS():
     x = Random_Line_Network(10)
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFS(x)
@@ -66,7 +66,7 @@ def test_SYNCH_BFS():
 def test_SYNCH_BFS_ACK():
     x = Bidirectional_Line(6, lambda t:t)
 
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFSAck(x)
@@ -75,7 +75,7 @@ def test_SYNCH_BFS_ACK():
 def test_SYNCH_CONVERGE_HEIGHT():
     x = Random_Line_Network(10)
 
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFS(x)
@@ -86,7 +86,7 @@ def test_SYNCH_CONVERGE_HEIGHT():
 def test_SYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFSAck(x)
@@ -100,7 +100,7 @@ def test_SYNCH_BROADCAST_HEIGHT():
 def test_ASYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
-    FloodMax(x)
+    SynchFloodMax(x)
     assertLeaderElection(x)
 
     SynchBFSAck(x)
@@ -180,7 +180,7 @@ def test_COMPOSE_SYNCH_LCR():
     assert C.message_count == 3*A.message_count, "Compose LCR LCR LCR wrong message count"
 
 def test_CHAIN_BROADCAST_HEIGHT():
-    fm = FloodMax()
+    fm = SynchFloodMax()
     bfs = SynchBFSAck()
     converge = SynchConvergeHeight()
     broadcast = SynchBroadcast(params ={"attr":"height"})

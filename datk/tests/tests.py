@@ -8,7 +8,7 @@ try:
     from datk.core.distalgs import *
     from datk.core.networks import *
     from datk.core.algs import *
-    from datk.core.tester import *
+    from datk.core.tester import Tester
 except ImportError:
     raise ImportError(
 """ Imports failed\n
@@ -38,6 +38,8 @@ def configure_ipython():
 configure_ipython()
 
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
+tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = False)
+test=tester.test
 
 @test
 def LCR_UNI_RING():
@@ -64,15 +66,33 @@ def ASYNC_LCR_BI_RING():
     assertLeaderElection(r)
 
 @test
-def HS_UNI_RING():
-    r = Unidirectional_Ring(6)
+def HS_BI_RING():
+    r = Bidirectional_Ring(6)
     SynchHS(r)
     assertLeaderElection(r)
 
 @test
-def HS_BI_RING():
+def TS_UNI_RING():
+    r = Unidirectional_Ring(6)
+    SynchTimeSlice(r)
+    assertLeaderElection(r)
+
+@test
+def TS_BI_RING():
     r = Bidirectional_Ring(6)
-    SynchHS(r)
+    SynchTimeSlice(r)
+    assertLeaderElection(r)
+
+@test
+def VS_UNI_RING():
+    r = Unidirectional_Ring(6)
+    SynchVariableSpeeds(r)
+    assertLeaderElection(r)
+
+@test
+def VS_BI_RING():
+    r = Bidirectional_Ring(6)
+    SynchVariableSpeeds(r)
     assertLeaderElection(r)
 
 @test
@@ -240,7 +260,7 @@ def COMPOSE_SYNCH_LCR():
 
 @test
 def CHAIN_BROADCAST_HEIGHT():
-    fm = FloodMax()
+    fm = SynchFloodMax()
     bfs = SynchBFSAck()
     converge = SynchConvergeHeight()
     broadcast = SynchBroadcast(params ={"attr":"height"})
@@ -264,4 +284,4 @@ def SYNCH_LUBY_MIS():
     SynchLubyMIS(x)
     assertLubyMIS(x)
 
-summarize()
+tester.summarize()
