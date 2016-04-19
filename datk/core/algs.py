@@ -102,7 +102,7 @@ class AsyncLCR(Asynchronous_Algorithm):
                     self.output(p,"status", "non-leader")
 
 #TODO: Synchronous FloodMax
-class FloodMax(Synchronous_Algorithm):
+class FloodMax(Synchronous_Algorithm): # implement floodmax
     pass
 
 #TODO: Synchronous HS
@@ -426,3 +426,30 @@ class SynchLubyMIS(Synchronous_Algorithm):
             self.set(p, 'rem_nbrs', rem_nbrs)
             if self.get(p, 'status') in ['winner', 'loser']:
                 p.terminate(self)
+
+
+class TimeSlice(Synchronous_Algorithm):
+    """The TimeSlice algorithm in a Synchronous Ring Network """
+    def msgs_i(self, p):
+        if self.r == (p.UID-1)*self.state['n']+1:
+            if not self.has(p, "decided"): # check if logic is correct for this
+                self.set(p, 'decided', None)
+                self.output(p,"status", "leader")
+                p.send_msg( Message(self, self.get(p, 'val')), self.get(p, 'rem_nbrs') ) 
+
+    def trans_i(self, p, msgs):
+        msg = msgs.pop()
+        if (self.r - 1)/self.state['n'] == msg.content and not self.has(p,"decided"):
+            self.set(p, 'decided', None)
+            self.output(p,"status", "non-leader")
+
+
+        # if msg.content == p.UID:
+        #     self.output(p,"status", "leader")
+        # elif msg.content > p.UID:
+        #     self.set(p,"send", msg)
+        #     if not self.has(p, "decided"):
+        #         self.set(p, "decided", None)
+        #         self.output(p,"status", "non-leader")
+        # else:
+        #     self.set(p, "send",  None)
