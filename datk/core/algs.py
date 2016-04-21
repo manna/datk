@@ -159,11 +159,15 @@ class SynchHS(Synchronous_Algorithm):
     """
     def msgs_i(self, p):
         # initialize messages if needed
+        print p
+        print p.out_nbrs
+        plus_msg = tuple(p.UID, "out", 1)
+        minus_msg = tuple(p.UID, "out", 1)
         if not self.has(p, "send_plus"):
-            self.set(p, 'send_plus', Message(self, p.UID, "out", 1))
+            self.set(p, 'send_plus', Message(self, plus_msg))
 
         if not self.has(p, "send_minus"):
-            self.set(p, 'send_minus', Message(self, p.UID, "out", 1))
+            self.set(p, 'send_minus', Message(self, minus_msg))
 
        # send the current value of send+ to process i + 1
         msg = self.get(p, "send_plus")
@@ -178,11 +182,15 @@ class SynchHS(Synchronous_Algorithm):
             return
         self.set(p, "send_minus", None)
         p.send_msg(msg, p.out_nbrs[0])
+        print msgs
+        print msg
 
     def get_phase(self, p):
         return self.get(p, "phase")
 
     def trans_i(self, p, msgs):
+        print "hi"
+        print p.UID, msgs
         # send+ := null
         # send- := null
         send_plus = None
@@ -197,8 +205,8 @@ class SynchHS(Synchronous_Algorithm):
         # if there are no messages to send, initialize send+ and send-
         # to contain the triple consisting of i's UID, out, and 1
         if len(msgs) == 0 and get_phase(p) == 0:
-            send_plus = Message(self, (u, "out", 1))
-            send_minus = Message(self, (u, "out", 1))
+            send_plus = Message(self, tuple(u, "out", 1))
+            send_minus = Message(self, tuple(u, "out", 1))
 
         else:
             # create temp vars to keep track of send+ and send- messages sent by process p in round i
@@ -214,11 +222,11 @@ class SynchHS(Synchronous_Algorithm):
             if minus_msg.content[1] == "out" :
                 # if send+ := (v, out, h- 1)
                 if v_minus > u and h_minus > 1:
-                    send_plus = Message(self, (v_minus, "out", h - 1))
+                    send_plus = Message(self, tuple(v_minus, "out", h - 1))
                 # case v > u and h = 1:
                 # send- :- (v, in, 1)
-                elif v_minus > u and h_mius == 1:
-                    send_minus = Message(self, (v_minus, "in", 1))
+                elif v_minus > u and h_minus == 1:
+                    send_minus = Message(self, tuple(v_minus, "in", 1))
 
                 # case v = u: status
                 # status:= leader
@@ -230,12 +238,12 @@ class SynchHS(Synchronous_Algorithm):
                 # case: v > u and h > I:
                 # send- :- (v, out, h- I)
                 if v_plus > u and h_plus > 1:
-                    send_minus= Message(self, (v_plus, "out", h_plus - 1))
+                    send_minus= Message(self, tuple(v_plus, "out", h_plus - 1))
 
                 # case: v > u and h -- 1:
                 # send+ := (v, in, 1)
                 elif v_plus> u and h_plus == 1:
-                    send_plus = Message(self, (v_plus, "in", 1))
+                    send_plus = Message(self, tuple(v_plus, "in", 1))
 
                 # case: v = u: status :-- leader
                 # status :-- leader
@@ -246,12 +254,12 @@ class SynchHS(Synchronous_Algorithm):
              # if the message from i - 1 is (v, in, 1) and v != u
             if minus_msg.content[1] == "in" and v_minus != u:
                 # then send+ := (v, in, 1)
-                send_plus = Message(self, (v_minus, "in", 1))
+                send_plus = Message(self, tuple(v_minus, "in", 1))
 
             # if the messages from i - 1 and i + 1 are both (u, in, 1)
             if plus_msg.content[1] == "in" and v_plus != u:
                 # then send- := (v, in, 1)
-                send_minus = Message(self, (v_plus, "in", 1))
+                send_minus = Message(self, tuple(v_plus, "in", 1))
 
             # if the messages from i - 1 and i + 1 are both (u, in, 1)
             if plus_msg.content == (u, "in", 1) and minus_msg.content == (u, "in", 1):
@@ -263,8 +271,8 @@ class SynchHS(Synchronous_Algorithm):
                     self.set(p, "phase", 0)
                 # create msg => send+ := (u, out, 2**phase)
                 # create msg => send- := (u, out, 2**phase)
-                send_plus = Message(self, (u, "out", math.pow(2, get_phase(p))))
-                send_minus = Message(self, (u, "out", math.pow(2, get_phase(p))))
+                send_plus = Message(self, tuple(u, "out", math.pow(2, get_phase(p))))
+                send_minus = Message(self, tuple(u, "out", math.pow(2, get_phase(p))))
 
             # add messages to be sent
             self.set(p, "send_plus", send_plus)
