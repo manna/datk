@@ -295,7 +295,14 @@ class SynchHS(Synchronous_Algorithm):
 class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network """
     def msgs_i(self, p):
-        if self.r == (p.UID-1)*p.state['n']+1 and not self.has(p, "decided"): # check if logic is correct for this
+        msg = self.get(p, "send")
+        if msg:
+            if (self.r - 1)/p.state['n'] == msg.content-1:
+                p.send_msg(msg)
+
+            p.terminate(self)
+        
+        elif self.r == (p.UID-1)*p.state['n']+1 and not self.has(p, "decided"): # check if logic is correct for this
             self.set(p, 'decided', None)
             self.output(p,"status", "leader")
             msg = Message(self, p.UID)
@@ -309,7 +316,10 @@ class SynchTimeSlice(Synchronous_Algorithm):
             if (self.r - 1)/p.state['n'] == msg.content-1 and not self.has(p,"decided"):
                 self.set(p, 'decided', None)
                 self.output(p,"status", "non-leader")
-                p.send_msg(msg)
+                self.set(p,"send", msg)
+
+            else:
+                self.set(p,"send",None)
                 p.terminate(self)
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
