@@ -295,6 +295,7 @@ class SynchHS(Synchronous_Algorithm):
 class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network """
     def msgs_i(self, p):
+        print "nattar paneer"
         msg = self.get(p, "send")
         if msg:
             if (self.r - 1)/p.state['n'] == msg.content-1:
