@@ -1,7 +1,24 @@
 from distalgs import *
 #Leader Election Algorithms for Ring networks:
 
-class LCR(Synchronous_Algorithm):
+class Leader_Election_Synchronous_Algorithm(Synchronous_Algorithm):
+    def draw(self,network):
+        vals = network.draw(node_coloring = True)
+        for p in network.processes:
+            v = vals[p.UID] # IMPORTANT: check to make sure this is right!
+            # if self.has(p, "decided"):
+            if p.state['status'] == "leader":
+                plt.plot( [v[0]], [v[1]], 'ro' )
+
+            else: # non-leader
+                plt.plot( [v[0]], [v[1]], 'bo' )
+
+            # else:
+            #     plt.plot( [v[0]], [v[1]], 'go' )
+
+        plt.show()
+
+class LCR(Leader_Election_Synchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Ring Network 
 
     Each Process sends its identifier around the ring.
@@ -41,6 +58,8 @@ class LCR(Synchronous_Algorithm):
             else:
                 self.set(p, "send",  None)
         if self.r == p.state['n']: p.terminate(self)
+
+
 
 class AsyncLCR(Asynchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in an Asynchronous Ring Network 
@@ -292,10 +311,9 @@ class SynchHS(Synchronous_Algorithm):
             p.terminate(self)
 
 #TODO: Synchronous TimeSlice
-class SynchTimeSlice(Synchronous_Algorithm):
+class SynchTimeSlice(Leader_Election_Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network """
     def msgs_i(self, p):
-        print "nattar paneer"
         msg = self.get(p, "send")
         if msg:
             if (self.r - 1)/p.state['n'] == msg.content-1:
@@ -317,11 +335,13 @@ class SynchTimeSlice(Synchronous_Algorithm):
             if (self.r - 1)/p.state['n'] == msg.content-1 and not self.has(p,"decided"):
                 self.set(p, 'decided', None)
                 self.output(p,"status", "non-leader")
+                
                 self.set(p,"send", msg)
 
             else:
                 self.set(p,"send",None)
                 p.terminate(self)
+
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
     pass
