@@ -420,11 +420,9 @@ class SynchVariableSpeeds(Synchronous_Algorithm):
         if status == "leader":
             p.terminate(self)
         if self.r >10:
-            p.terminate(self)
-       
+            p.terminate(self)       
         print "After transition, status: ", p, " ", status
-        print ""
-        print ""
+
         return
                
 #Construct BFS Tree
