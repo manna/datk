@@ -142,10 +142,113 @@ class SynchHS(Synchronous_Algorithm):
 #TODO: Synchronous TimeSlice
 class SynchTimeSlice(Synchronous_Algorithm):
     pass
-   
-class SynchVariableSpeeds(Synchronous_Algorithm):
-    pass
 
+#TODO: Synchronous VS
+class SynchVariableSpeeds(Synchronous_Algorithm):
+    """
+    Each process i initiates a token which travels around the ring.
+    - Different tokens tavel at different rates: a token carraying UID v travels at
+    the rate of 1 message transmission every 2^v rounds. 
+    For example, for the token with UID 1, each process along its path waits 
+    2 rounds after receiving the token before sending it out.
+    - Each process keeps track of the smallest UID it has seen and discard any token 
+    with the UID larger than the smallest UID
+    - If a token returns to its originator, the originator is elected.
+    
+    TODO:
+    Requires:
+    
+    Effects:
+    """
+    def msgs_i(self, p):
+        #Create own messages
+        #content is a dictionary: {"id": p.UID, "tts": tts)
+
+        if not self.has(p, "queue"):
+            token =  Message(self, {"UID": p.UID, "TTS": 2**p.UID, "MOVED":False})
+            self.set(p, "queue", [token])
+        if not self.has(p,"send"):
+            self.set(p, "send", [])
+        
+        for msg in self.get(p, "send"):
+            msg.content["MOVED"] = True
+            p.send_msg(msg)
+            
+        print 'done sending messages at ', p
+        return
+
+    def trans_i(self, p, msgs):
+        #check if there is any leader selected already.
+        for process in self.network:
+            if self.get(process,"status") and self.get(process,"status") == "leader":
+                print self.get(process, "status")
+                p.terminate(self)
+    
+        if not self.has(p,"status"):
+            self.set(p,"status","undecided")
+        status = self.get(p,"status")
+        
+        if not self.has(p, "MIN_UID"):
+            self.set(p, "MIN_UID", p.UID)
+        print "\nCurrent p: ", p
+        print "current status of p (can't be none or leader): ", status
+        print "current min_uid: ", self.get(p, "MIN_UID")
+        
+        queue = self.get(p,"queue")
+        print "current queue: ", [str(m) for m in queue]
+        print "incoming msgs: ", [str(m) for m in msgs]
+        queue += msgs
+        
+        toRemove = []
+        toSend = []
+
+        for msg in queue:
+            msg.content["TTS"] -= 1
+            print msg.content.get("TTS")
+            assert(msg.content.get("TTS") >= 0)
+            print "decreasing TTS for this round"  
+            print msg
+            
+            if msg.content["TTS"] == 0:
+                #Reset TTS to its 2**UID
+                msg.content["TTS"] = 2**msg.content["UID"]
+                toSend.append(msg)
+                toRemove.append(msg)
+
+            msg_uid = msg.content.get("UID")
+            assert(msg_uid is not None)
+            if msg.content.get("MOVED") and msg_uid == p.UID:
+                status = "leader"
+                
+            if msg_uid < self.get(p, "MIN_UID"):
+                self.set(p, "MIN_UID", msg_uid)
+                print "Min-uid updated" #debug
+
+            elif msg_uid > self.get(p, "MIN_UID"):
+                toRemove.append(msg)
+                
+        #Remove larger msgs
+        new_queue = []
+        while len(queue) > 0:
+            msg = queue.pop()
+            if msg not in toRemove:
+                new_queue.append(msg)
+        #Reset process's queue
+        self.set(p, "queue", new_queue)
+        self.set(p,"send", toSend)
+           
+        #Go public
+        self.output(p, "status", status)
+        if status == "leader":
+            p.terminate(self)
+        if self.r >10:
+            p.terminate(self)
+       
+        print "After transition, status: ", p, " ", status
+        print ""
+        print ""
+        return
+               
 #Construct BFS Tree
 class SynchBFS(Synchronous_Algorithm):
     """Constructs a BFS tree with the 'leader' Process at its root
@@ -462,3 +565,33 @@ class SynchLubyMIS(Synchronous_Algorithm):
             self.set(p, 'rem_nbrs', rem_nbrs)
             if self.get(p, 'status') in ['winner', 'loser']:
                 p.terminate(self)
+
+##########debug
+#try:
+#    from core.distalgs import *
+#    from core.networks import *
+#    from datk.core.algs import *
+#    from core.tester import *
+#except ImportError:
+#    raise ImportError(
+#""" Imports failed\n
+#To run tests, execute the following commands:
+#$ cd ../..
+#$ python -m datk.tests.tests """)
+from networks import *
+verbose = True
+
+def VS_UNI_RING():
+    r = Unidirectional_Ring(3, lambda n : n)
+    r.draw()
+    SynchVariableSpeeds(r)
+#    assertLeaderElection(r)
+
+
+def VS_BI_RING():
+    r = Bidirectional_Ring(6)
+    r.draw()
+    SynchVariableSpeeds(r)
+#    assertLeaderElection(r)
+VS_UNI_RING()
+#VS_BI_RING()

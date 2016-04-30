@@ -107,6 +107,7 @@ class Process:
                     nbr.in_channel[nbr.in_nbrs.index(self)].append(msg)
                 else:
                     nbr.in_channel[nbr.in_nbrs.index(self)] = [msg]
+            #should also take out from the 
         else:
             raise Exception("incorrect type for out_nbrs argument of Process.send_msg()")
 
