@@ -1,10 +1,9 @@
 from distalgs import *
-
 #Leader Election Algorithms for Ring networks:
 
 class LCR(Synchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Ring Network 
-    
+
     Each Process sends its identifier around the ring.
     When a Process receives an incoming identifier, it compares that identifier to its own.
     If the incoming identifier is greater than its own, it keeps passing the identifier;
@@ -45,7 +44,7 @@ class LCR(Synchronous_Algorithm):
 
 class AsyncLCR(Asynchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in an Asynchronous Ring Network 
-    
+
     Each Process sends its identifier around the ring.
     When a Process receives incoming identifier(s), it compares their largest to its own.
     If that incoming identifier is greater than its own, it keeps passing that identifier;
@@ -84,7 +83,7 @@ class AsyncLCR(Asynchronous_Algorithm):
         msgs = p.get_msgs(self)
         if self.get(p, 'sends') is None:
             self.set(p, 'sends', [Message(self, p.UID)])
-        
+
         if verbose:
             print str(p) + " received " + str(p.in_channel)
         while len(msgs) > 0:
@@ -100,6 +99,7 @@ class AsyncLCR(Asynchronous_Algorithm):
                 if not self.has(p, 'decided'):
                     self.set(p, 'decided', None)
                     self.output(p,"status", "non-leader")
+
 
 #Leader Election Algorithms for general Networks:
 class SynchFloodMax(Synchronous_Algorithm):
@@ -135,15 +135,193 @@ class SynchFloodMax(Synchronous_Algorithm):
                 self.output(p,"status", "non-leader")
                 p.terminate(self)
 
-#TODO: Synchronous HS
+
 class SynchHS(Synchronous_Algorithm):
-    pass
+    """The Hirschberg and Sinclair ("HS") algorithm for Leader Election in a Synchronous Bidirectional Ring Network
+
+    This algorithm works in phases 0, 1, 2, ... O(logn) in a bidrectional ring. It achieves a message complexity of O(n*logn), 
+    which improves upon the O(n**2) message complexity of LCR.
+
+    Each Process sends out "tokens" containing its identifier in both directions (left and right)
+    around the ring. These tokens are intended to travel a distance 2**l, and then return to
+    the Process. If the Process receives back both tokens, it continues with the next phase.
+    However, a Process will not always receive back both of its tokens. As a token is
+    passed around the ring, when a Process receives an incoming token, it compares the identifier
+    encoded in that token to its own. If the incoming identifier is greater than its own, it keeps passing the identifier;
+    If the identifier is less than its own, it discards the incoming identifier;
+    if it is equal to its own, the Process declares itself the leader.
+
+    Requires:
+        - Every process knows state['n'], the size of the network
+    Effects:
+        - Every process has state['status'] is 'leader' or 'non-leader'.
+        - Exactly one process has state['status'] is 'leader'
+    """
+    def msgs_i(self, p):
+        # initialize messages if needed
+        print p
+        print p.out_nbrs
+        plus_msg = tuple(p.UID, "out", 1)
+        minus_msg = tuple(p.UID, "out", 1)
+        if not self.has(p, "send_plus"):
+            self.set(p, 'send_plus', Message(self, plus_msg))
+
+        if not self.has(p, "send_minus"):
+            self.set(p, 'send_minus', Message(self, minus_msg))
+
+       # send the current value of send+ to process i + 1
+        msg = self.get(p, "send_plus")
+        if msg is None:
+            return
+        self.set(p, "send_plus", None)
+        p.send_msg(msg, p.out_nbrs[-1])
+
+        # send the current value of send- to process i- 1
+        msg = self.get(p, "send_minus")
+        if msg is None:
+            return
+        self.set(p, "send_minus", None)
+        p.send_msg(msg, p.out_nbrs[0])
+        print msgs
+        print msg
+
+    def get_phase(self, p):
+        return self.get(p, "phase")
+
+    def trans_i(self, p, msgs):
+        print "hi"
+        print p.UID, msgs
+        # send+ := null
+        # send- := null
+        send_plus = None
+        send_minus = None
+
+        u = p.UID
+
+        # initialize the phase of process p to phase 0
+        if not self.has(p, "phase"):
+            self.set(p, "phase", 0)
+
+        # if there are no messages to send, initialize send+ and send-
+        # to contain the triple consisting of i's UID, out, and 1
+        if len(msgs) == 0 and get_phase(p) == 0:
+            send_plus = Message(self, tuple(u, "out", 1))
+            send_minus = Message(self, tuple(u, "out", 1))
+
+        else:
+            # create temp vars to keep track of send+ and send- messages sent by process p in round i
+            minus_msg = [x for x in msgs if p.out_nbrs.index(x.author) == 0][-1]
+            plus_msg = [x for x in msgs if p.out_nbrs.index(x.author) == 1][-1]
+
+            v_plus = plus_msg.content[0]
+            h_plus = plus_msg.content[2]
+            v_minus = minus_msg.content[0]
+            h_minus = minus_msg.content[2]
+
+            # message from i-1 is (v, out, h)
+            if minus_msg.content[1] == "out" :
+                # if send+ := (v, out, h- 1)
+                if v_minus > u and h_minus > 1:
+                    send_plus = Message(self, tuple(v_minus, "out", h - 1))
+                # case v > u and h = 1:
+                # send- :- (v, in, 1)
+                elif v_minus > u and h_minus == 1:
+                    send_minus = Message(self, tuple(v_minus, "in", 1))
+
+                # case v = u: status
+                # status:= leader
+                elif v_minus == u:
+                    self.output(p, "status", "leader")
+
+            # message from i+1 is (v, out, h)
+            if plus_msg.content[1] == "out" :
+                # case: v > u and h > I:
+                # send- :- (v, out, h- I)
+                if v_plus > u and h_plus > 1:
+                    send_minus= Message(self, tuple(v_plus, "out", h_plus - 1))
+
+                # case: v > u and h -- 1:
+                # send+ := (v, in, 1)
+                elif v_plus> u and h_plus == 1:
+                    send_plus = Message(self, tuple(v_plus, "in", 1))
+
+                # case: v = u: status :-- leader
+                # status :-- leader
+                elif v_plus == u:
+                    self.output(p, "status", "leader")
+
+
+             # if the message from i - 1 is (v, in, 1) and v != u
+            if minus_msg.content[1] == "in" and v_minus != u:
+                # then send+ := (v, in, 1)
+                send_plus = Message(self, tuple(v_minus, "in", 1))
+
+            # if the messages from i - 1 and i + 1 are both (u, in, 1)
+            if plus_msg.content[1] == "in" and v_plus != u:
+                # then send- := (v, in, 1)
+                send_minus = Message(self, tuple(v_plus, "in", 1))
+
+            # if the messages from i - 1 and i + 1 are both (u, in, 1)
+            if plus_msg.content == (u, "in", 1) and minus_msg.content == (u, "in", 1):
+                # phase := phase + 1
+                if self.has(p, "phase"):
+                    self.set(p, "phase", get_phase(p)+1)
+                # if does p not have phase attribute, set it to 0
+                else:
+                    self.set(p, "phase", 0)
+                # create msg => send+ := (u, out, 2**phase)
+                # create msg => send- := (u, out, 2**phase)
+                send_plus = Message(self, tuple(u, "out", math.pow(2, get_phase(p))))
+                send_minus = Message(self, tuple(u, "out", math.pow(2, get_phase(p))))
+
+            # add messages to be sent
+            self.set(p, "send_plus", send_plus)
+            self.set(p, "send_minus", send_minus)
+
+            # set the nodes to be non-leaders if they were not already elected
+            if not self.has(p, "decided"):
+                self.set(p, "decided", None)
+                self.output(p,"status", "non-leader")
+
+        # terminate algorithm if total number of phases so far = 1+ ceil(log(n))
+        # total number of phases so far = (current phase + 1) to include phase 0
+        max_num_phases = 1 + math.ceil(math.log(2, p.state['n']))
+        total_phases = get_phase(p)
+
+        if total_phases == max_num_phases:
+            p.terminate(self)
 
 #TODO: Synchronous TimeSlice
 class SynchTimeSlice(Synchronous_Algorithm):
-    pass
+    """The TimeSlice algorithm in a Synchronous Ring Network """
+    def msgs_i(self, p):
+        msg = self.get(p, "send")
+        if msg:
+            if (self.r - 1)/p.state['n'] == msg.content-1:
+                p.send_msg(msg)
 
-#TODO: Synchronous VS
+            p.terminate(self)
+        
+        elif self.r == (p.UID-1)*p.state['n']+1 and not self.has(p, "decided"): # check if logic is correct for this
+            self.set(p, 'decided', None)
+            self.output(p,"status", "leader")
+            msg = Message(self, p.UID)
+            p.send_msg( msg) 
+            p.terminate(self)
+
+
+    def trans_i(self, p, msgs):
+        if len(msgs) > 0:
+            msg = msgs[0] # modify this
+            if (self.r - 1)/p.state['n'] == msg.content-1 and not self.has(p,"decided"):
+                self.set(p, 'decided', None)
+                self.output(p,"status", "non-leader")
+                self.set(p,"send", msg)
+
+            else:
+                self.set(p,"send",None)
+                p.terminate(self)
+
 class SynchVariableSpeeds(Synchronous_Algorithm):
     """
     Each process i initiates a token which travels around the ring.
@@ -565,33 +743,3 @@ class SynchLubyMIS(Synchronous_Algorithm):
             self.set(p, 'rem_nbrs', rem_nbrs)
             if self.get(p, 'status') in ['winner', 'loser']:
                 p.terminate(self)
-
-##########debug
-#try:
-#    from core.distalgs import *
-#    from core.networks import *
-#    from datk.core.algs import *
-#    from core.tester import *
-#except ImportError:
-#    raise ImportError(
-#""" Imports failed\n
-#To run tests, execute the following commands:
-#$ cd ../..
-#$ python -m datk.tests.tests """)
-from networks import *
-verbose = True
-
-def VS_UNI_RING():
-    r = Unidirectional_Ring(3, lambda n : n)
-    r.draw()
-    SynchVariableSpeeds(r)
-#    assertLeaderElection(r)
-
-
-def VS_BI_RING():
-    r = Bidirectional_Ring(6)
-    r.draw()
-    SynchVariableSpeeds(r)
-#    assertLeaderElection(r)
-VS_UNI_RING()
-#VS_BI_RING()
