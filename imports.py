@@ -10,3 +10,5 @@ try:
   ip.magic("%matplotlib inline") 
 except NameError:
   pass
+except ImportError:
+  pass
