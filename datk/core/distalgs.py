@@ -10,6 +10,17 @@ from scipy.linalg import eig
 import math
 from matplotlib import pyplot as plt
 
+##Additional import for simulation
+import Tkinter as tk
+import matplotlib 
+import matplotlib.animation as animation
+matplotlib.use('TkAgg')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.figure import Figure
+
+
+
 from helpers import memoize
 
 class Message:
@@ -216,7 +227,7 @@ class Network:
             for k in range(n):
                 vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
 
-        plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+        plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )#todo
 
         def line(v1, v2):
             plt.plot( (v1[0], v2[0]), (v1[1], v2[1] ))
@@ -227,8 +238,18 @@ class Network:
         frame = plt.gca()
         frame.axes.get_xaxis().set_visible(False)
         frame.axes.get_yaxis().set_visible(False)
-        plt.show()
+        plt.show()#todo: remove this
+    #todo
+    def start_simulation(self, **params):
+        print "Simulation started on " + self
+        self.vizApp = VizApp()
+        self.vizApp.mainloop()
+        print "GUI is set up"
 
+        #what to do now?
+    def stop_simulation(self):
+        self.terminate()
+        print "GUI destroyed"
 
     def state(self):
         """
@@ -425,7 +446,7 @@ class Algorithm:
         msg_complexity = "Message Complexity: " + str(self.message_count)
         print msg_complexity
         print "-"*len(msg_complexity)
-
+                
     def count_msg(self, message_count):
         self.message_count += message_count
 
@@ -473,7 +494,7 @@ class Synchronous_Algorithm(Algorithm):
         while not self.halted:
             self.r+=1
             if self.params['verbosity'] >= Algorithm.DEFAULT:
-                print "Round",self.r
+                print "Round",self.r#TODO
             self.round()
             self.halt()
 
@@ -660,3 +681,80 @@ class Chain(Algorithm):
         Algorithm.cleanup(self)
 
     def __repr__(self): return self.name
+        
+        
+LARGE_FONT=('Verdana',12)
+class VizApp(tk.Tk):
+
+    def __init__(self, *args, **kwargs):
+        
+        tk.Tk.__init__(self, *args, **kwargs)
+
+#        tk.Tk.iconbitmap(self, default="clienticon.ico")
+        tk.Tk.wm_title(self, "DATK Visualization")        
+        
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand = True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+
+        for F in (StartPage, GraphPage):
+            frame = F(container, self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame(StartPage)
+
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
+        
+    def terminate(self):
+        self.quit()
+        self.destroy()
+        print "VizApp terminated"
+
+        
+class StartPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self,parent)
+        label = tk.Label(self, text="Start Page", font=LARGE_FONT)
+        label.pack(pady=10,padx=10)
+
+        button = tk.Button(self, text="Graph Page",
+                            command=lambda: controller.show_frame(GraphPage))
+        button.pack()
+
+
+class GraphPage(tk.Frame):
+
+    def __init__(self, parent, controller, network):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="DATK simulation page!", font=LARGE_FONT)
+        label.pack(pady=10,padx=10)
+
+        button1 = tk.Button(self, text="Back to Home",
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack()
+
+        f = Figure(figsize=(5,5), dpi=100)
+        a = f.add_subplot(111)
+        #DO STUFF HERE TO PLOT
+        a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
+        #todo
+        # initializer gets Network instance
+        # nw.canvas.plot
+
+
+        canvas = FigureCanvasTkAgg(f, self)
+        canvas.show()
+        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+        toolbar = NavigationToolbar2TkAgg(canvas, self)
+        toolbar.update()
+        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        
