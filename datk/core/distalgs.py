@@ -241,14 +241,20 @@ class Network:
         plt.show()#todo: remove this
     #todo
     def start_simulation(self, **params):
-        print "Simulation started on " + self
-        self.vizApp = VizApp()
+        print "Simulation started on " + str(self)
+        self.vizApp = VizApp(self)
         self.vizApp.mainloop()
         print "GUI is set up"
 
         #what to do now?
     def stop_simulation(self):
-        self.terminate()
+        try: 
+            self.vizApp.terminate()
+        except TclError:
+            pass
+        finally:
+            self.vizApp = None
+            print 'here'
         print "GUI destroyed"
 
     def state(self):
@@ -686,22 +692,21 @@ class Chain(Algorithm):
 LARGE_FONT=('Verdana',12)
 class VizApp(tk.Tk):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, network):
         
-        tk.Tk.__init__(self, *args, **kwargs)
-
+        tk.Tk.__init__(self)
 #        tk.Tk.iconbitmap(self, default="clienticon.ico")
-        tk.Tk.wm_title(self, "DATK Visualization")        
+        tk.Tk.wm_title(self, "DATK Visualization")     
+        
+        self.frames = {}
         
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand = True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self.frames = {}
-
         for F in (StartPage, GraphPage):
-            frame = F(container, self)
+            frame = F(container, self, network)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
@@ -719,7 +724,7 @@ class VizApp(tk.Tk):
         
 class StartPage(tk.Frame):
 
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller,network):
         tk.Frame.__init__(self,parent)
         label = tk.Label(self, text="Start Page", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
@@ -727,11 +732,12 @@ class StartPage(tk.Frame):
         button = tk.Button(self, text="Graph Page",
                             command=lambda: controller.show_frame(GraphPage))
         button.pack()
-
+        
 
 class GraphPage(tk.Frame):
 
     def __init__(self, parent, controller, network):
+        print "GraphPage: network: ", network
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="DATK simulation page!", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
