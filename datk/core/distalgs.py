@@ -242,6 +242,7 @@ class Network:
     #todo
     def start_simulation(self, **params):
         print "Simulation started on " + str(self)
+        
         self.vizApp = VizApp(self)
         self.vizApp.mainloop()
         print "GUI is set up"
