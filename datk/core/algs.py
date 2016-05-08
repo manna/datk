@@ -157,139 +157,85 @@ class SynchHS(Synchronous_Algorithm):
         - Every process has state['status'] is 'leader' or 'non-leader'.
         - Exactly one process has state['status'] is 'leader'
     """
+    class Leader_Declaration(Message): pass
+    
     def msgs_i(self, p):
-        # initialize messages if needed
-        print p
-        print p.out_nbrs
-        plus_msg = tuple(p.UID, "out", 1)
-        minus_msg = tuple(p.UID, "out", 1)
-        if not self.has(p, "send_plus"):
-            self.set(p, 'send_plus', Message(self, plus_msg))
+        if "status" in p.state:
+            p.send_msg(SynchHS.Leader_Declaration(self), p.out_nbrs[-1])
+            return p.terminate(self)
 
-        if not self.has(p, "send_minus"):
-            self.set(p, 'send_minus', Message(self, minus_msg))
+        # initialize messages if needed
+        plus_msg = (p.UID, "out", 1)
+        minus_msg = (p.UID, "out", 1)
+        if not self.has(p, "send+"):
+            self.set(p, 'send+', Message(self, plus_msg))
+
+        if not self.has(p, "send-"):
+            self.set(p, 'send-', Message(self, minus_msg))
 
        # send the current value of send+ to process i + 1
-        msg = self.get(p, "send_plus")
-        if msg is None:
-            return
-        self.set(p, "send_plus", None)
-        p.send_msg(msg, p.out_nbrs[-1])
+        msg = self.get(p, "send+")
+        if msg is not None:
+            self.set(p, "send+", None)
+            p.send_msg(msg, p.out_nbrs[-1])
 
         # send the current value of send- to process i- 1
-        msg = self.get(p, "send_minus")
-        if msg is None:
-            return
-        self.set(p, "send_minus", None)
-        p.send_msg(msg, p.out_nbrs[0])
-        print msgs
-        print msg
-
-    def get_phase(self, p):
-        return self.get(p, "phase")
+        msg = self.get(p, "send-")
+        if msg is not None:
+            self.set(p, "send-", None)
+            p.send_msg(msg, p.out_nbrs[0])
 
     def trans_i(self, p, msgs):
-        print "hi"
-        print p.UID, msgs
-        # send+ := null
-        # send- := null
-        send_plus = None
-        send_minus = None
-
-        u = p.UID
-
         # initialize the phase of process p to phase 0
         if not self.has(p, "phase"):
             self.set(p, "phase", 0)
 
-        # if there are no messages to send, initialize send+ and send-
-        # to contain the triple consisting of i's UID, out, and 1
-        if len(msgs) == 0 and get_phase(p) == 0:
-            send_plus = Message(self, tuple(u, "out", 1))
-            send_minus = Message(self, tuple(u, "out", 1))
+        left_msg_returned = False
+        right_msg_returned = False
+        for msg in msgs:
+            if isinstance(msg, SynchHS.Leader_Declaration):
+                self.output(p, "status", "non-leader") #Terminates next msgs_i
+                return
+            val, flag, hopcount = msg.content
 
-        else:
-            # create temp vars to keep track of send+ and send- messages sent by process p in round i
-            minus_msg = [x for x in msgs if p.out_nbrs.index(x.author) == 0][-1]
-            plus_msg = [x for x in msgs if p.out_nbrs.index(x.author) == 1][-1]
+            # If msg came from process i-1
+            if msg.author == p.out_nbrs[0]:
+                if flag == 'out':
+                    if val > p.UID and hopcount > 1:
+                        self.set(p, 'send+', Message(self, (val, flag, hopcount-1)))
+                    if val > p.UID and hopcount == 1:
+                        self.set(p, 'send-', Message(self, (val, 'in', 1)))
+                    if val == p.UID:
+                        return self.output(p, "status", "leader") #Terminates next msgs_i
+                if flag == 'in':
+                    if val != p.UID:
+                        self.set(p, 'send+', msg)
+                    else:
+                        left_msg_returned = True
 
-            v_plus = plus_msg.content[0]
-            h_plus = plus_msg.content[2]
-            v_minus = minus_msg.content[0]
-            h_minus = minus_msg.content[2]
+            #If msg came from process i+1
+            if msg.author == p.out_nbrs[1]:
+                if flag == 'out':
+                    if val > p.UID and hopcount > 1:
+                        self.set(p, 'send-', Message(self, (val, flag, hopcount-1)))
+                    if val > p.UID and hopcount == 1:
+                        self.set(p, 'send+', Message(self, (val, 'in', 1)))
+                    if val == p.UID:
+                        return self.output(p, "status", "leader") #Terminates next msgs_i
+                if flag == 'in':
+                    if val != p.UID:
+                        self.set(p, 'send-', msg)
+                    else:
+                        right_msg_returned = True
 
-            # message from i-1 is (v, out, h)
-            if minus_msg.content[1] == "out" :
-                # if send+ := (v, out, h- 1)
-                if v_minus > u and h_minus > 1:
-                    send_plus = Message(self, tuple(v_minus, "out", h - 1))
-                # case v > u and h = 1:
-                # send- :- (v, in, 1)
-                elif v_minus > u and h_minus == 1:
-                    send_minus = Message(self, tuple(v_minus, "in", 1))
-
-                # case v = u: status
-                # status:= leader
-                elif v_minus == u:
-                    self.output(p, "status", "leader")
-
-            # message from i+1 is (v, out, h)
-            if plus_msg.content[1] == "out" :
-                # case: v > u and h > I:
-                # send- :- (v, out, h- I)
-                if v_plus > u and h_plus > 1:
-                    send_minus= Message(self, tuple(v_plus, "out", h_plus - 1))
-
-                # case: v > u and h -- 1:
-                # send+ := (v, in, 1)
-                elif v_plus> u and h_plus == 1:
-                    send_plus = Message(self, tuple(v_plus, "in", 1))
-
-                # case: v = u: status :-- leader
-                # status :-- leader
-                elif v_plus == u:
-                    self.output(p, "status", "leader")
+        if left_msg_returned and right_msg_returned:
+            #Start next phase
+            next_phase = self.get(p, 'phase') + 1
+            self.set(p, 'phase', next_phase)
+            self.set(p, 'send+', Message(self, (p.UID, "out", 2**next_phase)))
+            self.set(p, 'send-', Message(self, (p.UID, "out", 2**next_phase)))
 
 
-             # if the message from i - 1 is (v, in, 1) and v != u
-            if minus_msg.content[1] == "in" and v_minus != u:
-                # then send+ := (v, in, 1)
-                send_plus = Message(self, tuple(v_minus, "in", 1))
-
-            # if the messages from i - 1 and i + 1 are both (u, in, 1)
-            if plus_msg.content[1] == "in" and v_plus != u:
-                # then send- := (v, in, 1)
-                send_minus = Message(self, tuple(v_plus, "in", 1))
-
-            # if the messages from i - 1 and i + 1 are both (u, in, 1)
-            if plus_msg.content == (u, "in", 1) and minus_msg.content == (u, "in", 1):
-                # phase := phase + 1
-                if self.has(p, "phase"):
-                    self.set(p, "phase", get_phase(p)+1)
-                # if does p not have phase attribute, set it to 0
-                else:
-                    self.set(p, "phase", 0)
-                # create msg => send+ := (u, out, 2**phase)
-                # create msg => send- := (u, out, 2**phase)
-                send_plus = Message(self, tuple(u, "out", math.pow(2, get_phase(p))))
-                send_minus = Message(self, tuple(u, "out", math.pow(2, get_phase(p))))
-
-            # add messages to be sent
-            self.set(p, "send_plus", send_plus)
-            self.set(p, "send_minus", send_minus)
-
-            # set the nodes to be non-leaders if they were not already elected
-            if not self.has(p, "decided"):
-                self.set(p, "decided", None)
-                self.output(p,"status", "non-leader")
-
-        # terminate algorithm if total number of phases so far = 1+ ceil(log(n))
-        # total number of phases so far = (current phase + 1) to include phase 0
-        max_num_phases = 1 + math.ceil(math.log(2, p.state['n']))
-        total_phases = get_phase(p)
-
-        if total_phases == max_num_phases:
-            p.terminate(self)
 
 #TODO: Synchronous TimeSlice
 class SynchTimeSlice(Synchronous_Algorithm):
