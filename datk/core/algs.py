@@ -135,7 +135,6 @@ class SynchFloodMax(Synchronous_Algorithm):
                 self.output(p,"status", "non-leader")
                 p.terminate(self)
 
-
 class SynchHS(Synchronous_Algorithm):
     """The Hirschberg and Sinclair ("HS") algorithm for Leader Election in a Synchronous Bidirectional Ring Network
 
@@ -233,7 +232,6 @@ class SynchHS(Synchronous_Algorithm):
             self.set(p, 'send+', Message(self, (p.UID, "out", 2**next_phase)))
             self.set(p, 'send-', Message(self, (p.UID, "out", 2**next_phase)))
 
-
 class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network
 
@@ -285,7 +283,61 @@ class SynchTimeSlice(Synchronous_Algorithm):
                 p.terminate(self)
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
-    pass
+    """
+    The VariableSpeeds algorithm for Leader Election in a Synchronous Ring Network 
+
+    Each process i initiates a token which travels around the ring.
+    - Different tokens tavel at different rates: a token carraying UID v travels at
+    the rate of 1 message transmission every 2^v rounds. 
+    For example, for the token with UID 1, each process along its path waits 
+    2 rounds after receiving the token before sending it out.
+    - Each process keeps track of the smallest UID it has seen and discard any token 
+    with the UID larger than the smallest UID
+    - If a token returns to its originator, the originator is elected.
+    
+    Effects:
+        - Every process has state['status'] is 'leader' or 'non-leader'.
+        - Exactly one process has state['status'] is 'leader'
+    """
+    class Leader_Declaration(Message): pass
+
+    def msgs_i(self, p):
+        if 'status' in p.state:
+            p.send_msg(SynchVariableSpeeds.Leader_Declaration(self), p.out_nbrs[-1])
+            return p.terminate(self)
+
+        if not self.has(p, "queue"):
+            token =  Message(self, {"UID": p.UID, "TTS": 2**p.UID})
+            self.set(p, "queue", [token])
+            self.set(p, "smallest_uid", p.UID)
+
+        queue = self.get(p, "queue")
+
+        for i in reversed(range(len(queue))):
+            msg = queue[i]
+            msg.content["TTS"] -= 1
+            if msg.content["TTS"] <= 0:
+                if msg.content['UID'] == self.get(p, "smallest_uid"):
+                    p.send_msg(msg, p.out_nbrs[-1])
+                queue.pop(i)
+
+        self.set(p, "queue", queue)
+
+    def trans_i(self, p, msgs):
+        queue = self.get(p, "queue")
+
+        for msg in msgs:
+            if isinstance(msg, SynchVariableSpeeds.Leader_Declaration):
+                return self.output(p, 'status', 'non-leader') #Terminates next msgs_i
+            if msg.content["UID"] == p.UID:
+                return self.output(p, 'status', 'leader') #Terminates next msgs_i
+            if msg.content["UID"] < self.get(p, "smallest_uid"):
+                self.set(p, "smallest_uid", msg.content["UID"])
+            
+            msg.content["TTS"] = 2**msg.content["UID"]
+            queue.append(msg)
+
+        self.set(p, "queue", queue)
 
 #Construct BFS Tree
 class SynchBFS(Synchronous_Algorithm):
