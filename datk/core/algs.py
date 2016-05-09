@@ -419,17 +419,48 @@ class SynchConvergecast(Synchronous_Algorithm):
                 self.set(p, 'send', self.trans_msg_to_parent(p, msgs) )
             else:
                 p.terminate(self)
-    def trans_root(self, p, msgs):          pass
-    def output_root(self, p):               pass
-    def initial_msg_to_parent(self, p):     return
-    def trans_msg_to_parent(self, p, msgs): return
+    def trans_root(self, p, msgs):
+        """Determines the state transition the root node should undergo
+        when it receives messages
+
+        @param p: the root Process
+        @param msgs: the messages received by the root Process, from its BFS children
+        """
+        pass
+    def output_root(self, p):
+        """Determines the output action, if any, that the root should perform
+        at the end of the Convergecast.
+        """
+        pass
+    def initial_msg_to_parent(self, p):
+        """Defines the initial message sent from a leaf process to its parent at the
+        beginning of the Convergecast
+
+        @param p: A Process at a leaf of the BFS tree
+        @return: the Message p should send to its state['parent']
+        """
+        return
+    def trans_msg_to_parent(self, p, msgs):
+        """Defines the message a non-leaf, non-root Process should send to its parent
+        when it has received all its children's messages
+
+        @param p: a Process that has both p.state['parent'] != null, and p.state['children'] not empty
+        @param msgs: A list of messages from every child of p (in p.state['children']) 
+        @return: the Message p should send to its state['parent']
+        """
+        return
+
 
 class AsynchConvergecast(Asynchronous_Algorithm):
     """The abstract superclass of a class of Asynchronous Algorithms that
     propagate information from the leaves of a BFS tree to its root.
 
     Requires:
-        - Every Process knows state['parent'] and state['children']"""
+        - Every Process knows state['parent'] and state['children']
+    Effects:
+        - The root node knows the result of some global computation on the
+        network (subclasses of SynchConvergecast define this computation).
+    """
     def is_root(self, p): return p.state['parent'] is None
     def msgs_i(self, p):
         if not self.has(p, 'reports'):
