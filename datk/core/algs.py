@@ -236,8 +236,6 @@ class SynchHS(Synchronous_Algorithm):
             self.set(p, 'send-', Message(self, (p.UID, "out", 2**next_phase)))
 
 
-
-#TODO: Synchronous TimeSlice
 class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network """
     def msgs_i(self, p):
