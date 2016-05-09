@@ -393,6 +393,9 @@ class SynchConvergecast(Synchronous_Algorithm):
 
     Requires:
         - Every Process knows state['parent']
+    Effects:
+        - The root node knows the result of some global computation on the
+        network (subclasses of SynchConvergecast define this computation).
     """
     #TODO If Processes also know state['children'] ==> Reduced Communication Complexity.
     def is_root(self, p): return p.state['parent'] is None
