@@ -1,24 +1,24 @@
 from distalgs import *
 #Leader Election Algorithms for Ring networks:
 
-class Leader_Election_Synchronous_Algorithm(Synchronous_Algorithm):
-    def draw(self,network):
-        vals = network.draw(node_coloring = True)
+
+class BFS_Synchronous_Algorithm(Synchronous_Algorithm):
+    def get_draw_args(self,network,vals):
+        """network - refers to the network on which the algorithm is running.
+        vals - the positions of the nodes in the network"""
+        node_colors = None
+        edge_colors = dict()
         for p in network.processes:
-            v = vals[p.UID] # IMPORTANT: check to make sure this is right!
-            # if self.has(p, "decided"):
-            if p.state['status'] == "leader":
-                plt.plot( [v[0]], [v[1]], 'ro' )
+            if p.state['parent']:
+                parent_UID = p.state['parent'].UID
+                edge_colors[(p.UID,parent_UID)] = 'r'
 
-            else: # non-leader
-                plt.plot( [v[0]], [v[1]], 'bo' )
+        return node_colors, edge_colors
 
-            # else:
-            #     plt.plot( [v[0]], [v[1]], 'go' )
 
-        plt.show()
 
-class LCR(Leader_Election_Synchronous_Algorithm):
+
+class LCR(Synchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Ring Network 
 
     Each Process sends its identifier around the ring.
@@ -58,6 +58,23 @@ class LCR(Leader_Election_Synchronous_Algorithm):
             else:
                 self.set(p, "send",  None)
         if self.r == p.state['n']: p.terminate(self)
+
+
+    def get_draw_args(self,network,vals):
+        """network - refers to the network on which the algorithm is running.
+        vals - the positions of the nodes in the network"""
+        node_colors = dict()
+        edge_colors = None
+        for p in network.processes:
+            # if self.has(p, "decided"):
+            if p.state['status'] == "leader":
+                node_colors[p.UID] = 'ro'
+
+            elif p.state['status'] == "non-leader": # non-leader
+                node_colors[p.UID] = 'bo'
+
+        # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
+        return node_colors, edge_colors
 
 
 
@@ -311,7 +328,7 @@ class SynchHS(Synchronous_Algorithm):
             p.terminate(self)
 
 #TODO: Synchronous TimeSlice
-class SynchTimeSlice(Leader_Election_Synchronous_Algorithm):
+class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network """
     def msgs_i(self, p):
         msg = self.get(p, "send")
@@ -331,6 +348,7 @@ class SynchTimeSlice(Leader_Election_Synchronous_Algorithm):
 
     def trans_i(self, p, msgs):
         if len(msgs) > 0:
+
             msg = msgs[0] # modify this
             if (self.r - 1)/p.state['n'] == msg.content-1 and not self.has(p,"decided"):
                 self.set(p, 'decided', None)
@@ -343,13 +361,30 @@ class SynchTimeSlice(Leader_Election_Synchronous_Algorithm):
                 p.terminate(self)
 
 
+    def get_draw_args(self,network,vals):
+        """network - refers to the network on which the algorithm is running.
+        vals - the positions of the nodes in the network"""
+        node_colors = dict()
+        edge_colors = None
+        for p in network.processes:
+            # v = vals[p.UID] # IMPORTANT: check to make sure this is right!
+            # if self.has(p, "decided"):
+            if p.state['status'] == "leader":
+                node_colors[p.UID] = 'ro'
+
+            elif p.state['status'] == "non-leader": # non-leader
+                node_colors[p.UID] = 'bo'
+
+        # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
+        return node_colors, edge_colors
+
+
 class SynchVariableSpeeds(Synchronous_Algorithm):
     pass
 
 #Construct BFS Tree
 class SynchBFS(Synchronous_Algorithm):
     """Constructs a BFS tree with the 'leader' Process at its root
-
     At any point during execution, there is some set of processes that is
     "marked," initially just i0. Process i0 sends out a search message at
     round 1, to all of its outgoing neighbors. At any round, if an unmarked
@@ -357,7 +392,6 @@ class SynchBFS(Synchronous_Algorithm):
     processes from which the search has arrived as its parent. At the first
     round after a process gets marked, it sends a search message to all of its
     outgoing neighbors.
-
     Requires:
         - testLeaderElection
     Effects:
@@ -386,9 +420,22 @@ class SynchBFS(Synchronous_Algorithm):
             if self.has(p, "recently_marked"): self.delete(p, "recently_marked")
             p.terminate(self)
 
-class SynchBFSAck(Synchronous_Algorithm):
-    """Constructs a BFS tree with children pointers and the 'leader' Process at its root
+    def get_draw_args(self,network,vals):
+        """network - refers to the network on which the algorithm is running.
+        vals - the positions of the nodes in the network"""
+        node_colors = None
+        edge_colors = dict()
+        for p in network.processes:
+            if p.state['parent']:
+                parent_UID = p.state['parent'].UID
+                edge_colors[(p.UID,parent_UID)] = 'r'
 
+        return node_colors, edge_colors
+
+        
+
+class SynchBFSAck(BFS_Synchronous_Algorithm):
+    """Constructs a BFS tree with children pointers and the 'leader' Process at its root
     Algorithm (Informal):
     At any point during execution, there is some set of processes that is
     "marked," initially just i0. Process i0 sends out a search message at
@@ -398,7 +445,6 @@ class SynchBFSAck(Synchronous_Algorithm):
     round after a process gets marked, it sends a search message to all of its
     outgoing neighbors, and an acknowledgement to its parent, so that nodes
     will also know their children.
-
     Requires:
         - testLeaderElection
     Effects: 
@@ -443,7 +489,7 @@ class SynchBFSAck(Synchronous_Algorithm):
                 p.terminate(self)
                 if self.params["verbosity"]>=Algorithm.VERBOSE:
                     print p,"knows children"
-
+                    
 #Convergecast
 
 class SynchConvergecast(Synchronous_Algorithm):
