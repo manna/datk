@@ -502,7 +502,6 @@ class SynchConvergecast(Synchronous_Algorithm):
         """
         return
 
-
 class AsynchConvergecast(Asynchronous_Algorithm):
     """The abstract superclass of a class of Asynchronous Algorithms that
     propagate information from the leaves of a BFS tree to its root.
@@ -689,3 +688,47 @@ class SynchLubyMIS(Synchronous_Algorithm):
             self.set(p, 'rem_nbrs', rem_nbrs)
             if self.get(p, 'status') in ['winner', 'loser']:
                 p.terminate(self)
+
+#All pairs shortest paths
+#TODO : Doesn't seem to work for networks with negative weight edges.
+class SynchBellmanFord(Synchronous_Algorithm):
+    """
+    All pairs shortest paths algorithm for a synchronous Network.
+
+    Requires:
+        - Every process knows state['nbr_dist'][UID], the weight of the edge
+        form the process to the neighboring process with uid UID, for all
+        neighbors.
+    Effect:
+        - Every process knows state['SP'][UID], the weight of the
+        shortest path to the process with uid UID, for every other process
+        in the network.
+    """
+    def msgs_i(self, p):
+        if self.r == 1:
+            self.set(p, 'SP', p.state['nbr_dist'])
+            self.set(p, 'send', True)
+        
+        if self.get(p, 'send') == True:
+            p.send_msg(Message(self, self.get(p, 'SP')))
+
+        if self.r == p.state['n']:
+            p.output('SP', self.get(p, 'SP'))
+            p.terminate(self)
+
+    def trans_i(self, p, msgs):
+        self.set(p, 'send', False)
+
+        SP = self.get(p, 'SP')
+        updated_SP = deepcopy(SP)
+        for msg in msgs:
+            u = msg.author.UID
+            for v, weight in msg.content.items():
+                if v == p.UID:
+                    continue
+                if v not in SP or SP[u] + weight < SP[v]:
+                    updated_SP[v] = SP[u] + weight
+
+        if updated_SP != SP:
+            self.set(p, 'SP', updated_SP)
+            self.set(p, 'send', True)
