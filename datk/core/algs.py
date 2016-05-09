@@ -251,6 +251,7 @@ class SynchTimeSlice(Synchronous_Algorithm):
 
     Requires:
         - Every process knows state['n'], the size of the network
+
     Effects:
         - Every process has state['status'] is 'leader' or 'non-leader'.
         - Exactly one process has state['status'] is 'leader'
@@ -299,7 +300,7 @@ class SynchBFS(Synchronous_Algorithm):
     outgoing neighbors.
 
     Requires:
-        - testLeaderElection
+        - assertLeaderElection
     Effects:
         - every Process has state['parent']. Leader has state['parent'] = None
     """
@@ -340,7 +341,7 @@ class SynchBFSAck(Synchronous_Algorithm):
     will also know their children.
 
     Requires:
-        - testLeaderElection
+        - assertLeaderElection
     Effects: 
         - Every process knows:
             - state['parent']. Leader has state['parent'] = None
