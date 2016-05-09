@@ -324,6 +324,8 @@ class SynchTimeSlice(Synchronous_Algorithm):
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
     """
+    The VariableSpeeds algorithm for Leader Election in a Synchronous Ring Network 
+
     Each process i initiates a token which travels around the ring.
     - Different tokens tavel at different rates: a token carraying UID v travels at
     the rate of 1 message transmission every 2^v rounds. 
@@ -333,97 +335,49 @@ class SynchVariableSpeeds(Synchronous_Algorithm):
     with the UID larger than the smallest UID
     - If a token returns to its originator, the originator is elected.
     
-    TODO:
-    Requires:
-    
     Effects:
+        - Every process has state['status'] is 'leader' or 'non-leader'.
+        - Exactly one process has state['status'] is 'leader'
     """
+    class Leader_Declaration(Message): pass
+
     def msgs_i(self, p):
-        #Create own messages
-        #content is a dictionary: {"id": p.UID, "tts": tts)
+        if 'status' in p.state:
+            p.send_msg(SynchVariableSpeeds.Leader_Declaration(self), p.out_nbrs[-1])
+            return p.terminate(self)
 
         if not self.has(p, "queue"):
-            token =  Message(self, {"UID": p.UID, "TTS": 2**p.UID, "MOVED":False})
+            token =  Message(self, {"UID": p.UID, "TTS": 2**p.UID})
             self.set(p, "queue", [token])
-        if not self.has(p,"send"):
-            self.set(p, "send", [])
-        
-        for msg in self.get(p, "send"):
-            msg.content["MOVED"] = True
-            p.send_msg(msg)
-            
-        print 'done sending messages at ', p
-        return
+            self.set(p, "smallest_uid", p.UID)
+
+        queue = self.get(p, "queue")
+
+        for i in reversed(range(len(queue))):
+            msg = queue[i]
+            msg.content["TTS"] -= 1
+            if msg.content["TTS"] <= 0:
+                if msg.content['UID'] == self.get(p, "smallest_uid"):
+                    p.send_msg(msg, p.out_nbrs[-1])
+                queue.pop(i)
+
+        self.set(p, "queue", queue)
 
     def trans_i(self, p, msgs):
-        #check if there is any leader selected already.
-        for process in self.network:
-            if self.get(process,"status") and self.get(process,"status") == "leader":
-                print self.get(process, "status")
-                p.terminate(self)
-    
-        if not self.has(p,"status"):
-            self.set(p,"status","undecided")
-        status = self.get(p,"status")
-        
-        if not self.has(p, "MIN_UID"):
-            self.set(p, "MIN_UID", p.UID)
-        print "\nCurrent p: ", p
-        print "current status of p (can't be none or leader): ", status
-        print "current min_uid: ", self.get(p, "MIN_UID")
-        
-        queue = self.get(p,"queue")
-        print "current queue: ", [str(m) for m in queue]
-        print "incoming msgs: ", [str(m) for m in msgs]
-        queue += msgs
-        
-        toRemove = []
-        toSend = []
+        queue = self.get(p, "queue")
 
-        for msg in queue:
-            msg.content["TTS"] -= 1
-            print msg.content.get("TTS")
-            assert(msg.content.get("TTS") >= 0)
-            print "decreasing TTS for this round"  
-            print msg
+        for msg in msgs:
+            if isinstance(msg, SynchVariableSpeeds.Leader_Declaration):
+                return self.output(p, 'status', 'non-leader') #Terminates next msgs_i
+            if msg.content["UID"] == p.UID:
+                return self.output(p, 'status', 'leader') #Terminates next msgs_i
+            if msg.content["UID"] < self.get(p, "smallest_uid"):
+                self.set(p, "smallest_uid", msg.content["UID"])
             
-            if msg.content["TTS"] == 0:
-                #Reset TTS to its 2**UID
-                msg.content["TTS"] = 2**msg.content["UID"]
-                toSend.append(msg)
-                toRemove.append(msg)
+            msg.content["TTS"] = 2**msg.content["UID"]
+            queue.append(msg)
 
-            msg_uid = msg.content.get("UID")
-            assert(msg_uid is not None)
-            if msg.content.get("MOVED") and msg_uid == p.UID:
-                status = "leader"
-                
-            if msg_uid < self.get(p, "MIN_UID"):
-                self.set(p, "MIN_UID", msg_uid)
-                print "Min-uid updated" #debug
-
-            elif msg_uid > self.get(p, "MIN_UID"):
-                toRemove.append(msg)
-                
-        #Remove larger msgs
-        new_queue = []
-        while len(queue) > 0:
-            msg = queue.pop()
-            if msg not in toRemove:
-                new_queue.append(msg)
-        #Reset process's queue
-        self.set(p, "queue", new_queue)
-        self.set(p,"send", toSend)
-           
-        #Go public
-        self.output(p, "status", status)
-        if status == "leader":
-            p.terminate(self)
-        if self.r >10:
-            p.terminate(self)       
-        print "After transition, status: ", p, " ", status
-
-        return
+        self.set(p, "queue", queue)
                
 #Construct BFS Tree
 class SynchBFS(Synchronous_Algorithm):
