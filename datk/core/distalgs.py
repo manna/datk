@@ -175,13 +175,16 @@ class Network:
     
     def __init__(self, processes):
         self.processes = processes
-
+        self.algs=[]
+        self.canvas = None
     def __init__(self, n, index_to_UID = None):
         """
         Creates a network of n disconnected Processes,
         with random distinct UIDs, or as specified by
         the index_to_UID function
         """
+        self.algs=[]
+        self.canvas = None
         if index_to_UID is None:
             self.processes = [Process(i) for i in range(n)]
             shuffle(self.processes)
@@ -192,14 +195,15 @@ class Network:
     
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
+        self.algs.append(algorithm)
         for process in self:
             process.add(algorithm)
     
     def run(self, algorithm):
         """Runs algorithm on the Network"""
         algorithm(self)
-    
-    def draw(self, style='spectral'):
+        
+    def draw(self, style='spectral', default_node_coloring = True, default_edge_coloring = True):
         """
         Draws the network
 
@@ -209,6 +213,8 @@ class Network:
                 - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
             - 'circular' draws graph in a circular layout
         """
+        fig = plt.figure()
+        ax1 = fig.add_subplot(111)
         if style == 'spectral':
             n = len(self)
             L = self._laplacian()
@@ -227,18 +233,87 @@ class Network:
             for k in range(n):
                 vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
 
-        plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )#todo
+        def line(v1, v2,color='k'):
+            ax1.plot( (v1[0], v2[0]), (v1[1], v2[1] ),color)
 
-        def line(v1, v2):
-            plt.plot( (v1[0], v2[0]), (v1[1], v2[1] ))
-        for i in range(n):
-            for nbr in self[i].out_nbrs:
-                line(vals[i], vals[self.index(nbr)])
+        if default_edge_coloring:
+            for i in range(n):
+                for nbr in self[i].out_nbrs:
+                    line(vals[i], vals[self.index(nbr)])
 
         frame = plt.gca()
         frame.axes.get_xaxis().set_visible(False)
         frame.axes.get_yaxis().set_visible(False)
-        plt.show()#todo: remove this
+        if default_node_coloring:
+            ax1.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+
+        for alg in self.algs:
+            node_colors, edge_colors = alg.get_draw_args(self,vals)
+            if node_colors:
+                for p_UID,node_color in node_colors.iteritems():
+                    v = vals[self.uid2process[p_UID]]
+                    ax1.plot( [v[0]], [v[1]], node_color)
+
+            if edge_colors:
+                for (p_UID,parent_UID),edge_color in edge_colors.iteritems():
+                    v1 = vals[self.uid2process[p_UID]]
+                    v2 = vals[self.uid2process[parent_UID]]
+                    line(v1,v2,color=edge_color)
+        
+        self.canvas = fig
+        print "canvas is set to frame"
+
+    
+#    def draw(self, style='spectral'):
+#        """
+#        Draws the network
+#
+#        @param style:
+#            - 'spectral' draws graph in a spectral graph layout
+#                - http://www.math.ucsd.edu/~fan/research/cb/ch1.pdf
+#                - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
+#            - 'circular' draws graph in a circular layout
+#            
+#        """
+#        fig = plt.figure()
+#        ax1 = fig.add_subplot(111)
+#
+#        if style == 'spectral':
+#            n = len(self)
+#            L = self._laplacian()
+#            D = np.diag(self.degrees())
+#            w, v = eig(L, D)
+#            v = v.T
+#
+#            idx = w.argsort()
+#            v = v[idx]
+#            x_vals, y_vals = v[1], v[2]
+#            vals = zip(x_vals, y_vals)
+#
+#        if style == 'circular':
+#            n = len(self)
+#            vals = []
+#            for k in range(n):
+#                vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
+#
+##        plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )#todo
+#        ax1.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )#todo
+#
+#
+#        def line(v1, v2):
+##            plt.plot( (v1[0], v2[0]), (v1[1], v2[1] ))
+#            ax1.plot( (v1[0], v2[0]), (v1[1], v2[1] ))
+#
+#        for i in range(n):
+#            for nbr in self[i].out_nbrs:
+#                line(vals[i], vals[self.index(nbr)])
+#
+#        frame = plt.gca()
+#        frame.axes.get_xaxis().set_visible(False)
+#        frame.axes.get_yaxis().set_visible(False)
+#        self.canvas = fig
+#        print "canvas is set to frame"
+#        plt.show()#todo: remove this!
     #todo
     def start_simulation(self, **params):
         print "Simulation started on " + str(self)
@@ -746,11 +821,18 @@ class GraphPage(tk.Frame):
         button1 = tk.Button(self, text="Back to Home",
                             command=lambda: controller.show_frame(StartPage))
         button1.pack()
-
-        f = Figure(figsize=(5,5), dpi=100)
-        a = f.add_subplot(111)
+        
+#        f = Figure(figsize=(10,10), dpi=100)
+        f = network.canvas
+#        f.add_subplot(network.canvas)
+#        a = f.add_subplot(121)
+        print type(f)
+        print type(network.canvas)
+        print str(network.canvas)
+        print str(f)
+        print 'here'
         #DO STUFF HERE TO PLOT
-        a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
+#        a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
         #todo
         # initializer gets Network instance
         # nw.canvas.plot
