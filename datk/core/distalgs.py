@@ -183,13 +183,17 @@ class Network:
         with random distinct UIDs, or as specified by
         the index_to_UID function
         """
-        self.algs=[]
-        self.canvas = None
+        self.algs = []
         if index_to_UID is None:
-            self.processes = [Process(i) for i in range(n)]
-            shuffle(self.processes)
+            proc_ids = range(n)
+            shuffle(proc_ids)
+            process2uid = dict(zip(range(n),proc_ids))
+            self.processes = [Process(process2uid[i]) for i in range(n)]
+            self.uid2process = dict(zip(proc_ids,range(n)))
+            # shuffle(self.processes)
         else:
             self.processes = [Process(index_to_UID(i)) for i in range(n)]
+            self.uid2process = dict(zip(range(n),[index_to_UID(i) for i in range(n)]))
         for process in self:
             process.state['n'] = n
     
