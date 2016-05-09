@@ -151,8 +151,6 @@ class SynchHS(Synchronous_Algorithm):
     If the identifier is less than its own, it discards the incoming identifier;
     if it is equal to its own, the Process declares itself the leader.
 
-    Requires:
-        - Every process knows state['n'], the size of the network
     Effects:
         - Every process has state['status'] is 'leader' or 'non-leader'.
         - Exactly one process has state['status'] is 'leader'
@@ -237,7 +235,26 @@ class SynchHS(Synchronous_Algorithm):
 
 
 class SynchTimeSlice(Synchronous_Algorithm):
-    """The TimeSlice algorithm in a Synchronous Ring Network """
+    """The TimeSlice algorithm in a Synchronous Ring Network
+
+    Computation proceeds in phases 1, 2, ..., where each phase consists
+    of n consecutive rounds. Each phase is devoted to the possible
+    circulation, all the way around the ring, of a token carrying a
+    particular UID. More specifically, in phase v, which consists of
+    rounds (v - 1)n + 1,... , vn, only a token carrying UID v is permitted
+    to circulate. If a process i with UID v exists, and round (v - 1)n + 1
+    is reached without i having previously received any non-null messages,
+    then process i elects itself the leader and sends a token carrying its
+    UID around the ring. As this token travels, all the other processes note
+    that they have received it, which prevents them from electing themselves
+    as leader or initiating the sending of a token at any later phase.
+
+    Requires:
+        - Every process knows state['n'], the size of the network
+    Effects:
+        - Every process has state['status'] is 'leader' or 'non-leader'.
+        - Exactly one process has state['status'] is 'leader'
+    """
     def msgs_i(self, p):
         msg = self.get(p, "send")
         if msg:
