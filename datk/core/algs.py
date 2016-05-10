@@ -42,6 +42,22 @@ class LCR(Synchronous_Algorithm):
                 self.set(p, "send",  None)
         if self.r == p.state['n']: p.terminate(self)
 
+    def get_draw_args(self,network,vals):
+        """network - refers to the network on which the algorithm is running.
+        vals - the positions of the nodes in the network"""
+        node_colors = dict()
+        edge_colors = None
+        for p in network.processes:
+            # if self.has(p, "decided"):
+            if p.state['status'] == "leader":
+                node_colors[p.UID] = 'ro'
+
+            elif p.state['status'] == "non-leader": # non-leader
+                node_colors[p.UID] = 'bo'
+
+        # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
+        return node_colors, edge_colors
+
 class AsyncLCR(Asynchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in an Asynchronous Ring Network 
 
