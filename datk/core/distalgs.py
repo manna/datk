@@ -184,6 +184,8 @@ class Network:
         the index_to_UID function
         """
         self.algs = []
+        self.snapshots = []
+
         if index_to_UID is None:
             proc_ids = range(n)
             shuffle(proc_ids)
@@ -337,8 +339,18 @@ class Network:
             print 'here'
         print "GUI destroyed"
 
+    def restore_snapshot(self, snapshot):
+        i = 0
+        for process in self:
+            process.state = snapshot[i]
+            i+=1
+
+    def get_snapshot(self):
+        return deepcopy([process.state for process in self])
+
     def state(self):
         """
+        (Text print get_state)
         @return: A text representation of the state of all the Processes in the Network 
         """
         return [(str(process), dict(process.state)) for process in self]
@@ -588,6 +600,8 @@ class Synchronous_Algorithm(Algorithm):
         """Executes a single round of the Synchronous Algorithm"""
         self.msgs()
         self.trans()
+
+        self.network.snapshots.append([process.state for process in self.network]) 
     
     def msgs(self):
         for process in self.network:
