@@ -395,6 +395,19 @@ class SynchBFS(Synchronous_Algorithm):
             if self.has(p, "recently_marked"): self.delete(p, "recently_marked")
             p.terminate(self)
 
+    def get_draw_args(self,network,vals):
+        """network - refers to the network on which the algorithm is running.
+        vals - the positions of the nodes in the network"""
+        node_colors = None
+        edge_colors = dict()
+        for p in network.processes:
+            if p.state['parent']:
+                parent_UID = p.state['parent'].UID
+                edge_colors[(p.UID,parent_UID)] = 'r'
+
+        return node_colors, edge_colors
+        
+
 class SynchBFSAck(Synchronous_Algorithm):
     """Constructs a BFS tree with children pointers and the 'leader' Process at its root
 
