@@ -245,9 +245,9 @@ class Network:
                 for nbr in self[i].out_nbrs:
                     line(vals[i], vals[self.index(nbr)])
 
-        frame = plt.gca()
-        frame.axes.get_xaxis().set_visible(False)
-        frame.axes.get_yaxis().set_visible(False)
+#        frame = plt.gca()
+#        frame.axes.get_xaxis().set_visible(False)
+#        frame.axes.get_yaxis().set_visible(False)
         if default_node_coloring:
             ax1.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
 
