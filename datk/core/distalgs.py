@@ -166,6 +166,7 @@ class Network:
     
     def __init__(self, processes):
         self.processes = processes
+        self.algs = []
 
     def __init__(self, n, index_to_UID = None):
         """
@@ -173,19 +174,26 @@ class Network:
         with random distinct UIDs, or as specified by
         the index_to_UID function
         """
+        self.algs = []
         if index_to_UID is None:
-            self.processes = [Process(i) for i in range(n)]
-            shuffle(self.processes)
+            proc_ids = range(n)
+            shuffle(proc_ids)
+            process2uid = dict(zip(range(n),proc_ids))
+            self.processes = [Process(process2uid[i]) for i in range(n)]
+            self.uid2process = dict(zip(proc_ids,range(n)))
+            # shuffle(self.processes)
         else:
             self.processes = [Process(index_to_UID(i)) for i in range(n)]
+            self.uid2process = dict(zip(range(n),[index_to_UID(i) for i in range(n)]))
         for process in self:
             process.state['n'] = n
     
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
+        self.algs.append(algorithm)
         for process in self:
             process.add(algorithm)
-    
+                
     def run(self, algorithm):
         """Runs algorithm on the Network"""
         algorithm(self)
