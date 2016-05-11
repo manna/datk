@@ -619,6 +619,15 @@ class Synchronous_Algorithm(Algorithm):
         print time_complexity
         print "-"*len(time_complexity)
 
+    def restore_snapshot(self, snapshot):
+        i = 0
+        for process in self:
+            process.state = snapshot[i]
+            i+=1
+
+    def get_snapshot(self):
+        return deepcopy([process.state for process in self])
+
 
 class Do_Nothing(Synchronous_Algorithm):
     def trans_i(self, p, messages): p.terminate(self)
