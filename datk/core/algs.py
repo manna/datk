@@ -13,10 +13,10 @@ def Colorizer(algorithm,network,vals,algorithm_type):
         for p in network.processes:
             # if self.has(p, "decided"):
             if p.state['status'] == "leader":
-                node_colors[p.UID] = "rgb(255, 0, 0)"
+                node_colors[p.UID] = ("rgb(255, 0, 0)", "leader")
 
             elif p.state['status'] == "non-leader": # non-leader
-                node_colors[p.UID] = "rgb(0, 0, 255)"
+                node_colors[p.UID] = ("rgb(0, 0, 255)", "non-leader")
 
         return node_colors, edge_colors
 
@@ -26,7 +26,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
         for p in network.processes:
             if p.state['parent']:
                 parent_UID = p.state['parent'].UID
-                edge_colors[(p.UID,parent_UID)] = "rgb(0, 255, 0)"
+                edge_colors[(p.UID,parent_UID)] = ("rgb(0, 255, 0)", "BFS")
 
         return node_colors, edge_colors
 

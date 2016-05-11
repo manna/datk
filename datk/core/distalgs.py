@@ -232,7 +232,7 @@ class Network:
 
 
         edge_tuples = [(i, self.index(nbr)) for i in range(len(self.processes)) for nbr in self[i].out_nbrs]
-        def scatter_nodes(pos, labels=None, color=None, size=20, opacity=1):
+        def scatter_nodes(pos, labels=None, color=None, size=20, opacity=1, hoverinfo = 'text'):
             # pos is the dict of node positions
             # labels is a list  of labels of len(pos), to be displayed when hovering the mouse over the nodes
             # color is the color for nodes. When it is set as None the Plotly default color is used
@@ -243,7 +243,7 @@ class Network:
             for k in range(L):
                 trace['x'].append(pos[k][0])
                 trace['y'].append(pos[k][1])
-            attrib=dict(name='', text=labels , hoverinfo='text', opacity=opacity) # a dict of Plotly node attributes
+            attrib=dict(name='', text=labels , hoverinfo=hoverinfo, opacity=opacity) # a dict of Plotly node attributes
             trace=dict(trace, **attrib)# concatenate the dict trace and attrib
             if color is not None:
                 trace['marker']['color'] = color
@@ -252,12 +252,12 @@ class Network:
             return trace
 
 
-        def scatter_edges(edge_tuples, pos, line_color=None, line_width=1):
+        def scatter_edges(edge_tuples, pos, line_color=None, line_width=1, hoverinfo = 'none'):
             trace = Scatter(x=[], y=[], mode='lines')
             for edge in edge_tuples:
                 trace['x'] += [pos[edge[0]][0],pos[edge[1]][0], None]
-                trace['y'] += [pos[edge[0]][1],pos[edge[1]][1], None]  
-                trace['hoverinfo']='none'
+                trace['y'] += [pos[edge[0]][1],pos[edge[1]][1], None]
+                trace['hoverinfo']=hoverinfo
                 trace['line']['width']=line_width
                 if line_color is not None: # when it is None a default Plotly color is used
                     trace['line']['color']=line_color
@@ -292,9 +292,10 @@ class Network:
         for alg in self.algs:
             node_colors, edge_colors = alg.get_draw_args(self,vals)
             if edge_colors:
-                for (p_UID,parent_UID),edge_color in edge_colors.iteritems():
+                for (p_UID,parent_UID),(edge_color,hoverinfo) in edge_colors.iteritems():
                     pair_indices = [(self.uid2process[p_UID],self.uid2process[parent_UID])]
                     edge_trace = scatter_edges(pair_indices, vals, line_color=edge_color)
+                    # edge_trace = scatter_edges(pair_indices, vals, line_color=edge_color, hoverinfo = hoverinfo)
                     traces.append(edge_trace)
 
 
@@ -304,9 +305,10 @@ class Network:
         for alg in self.algs:
             node_colors, edge_colors = alg.get_draw_args(self,vals)
             if node_colors:
-                for p_UID,node_color in node_colors.iteritems():
+                for p_UID,(node_color,hoverinfo) in node_colors.iteritems():
                     v = vals[self.uid2process[p_UID]]
-                    node_trace = scatter_nodes([v], labels=[p_UID], color=node_color)
+                    node_trace = scatter_nodes([v], labels=["%s : %i" %(hoverinfo,p_UID)], color=node_color)
+                    # node_trace = scatter_nodes([v], labels=[p_UID], color=node_color, hoverinfo = hoverinfo)
                     traces.append(node_trace)
 
         width=500
