@@ -795,7 +795,7 @@ class VizApp(tk.Tk):
         self.frames = {}
         
         container = tk.Frame(self)
-        container.pack(side="top", fill="both", expand = True)
+        container.pack(side="top", fill="both", expand = False)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
@@ -827,8 +827,10 @@ class StartPage(tk.Frame):
                             command=lambda: controller.show_frame(GraphPage))
         button.pack()
         
-
+def dummyprint():
+        print "hi"
 class GraphPage(tk.Frame):
+    
 
     def __init__(self, parent, controller, network):
         print "GraphPage: network: ", network
@@ -840,15 +842,14 @@ class GraphPage(tk.Frame):
                             command=lambda: controller.show_frame(StartPage))
         button1.pack()
         
+        scale = tk.Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, command=dummyprint())
+        scale.pack()
+        print scale.get()
+        
+        
 #        f = Figure(figsize=(10,10), dpi=100)
         f = network.canvas
-#        f.add_subplot(network.canvas)
-#        a = f.add_subplot(121)
-        print type(f)
-        print type(network.canvas)
-        print str(network.canvas)
-        print str(f)
-        print 'here'
+
         #DO STUFF HERE TO PLOT
 #        a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
         #todo
@@ -858,8 +859,8 @@ class GraphPage(tk.Frame):
 
         canvas = FigureCanvasTkAgg(f, self)
         canvas.show()
-        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
-
+        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=False)
+        
         toolbar = NavigationToolbar2TkAgg(canvas, self)
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
