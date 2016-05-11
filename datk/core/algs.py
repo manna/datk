@@ -418,7 +418,7 @@ class SynchBFS(Synchronous_Algorithm):
 
         
 
-class SynchBFSAck(BFS_Synchronous_Algorithm):
+class SynchBFSAck(Synchronous_Algorithm):
     """Constructs a BFS tree with children pointers and the 'leader' Process at its root
     Algorithm (Informal):
     At any point during execution, there is some set of processes that is
