@@ -193,7 +193,7 @@ class Network:
         self.algs.append(algorithm)
         for process in self:
             process.add(algorithm)
-                
+
     def run(self, algorithm):
         """Runs algorithm on the Network"""
         algorithm(self)
