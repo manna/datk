@@ -268,59 +268,7 @@ class Network:
         
         self.canvas = fig
         print "canvas is set to frame"
-
     
-#    def draw(self, style='spectral'):
-#        """
-#        Draws the network
-#
-#        @param style:
-#            - 'spectral' draws graph in a spectral graph layout
-#                - http://www.math.ucsd.edu/~fan/research/cb/ch1.pdf
-#                - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
-#            - 'circular' draws graph in a circular layout
-#            
-#        """
-#        fig = plt.figure()
-#        ax1 = fig.add_subplot(111)
-#
-#        if style == 'spectral':
-#            n = len(self)
-#            L = self._laplacian()
-#            D = np.diag(self.degrees())
-#            w, v = eig(L, D)
-#            v = v.T
-#
-#            idx = w.argsort()
-#            v = v[idx]
-#            x_vals, y_vals = v[1], v[2]
-#            vals = zip(x_vals, y_vals)
-#
-#        if style == 'circular':
-#            n = len(self)
-#            vals = []
-#            for k in range(n):
-#                vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
-#
-##        plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )#todo
-#        ax1.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )#todo
-#
-#
-#        def line(v1, v2):
-##            plt.plot( (v1[0], v2[0]), (v1[1], v2[1] ))
-#            ax1.plot( (v1[0], v2[0]), (v1[1], v2[1] ))
-#
-#        for i in range(n):
-#            for nbr in self[i].out_nbrs:
-#                line(vals[i], vals[self.index(nbr)])
-#
-#        frame = plt.gca()
-#        frame.axes.get_xaxis().set_visible(False)
-#        frame.axes.get_yaxis().set_visible(False)
-#        self.canvas = fig
-#        print "canvas is set to frame"
-#        plt.show()#todo: remove this!
-    #todo
     def start_simulation(self, **params):
         print "Simulation started on " + str(self)
         
@@ -328,7 +276,6 @@ class Network:
         self.vizApp.mainloop()
         print "GUI is set up"
 
-        #what to do now?
     def stop_simulation(self):
         try: 
             self.vizApp.terminate()
@@ -827,42 +774,40 @@ class StartPage(tk.Frame):
                             command=lambda: controller.show_frame(GraphPage))
         button.pack()
         
-def dummyprint():
-        print "hi"
+        
 class GraphPage(tk.Frame):
-    
 
     def __init__(self, parent, controller, network):
-        print "GraphPage: network: ", network
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="DATK simulation page!", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
-
-        button1 = tk.Button(self, text="Back to Home",
+        self.label = tk.Label(self, text="DATK simulation page!", font=LARGE_FONT)
+        self.button_home = tk.Button(self, text="Back to Home",
                             command=lambda: controller.show_frame(StartPage))
-        button1.pack()
-        
-        scale = tk.Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, command=dummyprint())
-        scale.pack()
-        print scale.get()
-        
-        
-#        f = Figure(figsize=(10,10), dpi=100)
-        f = network.canvas
+        self.n_steps = 100
+        if len(network.snapshots) > 0:
+            self.n_steps = len(network.snapshots)
+            
+        self.slider = tk.Scale(self, from_=0, to=self.n_steps, orient=tk.HORIZONTAL, command=self.updateValue)
+#        self.stringVar = tk.StringVar()
+#        self.stringVar.set(self.slider.get())        
+#        self.entry = tk.Entry(self, textvariable=self.stringVar)
 
-        #DO STUFF HERE TO PLOT
-#        a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
-        #todo
-        # initializer gets Network instance
-        # nw.canvas.plot
+        self.label.pack(pady=10,padx=10)
+        self.button_home.pack()
+        self.slider.pack()
 
-
-        canvas = FigureCanvasTkAgg(f, self)
-        canvas.show()
+#        self.entry.insert(0,"hello")
+#        self.entry.pack()
+        
+        canvas = FigureCanvasTkAgg(network.canvas, self)
+#        canvas.show()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=False)
         
         toolbar = NavigationToolbar2TkAgg(canvas, self)
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+    def updateValue(self, event):
+        print self.slider.get()
+
 
         
