@@ -6,7 +6,8 @@ def Colorizer(algorithm,network,vals,algorithm_type):
     leader_election
     BFS
     """
-    if algorithm_type == "leader_election":
+    if algorithm_type == "leader_election": 
+        # TODO:  do a visualization for undecided nodes
         node_colors = dict()
         edge_colors = None
         for p in network.processes:
@@ -17,7 +18,6 @@ def Colorizer(algorithm,network,vals,algorithm_type):
             elif p.state['status'] == "non-leader": # non-leader
                 node_colors[p.UID] = 'bo'
 
-        # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
         return node_colors, edge_colors
 
     elif algorithm_type == "BFS":
@@ -29,26 +29,6 @@ def Colorizer(algorithm,network,vals,algorithm_type):
                 edge_colors[(p.UID,parent_UID)] = 'r'
 
         return node_colors, edge_colors
-
-
-# class LeaderElectionAlgorithm(Synchronous_Algorithm):
-#     def get_draw_args(self,network,vals):
-#         """network - refers to the network on which the algorithm is running.
-#         vals - the positions of the nodes in the network"""
-#         node_colors = dict()
-#         edge_colors = None
-#         for p in network.processes:
-#             # if self.has(p, "decided"):
-#             if p.state['status'] == "leader":
-#                 node_colors[p.UID] = 'ro'
-
-#             elif p.state['status'] == "non-leader": # non-leader
-#                 node_colors[p.UID] = 'bo'
-
-#         # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
-#         return node_colors, edge_colors
-
-
 
 #Leader Election Algorithms for Ring networks:
 
