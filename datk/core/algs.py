@@ -9,7 +9,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
         node_colors = dict()
         edge_colors = None
         for p in network.processes:
-            if self.has(p, "decided"):
+            if algorithm.has(p, "decided"):
                 if p.state['status'] == "leader":
                     node_colors[p.UID] = 'ro'
 
@@ -335,7 +335,6 @@ class SynchHS(Synchronous_Algorithm):
         if total_phases == max_num_phases:
             p.terminate(self)
 
-#TODO: Synchronous TimeSlice
 class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network """
     def msgs_i(self, p):
