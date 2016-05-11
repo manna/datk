@@ -1,4 +1,5 @@
 from distalgs import *
+
 #Leader Election Algorithms for Ring networks:
 
 class LCR(Synchronous_Algorithm):
@@ -57,6 +58,7 @@ class LCR(Synchronous_Algorithm):
 
         # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
         return node_colors, edge_colors
+
 
 class AsyncLCR(Asynchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in an Asynchronous Ring Network 
@@ -118,6 +120,7 @@ class AsyncLCR(Asynchronous_Algorithm):
 
 
 #Leader Election Algorithms for general Networks:
+
 class SynchFloodMax(Synchronous_Algorithm):
     """
     UID flooding algorithm for Leader Election in a general network
@@ -150,6 +153,7 @@ class SynchFloodMax(Synchronous_Algorithm):
             else:
                 self.output(p,"status", "non-leader")
                 p.terminate(self)
+
 
 class SynchHS(Synchronous_Algorithm):
     """The Hirschberg and Sinclair ("HS") algorithm for Leader Election in a Synchronous Bidirectional Ring Network
@@ -248,6 +252,7 @@ class SynchHS(Synchronous_Algorithm):
             self.set(p, 'send+', Message(self, (p.UID, "out", 2**next_phase)))
             self.set(p, 'send-', Message(self, (p.UID, "out", 2**next_phase)))
 
+
 class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network
 
@@ -297,6 +302,7 @@ class SynchTimeSlice(Synchronous_Algorithm):
             else:
                 self.set(p,"send",None)
                 p.terminate(self)
+
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
     """
@@ -355,7 +361,9 @@ class SynchVariableSpeeds(Synchronous_Algorithm):
 
         self.set(p, "queue", queue)
 
+
 #Construct BFS Tree
+
 class SynchBFS(Synchronous_Algorithm):
     """Constructs a BFS tree with the 'leader' Process at its root
 
@@ -466,6 +474,7 @@ class SynchBFSAck(Synchronous_Algorithm):
                 if self.params["verbosity"]>=Algorithm.VERBOSE:
                     print p,"knows children"
 
+
 #Convergecast
 
 class SynchConvergecast(Synchronous_Algorithm):
@@ -530,6 +539,7 @@ class SynchConvergecast(Synchronous_Algorithm):
         @return: the Message p should send to its state['parent']
         """
         return
+
 
 class AsynchConvergecast(Asynchronous_Algorithm):
     """The abstract superclass of a class of Asynchronous Algorithms that
@@ -597,6 +607,7 @@ class AsynchConvergecast(Asynchronous_Algorithm):
         """
         return
 
+
 def _converge_height(Convergecast, name):
     class _ConvergeHeight(Convergecast):
         """
@@ -622,7 +633,9 @@ def _converge_height(Convergecast, name):
 SynchConvergeHeight = _converge_height(SynchConvergecast, "SynchConvergeHeight")
 AsynchConvergeHeight = _converge_height(AsynchConvergecast, "AsynchConvergeHeight")
 
+
 #Broadcast
+
 class SynchBroadcast(Synchronous_Algorithm):
     """Broadcasts a value stored in Process, p, to the BFS tree rooted at p
 
@@ -659,7 +672,9 @@ class SynchBroadcast(Synchronous_Algorithm):
                 else:
                     p.terminate(self)
 
+
 #Maximal Independent Set
+
 class SynchLubyMIS(Synchronous_Algorithm):
     """A randomized algorithm that constructs a Maximal Independent Set
     
@@ -717,6 +732,7 @@ class SynchLubyMIS(Synchronous_Algorithm):
             self.set(p, 'rem_nbrs', rem_nbrs)
             if self.get(p, 'status') in ['winner', 'loser']:
                 p.terminate(self)
+
 
 #All pairs shortest paths
 #TODO : Doesn't seem to work for networks with negative weight edges.

@@ -87,7 +87,7 @@ class Process:
         """
         Sends a Message from Process to some subset of out_nbrs
 
-        @param msg: The message to send.
+        @param msg: The message to send. This must be an instance of Message.
         @param out_nbrs: The out_nbrs to send the message to. This may be a
         subset of the Process's out_nbrs, or None, in which case the message
         will be sent to all out_nbrs
@@ -95,6 +95,8 @@ class Process:
         Effects:
             - Sets msg.author = self
         """
+        assert isinstance(msg, Message)
+
         msg.author = self
         if out_nbrs is None:
             out_nbrs = self.out_nbrs
