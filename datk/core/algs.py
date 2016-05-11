@@ -6,7 +6,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
     leader_election
     BFS
     """
-    if algorithm_type == "leader_election": 
+    if algorithm_type == "leader_election":
         # TODO:  do a visualization for undecided nodes
         node_colors = dict()
         edge_colors = None
