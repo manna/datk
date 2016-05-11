@@ -179,6 +179,7 @@ class Network:
         the index_to_UID function
         """
         self.algs = []
+        self.snapshots = []
         if index_to_UID is None:
             proc_ids = range(n)
             shuffle(proc_ids)
