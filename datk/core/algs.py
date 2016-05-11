@@ -1,11 +1,27 @@
 from distalgs import *
-#Leader Election Algorithms for Ring networks:
+def Colorizer(algorithm,network,vals,algorithm_type):
+    """
+    algorithm_type can have following values thus far:
+    leader_election
+    BFS
+    """
+    if algorithm_type == "leader_election":
+        node_colors = dict()
+        edge_colors = None
+        for p in network.processes:
+            if self.has(p, "decided"):
+                if p.state['status'] == "leader":
+                    node_colors[p.UID] = 'ro'
 
+                elif p.state['status'] == "non-leader": # non-leader
+                    node_colors[p.UID] = 'bo'
 
-class BFS_Synchronous_Algorithm(Synchronous_Algorithm):
-    def get_draw_args(self,network,vals):
-        """network - refers to the network on which the algorithm is running.
-        vals - the positions of the nodes in the network"""
+            else:
+                node_colors[p.UID] = "go"
+
+        return node_colors, edge_colors
+
+    elif algorithm_type == "BFS":
         node_colors = None
         edge_colors = dict()
         for p in network.processes:
@@ -16,7 +32,7 @@ class BFS_Synchronous_Algorithm(Synchronous_Algorithm):
         return node_colors, edge_colors
 
 
-
+#Leader Election Algorithms for Ring networks:
 
 class LCR(Synchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Ring Network 
@@ -61,20 +77,8 @@ class LCR(Synchronous_Algorithm):
 
 
     def get_draw_args(self,network,vals):
-        """network - refers to the network on which the algorithm is running.
-        vals - the positions of the nodes in the network"""
-        node_colors = dict()
-        edge_colors = None
-        for p in network.processes:
-            # if self.has(p, "decided"):
-            if p.state['status'] == "leader":
-                node_colors[p.UID] = 'ro'
-
-            elif p.state['status'] == "non-leader": # non-leader
-                node_colors[p.UID] = 'bo'
-
-        # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
-        return node_colors, edge_colors
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
 
 
@@ -135,6 +139,10 @@ class AsyncLCR(Asynchronous_Algorithm):
                 if not self.has(p, 'decided'):
                     self.set(p, 'decided', None)
                     self.output(p,"status", "non-leader")
+
+    def get_draw_args(self,network,vals):
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
 
 #Leader Election Algorithms for general Networks:
@@ -361,22 +369,6 @@ class SynchTimeSlice(Synchronous_Algorithm):
                 p.terminate(self)
 
 
-    def get_draw_args(self,network,vals):
-        """network - refers to the network on which the algorithm is running.
-        vals - the positions of the nodes in the network"""
-        node_colors = dict()
-        edge_colors = None
-        for p in network.processes:
-            # v = vals[p.UID] # IMPORTANT: check to make sure this is right!
-            # if self.has(p, "decided"):
-            if p.state['status'] == "leader":
-                node_colors[p.UID] = 'ro'
-
-            elif p.state['status'] == "non-leader": # non-leader
-                node_colors[p.UID] = 'bo'
-
-        # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
-        return node_colors, edge_colors
 
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
@@ -421,20 +413,12 @@ class SynchBFS(Synchronous_Algorithm):
             p.terminate(self)
 
     def get_draw_args(self,network,vals):
-        """network - refers to the network on which the algorithm is running.
-        vals - the positions of the nodes in the network"""
-        node_colors = None
-        edge_colors = dict()
-        for p in network.processes:
-            if p.state['parent']:
-                parent_UID = p.state['parent'].UID
-                edge_colors[(p.UID,parent_UID)] = 'r'
-
-        return node_colors, edge_colors
+        algorithm_type = "BFS"
+        return Colorizer(self,network,vals,algorithm_type)
 
         
 
-class SynchBFSAck(BFS_Synchronous_Algorithm):
+class SynchBFSAck(Synchronous_Algorithm):
     """Constructs a BFS tree with children pointers and the 'leader' Process at its root
     Algorithm (Informal):
     At any point during execution, there is some set of processes that is
