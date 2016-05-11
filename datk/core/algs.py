@@ -1,8 +1,38 @@
 from distalgs import *
+def Colorizer(algorithm,network,vals,algorithm_type):
+    """
+    algorithm_type can have following values thus far:
+    leader_election
+    BFS
+    """
+    if algorithm_type == "leader_election":
+        node_colors = dict()
+        edge_colors = None
+        for p in network.processes:
+            if self.has(p, "decided"):
+                if p.state['status'] == "leader":
+                    node_colors[p.UID] = 'ro'
+
+                elif p.state['status'] == "non-leader": # non-leader
+                    node_colors[p.UID] = 'bo'
+
+            else:
+                node_colors[p.UID] = "go"
+
+        return node_colors, edge_colors
+
+    elif algorithm_type == "BFS":
+        node_colors = None
+        edge_colors = dict()
+        for p in network.processes:
+            if p.state['parent']:
+                parent_UID = p.state['parent'].UID
+                edge_colors[(p.UID,parent_UID)] = 'r'
+
+        return node_colors, edge_colors
+
+
 #Leader Election Algorithms for Ring networks:
-
-
-
 
 class LCR(Synchronous_Algorithm):
     """The LeLann, Chang and Roberts algorithm for Leader Election in a Synchronous Ring Network 
