@@ -11,6 +11,10 @@ import math
 from matplotlib import pyplot as plt
 
 from helpers import memoize
+import networkx as nx
+
+from plotly.offline import plot
+from plotly.graph_objs import *
 
 class Message:
     """
@@ -226,36 +230,118 @@ class Network:
             for k in range(n):
                 vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
 
+
+        edge_tuples = [(i, self.index(nbr)) for i in range(len(self.processes)) for nbr in self[i].out_nbrs]
+        def scatter_nodes(pos, labels=None, color=None, size=20, opacity=1):
+            # pos is the dict of node positions
+            # labels is a list  of labels of len(pos), to be displayed when hovering the mouse over the nodes
+            # color is the color for nodes. When it is set as None the Plotly default color is used
+            # size is the size of the dots representing the nodes
+            #opacity is a value between [0,1] defining the node color opacity
+            L=len(pos)
+            trace = Scatter(x=[], y=[],  mode='markers', marker=Marker(size=[]))
+            for k in range(L):
+                trace['x'].append(pos[k][0])
+                trace['y'].append(pos[k][1])
+            attrib=dict(name='', text=labels , hoverinfo='text', opacity=opacity) # a dict of Plotly node attributes
+            trace=dict(trace, **attrib)# concatenate the dict trace and attrib
+            if color is not None:
+                trace['marker']['color'] = color
+
+            trace['marker']['size']=size
+            return trace
+
+
+        def scatter_edges(edge_tuples, pos, line_color=None, line_width=1):
+            trace = Scatter(x=[], y=[], mode='lines')
+            for edge in edge_tuples:
+                trace['x'] += [pos[edge[0]][0],pos[edge[1]][0], None]
+                trace['y'] += [pos[edge[0]][1],pos[edge[1]][1], None]  
+                trace['hoverinfo']='none'
+                trace['line']['width']=line_width
+                if line_color is not None: # when it is None a default Plotly color is used
+                    trace['line']['color']=line_color
+            return trace 
+
+
+        def make_annotations(pos, text, font_size=14, font_color='rgb(25,25,25)'):
+            L=len(pos)
+            if len(text)!=L:
+                raise ValueError('The lists pos and text must have the same len')
+            annotations = Annotations()
+            for k in range(L):
+                annotations.append(
+                    Annotation(
+                        text=text[k], 
+                        x=pos[k][0], y=pos[k][1],
+                        xref='x1', yref='y1',
+                        font=dict(color= font_color, size=font_size),
+                        showarrow=False)
+                )
+            return annotations 
+
+
+
+        labels = [self.processes[i].UID for i in range(len(self.processes))]
+        traces = []
+        if default_edge_coloring:
+            trace1 = scatter_edges(edge_tuples, vals, line_color = "rgb(255, 255, 255)")
+            traces.append(trace1)
         
 
-        def line(v1, v2,color='k'):
-            plt.plot( (v1[0], v2[0]), (v1[1], v2[1] ),color)
+        for alg in self.algs:
+            node_colors, edge_colors = alg.get_draw_args(self,vals)
+            if edge_colors:
+                for (p_UID,parent_UID),edge_color in edge_colors.iteritems():
+                    pair_indices = [(self.uid2process[p_UID],self.uid2process[parent_UID])]
+                    edge_trace = scatter_edges(pair_indices, vals, line_color=edge_color)
+                    traces.append(edge_trace)
 
-        if default_edge_coloring:
-            for i in range(n):
-                for nbr in self[i].out_nbrs:
-                    line(vals[i], vals[self.index(nbr)])
 
-        frame = plt.gca()
-        frame.axes.get_xaxis().set_visible(False)
-        frame.axes.get_yaxis().set_visible(False)
         if default_node_coloring:
-            plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+            trace2 = scatter_nodes(vals, labels = labels, color = "rgb(255, 255, 255)")
 
         for alg in self.algs:
             node_colors, edge_colors = alg.get_draw_args(self,vals)
             if node_colors:
                 for p_UID,node_color in node_colors.iteritems():
                     v = vals[self.uid2process[p_UID]]
-                    plt.plot( [v[0]], [v[1]], node_color)
+                    node_trace = scatter_nodes([v], labels=[p_UID], color=node_color)
+                    traces.append(node_trace)
 
-            if edge_colors:
-                for (p_UID,parent_UID),edge_color in edge_colors.iteritems():
-                    v1 = vals[self.uid2process[p_UID]]
-                    v2 = vals[self.uid2process[parent_UID]]
-                    line(v1,v2,color=edge_color)
+        width=500
+        height=500
+        axis=dict(showline=False, # hide axis line, grid, ticklabels and  title
+                  zeroline=False,
+                  showgrid=False,
+                  showticklabels=False,
+                  title='' 
+                  )
+        layout=Layout(title= 'DATK Graph Visualization',  #
+            font= Font(),
+            showlegend=False,
+            autosize=False,
+            width=width,
+            height=height,
+            xaxis=XAxis(axis),
+            yaxis=YAxis(axis),
+            margin=Margin(
+                l=40,
+                r=40,
+                b=85,
+                t=100,
+                pad=0,
+               
+            ),
+            hovermode='closest',
+            plot_bgcolor='#EFECEA', #set background color            
+            )
+        plot({'data': traces, 'layout': layout}, show_link=False)
+        # data = Data(traces)
 
-        plt.show()
+        # fig = Figure(data=data, layout=layout)
+
+        # plt.show()
 
 
     def state(self):

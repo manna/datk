@@ -7,16 +7,16 @@ def Colorizer(algorithm,network,vals,algorithm_type):
     BFS
     """
     if algorithm_type == "leader_election":
-        # TODO:  do a visualization for undecided nodes
+        # TODO:  do a visualization for undecided nodes - Taken care of on Hayley's branch.
         node_colors = dict()
         edge_colors = None
         for p in network.processes:
             # if self.has(p, "decided"):
             if p.state['status'] == "leader":
-                node_colors[p.UID] = 'ro'
+                node_colors[p.UID] = "rgb(255, 0, 0)"
 
             elif p.state['status'] == "non-leader": # non-leader
-                node_colors[p.UID] = 'bo'
+                node_colors[p.UID] = "rgb(0, 0, 255)"
 
         return node_colors, edge_colors
 
@@ -26,7 +26,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
         for p in network.processes:
             if p.state['parent']:
                 parent_UID = p.state['parent'].UID
-                edge_colors[(p.UID,parent_UID)] = 'r'
+                edge_colors[(p.UID,parent_UID)] = "rgb(0, 255, 0)"
 
         return node_colors, edge_colors
 
