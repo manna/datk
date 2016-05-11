@@ -9,7 +9,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
         node_colors = dict()
         edge_colors = None
         for p in network.processes:
-            if self.has(p, "decided"):
+            if algorithm.has(p, "decided"):
                 if p.state['status'] == "leader":
                     node_colors[p.UID] = 'ro'
 
