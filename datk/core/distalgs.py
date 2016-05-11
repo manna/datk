@@ -527,16 +527,12 @@ class Asynchronous_Algorithm(Algorithm):
 
         def halt_process(process):
             halted_processes.add(process)
-            try:
+            if process in msg_enabled:
                 msg_enabled.remove(process)
-            except KeyError:
-                pass
-            try:
+            if process in trans_enabled:
                 trans_enabled.remove(process)
-            except KeyError:
-                pass
 
-        def trans_process(process, self):
+        def trans_process(process):
             if process not in halted_processes:
                 try: #Checks if function trans_i(self, p) is defined
                     self.trans_i(process)
@@ -555,7 +551,7 @@ class Asynchronous_Algorithm(Algorithm):
                 if self.halt_i(process):
                     halt_process(process)            
 
-        def msg_process(process, self):
+        def msg_process(process):
             if process not in halted_processes:
                 self.msgs_i(process)
 
@@ -568,14 +564,13 @@ class Asynchronous_Algorithm(Algorithm):
                     halt_process(process)
 
         self.halted=False
-        # while len(halted_processes) < len(self.network.processes):
         while not self.halted:
             if msg_enabled or trans_enabled:
                 r = random.randrange(len(msg_enabled) + len(trans_enabled))
                 if r < len(msg_enabled):
-                    msg_process(list(msg_enabled)[r], self)
+                    msg_process(list(msg_enabled)[r])
                 else:
-                    trans_process(list(trans_enabled)[r-len(msg_enabled)], self)
+                    trans_process(list(trans_enabled)[r-len(msg_enabled)])
             else:
                 raise Exception("No enabled actions, but not all processes halted")
             self.halt()
