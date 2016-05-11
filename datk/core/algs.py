@@ -2,20 +2,6 @@ from distalgs import *
 #Leader Election Algorithms for Ring networks:
 
 
-class BFS_Synchronous_Algorithm(Synchronous_Algorithm):
-    def get_draw_args(self,network,vals):
-        """network - refers to the network on which the algorithm is running.
-        vals - the positions of the nodes in the network"""
-        node_colors = None
-        edge_colors = dict()
-        for p in network.processes:
-            if p.state['parent']:
-                parent_UID = p.state['parent'].UID
-                edge_colors[(p.UID,parent_UID)] = 'r'
-
-        return node_colors, edge_colors
-
-
 
 
 class LCR(Synchronous_Algorithm):
@@ -66,14 +52,16 @@ class LCR(Synchronous_Algorithm):
         node_colors = dict()
         edge_colors = None
         for p in network.processes:
-            # if self.has(p, "decided"):
-            if p.state['status'] == "leader":
-                node_colors[p.UID] = 'ro'
+            if self.has(p, "decided"):
+                if p.state['status'] == "leader":
+                    node_colors[p.UID] = 'ro'
 
-            elif p.state['status'] == "non-leader": # non-leader
-                node_colors[p.UID] = 'bo'
+                elif p.state['status'] == "non-leader": # non-leader
+                    node_colors[p.UID] = 'bo'
 
-        # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
+            else:
+                node_colors[p.UID] = "go"
+
         return node_colors, edge_colors
 
 
@@ -361,22 +349,6 @@ class SynchTimeSlice(Synchronous_Algorithm):
                 p.terminate(self)
 
 
-    def get_draw_args(self,network,vals):
-        """network - refers to the network on which the algorithm is running.
-        vals - the positions of the nodes in the network"""
-        node_colors = dict()
-        edge_colors = None
-        for p in network.processes:
-            # v = vals[p.UID] # IMPORTANT: check to make sure this is right!
-            # if self.has(p, "decided"):
-            if p.state['status'] == "leader":
-                node_colors[p.UID] = 'ro'
-
-            elif p.state['status'] == "non-leader": # non-leader
-                node_colors[p.UID] = 'bo'
-
-        # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
-        return node_colors, edge_colors
 
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
