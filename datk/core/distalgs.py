@@ -166,6 +166,7 @@ class Network:
     
     def __init__(self, processes):
         self.processes = processes
+        self.algs = []
 
     def __init__(self, n, index_to_UID = None):
         """
@@ -173,24 +174,31 @@ class Network:
         with random distinct UIDs, or as specified by
         the index_to_UID function
         """
+        self.algs = []
         if index_to_UID is None:
-            self.processes = [Process(i) for i in range(n)]
-            shuffle(self.processes)
+            proc_ids = range(n)
+            shuffle(proc_ids)
+            process2uid = dict(zip(range(n),proc_ids))
+            self.processes = [Process(process2uid[i]) for i in range(n)]
+            self.uid2process = dict(zip(proc_ids,range(n)))
+            # shuffle(self.processes)
         else:
             self.processes = [Process(index_to_UID(i)) for i in range(n)]
+            self.uid2process = dict(zip(range(n),[index_to_UID(i) for i in range(n)]))
         for process in self:
             process.state['n'] = n
     
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
+        self.algs.append(algorithm)
         for process in self:
             process.add(algorithm)
-    
+
     def run(self, algorithm):
         """Runs algorithm on the Network"""
         algorithm(self)
     
-    def draw(self, style='spectral'):
+    def draw(self, style='spectral', default_node_coloring = True, default_edge_coloring = True):
         """
         Draws the network
 
@@ -218,17 +226,35 @@ class Network:
             for k in range(n):
                 vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
 
-        plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+        
 
-        def line(v1, v2):
-            plt.plot( (v1[0], v2[0]), (v1[1], v2[1] ))
-        for i in range(n):
-            for nbr in self[i].out_nbrs:
-                line(vals[i], vals[self.index(nbr)])
+        def line(v1, v2,color='k'):
+            plt.plot( (v1[0], v2[0]), (v1[1], v2[1] ),color)
+
+        if default_edge_coloring:
+            for i in range(n):
+                for nbr in self[i].out_nbrs:
+                    line(vals[i], vals[self.index(nbr)])
 
         frame = plt.gca()
         frame.axes.get_xaxis().set_visible(False)
         frame.axes.get_yaxis().set_visible(False)
+        if default_node_coloring:
+            plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+
+        for alg in self.algs:
+            node_colors, edge_colors = alg.get_draw_args(self,vals)
+            if node_colors:
+                for p_UID,node_color in node_colors.iteritems():
+                    v = vals[self.uid2process[p_UID]]
+                    plt.plot( [v[0]], [v[1]], node_color)
+
+            if edge_colors:
+                for (p_UID,parent_UID),edge_color in edge_colors.iteritems():
+                    v1 = vals[self.uid2process[p_UID]]
+                    v2 = vals[self.uid2process[parent_UID]]
+                    line(v1,v2,color=edge_color)
+
         plt.show()
 
 
