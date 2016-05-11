@@ -355,6 +355,15 @@ class Network:
     def clone(self):
         return deepcopy(self)
 
+    def restore_snapshot(self, snapshot):
+        i = 0
+        for process in self:
+            process.state = snapshot[i]
+            i+=1
+
+    def get_snapshot(self):
+        return deepcopy([process.state for process in self])
+
     # @memoize
     def adjacency_matrix(self):
         """
@@ -597,6 +606,7 @@ class Synchronous_Algorithm(Algorithm):
         """Executes a single round of the Synchronous Algorithm"""
         self.msgs()
         self.trans()
+        self.network.snapshots.append([process.state for process in self.network]) 
     
     def msgs(self):
         for process in self.network:
@@ -618,15 +628,6 @@ class Synchronous_Algorithm(Algorithm):
         time_complexity = "Time Complexity: " + str(self.r)
         print time_complexity
         print "-"*len(time_complexity)
-
-    def restore_snapshot(self, snapshot):
-        i = 0
-        for process in self:
-            process.state = snapshot[i]
-            i+=1
-
-    def get_snapshot(self):
-        return deepcopy([process.state for process in self])
 
 
 class Do_Nothing(Synchronous_Algorithm):
