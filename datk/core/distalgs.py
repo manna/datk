@@ -4,7 +4,7 @@ from time import sleep
 import pdb
 import collections
 from collections import defaultdict
-from copy import deepcopy
+from copy import deepcopy,copy
 import numpy as np
 from scipy.linalg import eig
 import math
@@ -184,7 +184,7 @@ class Network:
         the index_to_UID function
         """
         self.algs = []
-        self.snapshots = []
+
 
         if index_to_UID is None:
             proc_ids = range(n)
@@ -198,6 +198,9 @@ class Network:
             self.uid2process = dict(zip(range(n),[index_to_UID(i) for i in range(n)]))
         for process in self:
             process.state['n'] = n
+        
+        self.snapshots = [self.get_snapshot()]
+        
     
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
@@ -286,15 +289,22 @@ class Network:
             print 'here'
         print "GUI destroyed"
 
-    def restore_snapshot(self, snapshot):
-        i = 0
-        for process in self:
-            process.state = snapshot[i]
-            i+=1
+    def restore_snapshot(self, t):
+        if len(self.snapshots) < 0:
+            print "Run your algorithm on the network first"
+            return 
+        if t<0 or t > len(self.snapshots):
+            print "no snapshot available at that step"
+            return
+        
+        for i in range(len(self)):
+            self[i].state = self.snapshots[t][i]
+            
 
     def get_snapshot(self):
-        return deepcopy([process.state for process in self])
-
+#        print [process.state for process in self][:]
+        return [copy(process.state) for process in self]
+#        return []
     def state(self):
         """
         (Text print get_state)
@@ -547,8 +557,7 @@ class Synchronous_Algorithm(Algorithm):
         """Executes a single round of the Synchronous Algorithm"""
         self.msgs()
         self.trans()
-
-        self.network.snapshots.append([process.state for process in self.network]) 
+        self.network.snapshots.append(self.network.get_snapshot()) 
     
     def msgs(self):
         for process in self.network:
@@ -787,9 +796,7 @@ class GraphPage(tk.Frame):
             self.n_steps = len(network.snapshots)
             
         self.slider = tk.Scale(self, from_=0, to=self.n_steps, orient=tk.HORIZONTAL, command=self.updateValue)
-#        self.stringVar = tk.StringVar()
-#        self.stringVar.set(self.slider.get())        
-#        self.entry = tk.Entry(self, textvariable=self.stringVar)
+
 
         self.label.pack(pady=10,padx=10)
         self.button_home.pack()
@@ -810,4 +817,4 @@ class GraphPage(tk.Frame):
         print self.slider.get()
 
 
-        
+
