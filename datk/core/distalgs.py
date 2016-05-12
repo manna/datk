@@ -64,7 +64,6 @@ class Process:
     def output(self, key, val, verbose=True):
         """
         Sets the publicly visible value of self.state[key] to val
-
         @param key: The state variable to set
         @param val: The value to assign to it
         @param verbose: Dictates whether or not to print this event to STDOUT
@@ -75,74 +74,6 @@ class Process:
                 print str(self)+"."+str(key), "are", [str(v) for v in val]
             else: 
                 print str(self)+"."+str(key),"is", val
-
-    def send_to_all_neighbors(self, msg):
-        """Sends a message to all out_nbrs
-
-        @param msg: the message to send
-        """
-        self.send_msg(msg)
-
-    def send_msg(self, msg, out_nbrs=None):
-        """
-        Sends a Message from Process to some subset of out_nbrs
-
-        @param msg: The message to send. This must be an instance of Message.
-        @param out_nbrs: The out_nbrs to send the message to. This may be a
-        subset of the Process's out_nbrs, or None, in which case the message
-        will be sent to all out_nbrs
-
-        Effects:
-            - Sets msg.author = self
-        """
-        assert isinstance(msg, Message)
-
-        msg.author = self
-        if out_nbrs is None:
-            out_nbrs = self.out_nbrs
-        elif isinstance(out_nbrs, Process):
-            out_nbrs = [out_nbrs]
-        if isinstance(out_nbrs, list):
-            msg.algorithm.count_msg(len(out_nbrs))
-            for nbr in out_nbrs:
-                if nbr.in_nbrs.index(self) in nbr.in_channel:
-                    nbr.in_channel[nbr.in_nbrs.index(self)].append(msg)
-                else:
-                    nbr.in_channel[nbr.in_nbrs.index(self)] = [msg]
-        else:
-            raise Exception("incorrect type for out_nbrs argument of Process.send_msg()")
-
-    def get_msgs(self, algorithm, in_nbrs = None):
-        """Removes all Messages that relate to a particular Algorithm from the Process'
-        incoming channels (or from some subset of incoming channels). Returns them.
-
-        @param algorithm: the algorithm whose messages this returns
-        @param in_nbrs: the in_nbrs of the Process from whose channels we are getting
-        messages. If None, fetches messages from all channels
-        @return: A list of Messages, msgs, such that every message in msgs has Algorithm
-        algorithm, and author in in_nbrs
-        """
-        if in_nbrs is None:
-            in_nbrs = self.in_nbrs[:]
-        elif isinstance(in_nbrs, Process):
-            in_nbrs = [in_nbrs]
-
-        if isinstance(in_nbrs, list):
-            msgs = []
-            for in_nbr in in_nbrs:
-                idx = self.in_nbrs.index(in_nbr)
-                if idx in self.in_channel:
-                    i = 0
-                    while i < len(self.in_channel[idx]):
-                        msg = self.in_channel[idx][i]
-                        if msg.algorithm == algorithm:
-                            self.in_channel[idx].pop(i)
-                            msgs.append(msg)
-                        else:
-                            i+=1
-            return msgs
-        else:
-            raise Exception("incorrect type for in_nbrs argument of Process.get_msgs()")
 
     def add(self, algorithm):
         """Causes the Process to wake up with respect to algorithm"""
@@ -159,6 +90,118 @@ class Process:
 
     def __repr__(self):
         return "P" + str(self.UID) + " -> {"+", ".join([str(process) for process in self.out_nbrs]) + "}" 
+
+
+class AlgProcess:
+    """
+    A Wrapper around Process
+    """
+    def __init__(self, algorithm, process):
+        self.algorithm = algorithm
+
+        self.process = process
+        self.state = process.state
+        self.UID = process.UID
+        self.out_nbrs = process.out_nbrs
+        self.in_nbrs = process.in_nbrs
+        self.in_channel = process.in_channel
+
+    def output(self, key, val):
+        """
+        Sets the publicly visible value of process.state[key] to val
+
+        This command is verbose if Algorithm's verbosity is >= DEFAULT
+
+        @param key: The state variable to set
+        @param val: The value to assign to it
+        """
+        self.process.output(key, val, verbose= (self.algorithm.params['verbosity'] >= Algorithm.DEFAULT))
+
+    def terminate(self):
+        return self.process.terminate(self.algorithm)
+
+    def set(self, key, value):
+        self.state[self.algorithm][key] = value
+    
+    def increment(self, key, inc=1):
+        self.state[self.algorithm][key] += inc
+    
+    def has(self, key):
+        return key in self.state[self.algorithm]
+    
+    def get(self, key):
+        if self.has(key):
+            return self.state[self.algorithm][key]
+    
+    def delete(self, key):
+        if self.has(key):
+            del self.state[self.algorithm][key]
+
+    def __str__(self):
+        return self.process.__str__()
+
+    def __repr__(self):
+        return self.process.__repr__()
+
+    def get_msgs(self, in_nbrs = None):
+        """Removes all Messages that relate to a particular Algorithm from the Process'
+        incoming channels (or from some subset of incoming channels). Returns them.
+        @param algorithm: the algorithm whose messages this returns
+        @param in_nbrs: the in_nbrs of the Process from whose channels we are getting
+        messages. If None, fetches messages from all channels
+        @return: A list of Messages, msgs, such that every message in msgs has Algorithm
+        algorithm, and author in in_nbrs
+        """
+        if in_nbrs is None:
+            in_nbrs = self.in_nbrs[:]
+        elif isinstance(in_nbrs, Process):
+            in_nbrs = [in_nbrs]
+        elif isinstance(in_nbrs, AlgProcess):
+            in_nbrs = [in_nbrs.process]
+        if isinstance(in_nbrs, list):
+            msgs = []
+            for in_nbr in in_nbrs:
+                idx = self.in_nbrs.index(in_nbr)
+                if idx in self.in_channel:
+                    i = 0
+                    while i < len(self.in_channel[idx]):
+                        msg = self.in_channel[idx][i]
+                        if msg.algorithm == self.algorithm:
+                            self.in_channel[idx].pop(i)
+                            msgs.append(msg)
+                        else:
+                            i+=1
+            return msgs
+        else:
+            raise Exception("incorrect type for in_nbrs argument of Process.get_msgs()", in_nbrs.__class__.__name__)
+
+    def send_msg(self, msg, out_nbrs=None):
+        """
+        Sends a Message from Process to some subset of out_nbrs
+        @param msg: The message to send. This must be an instance of Message.
+        @param out_nbrs: The out_nbrs to send the message to. This may be a
+        subset of the Process's out_nbrs, or None, in which case the message
+        will be sent to all out_nbrs
+        Effects:
+            - Sets msg.author = self
+        """
+        assert isinstance(msg, Message)
+        msg.author = self.process
+        if out_nbrs is None:
+            out_nbrs = self.out_nbrs
+        elif isinstance(out_nbrs, Process):
+            out_nbrs = [out_nbrs]
+        elif isinstance(out_nbrs, AlgProcess):
+            out_nbrs = [out_nbrs.process]
+        if isinstance(out_nbrs, list):
+            msg.algorithm.count_msg(len(out_nbrs))
+            for nbr in out_nbrs:
+                if nbr.in_nbrs.index(self.process) in nbr.in_channel:
+                    nbr.in_channel[nbr.in_nbrs.index(self.process)].append(msg)
+                else:
+                    nbr.in_channel[nbr.in_nbrs.index(self.process)] = [msg]
+        else:
+            raise Exception("incorrect type for out_nbrs argument of Process.send_msg():", out_nbrs.__class__.__name__)
 
 
 class Network:
@@ -457,34 +500,6 @@ class Algorithm:
     def count_msg(self, message_count):
         self.message_count += message_count
 
-    def set(self, process, state, value):
-        process.state[self][state] = value
-    
-    def increment(self, process, state, inc=1):
-        process.state[self][state] += inc
-    
-    def has(self, process, state):
-        return state in process.state[self]
-    
-    def get(self, process, state):
-        if self.has(process, state):
-            return process.state[self][state]
-    
-    def delete(self, process, state):
-        if self.has(process, state):
-            del process.state[self][state]
-    
-    def output(self, process, key, val):
-        """
-        Sets the publicly visible value of process.state[key] to val
-
-        This command is verbose if Algorithm's verbosity is >= DEFAULT
-
-        @param key: The state variable to set
-        @param val: The value to assign to it
-        """
-        process.output(key, val, self.params['verbosity'] >= Algorithm.DEFAULT)
-
 
 class Synchronous_Algorithm(Algorithm):
     """
@@ -511,17 +526,19 @@ class Synchronous_Algorithm(Algorithm):
         self.trans()
     
     def msgs(self):
-        for process in self.network:
-            if self.halt_i(process): continue
+        for p in self.network:
+            process = AlgProcess(self, p)
+            if self.halt_i(p): continue
             self.msgs_i(process)
     
     def trans(self):
-        for process in self.network:
-            if self.halt_i(process): continue
+        for p in self.network:
+            process = AlgProcess(self, p)
+            if self.halt_i(p): continue
             try: #Checks if function trans_i(self, p) is defined
                 self.trans_i(process)
             except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
-                self.trans_i(process, process.get_msgs(self))
+                self.trans_i(process, process.get_msgs())
     
     def print_algorithm_terminated(self):
         print self.name+" Terminated"
@@ -533,7 +550,7 @@ class Synchronous_Algorithm(Algorithm):
 
 
 class Do_Nothing(Synchronous_Algorithm):
-    def trans_i(self, p, messages): p.terminate(self)
+    def trans_i(self, p, messages): p.terminate()
 
     
 class Asynchronous_Algorithm(Algorithm):
@@ -560,10 +577,11 @@ class Asynchronous_Algorithm(Algorithm):
 
         def trans_process(process):
             if process not in halted_processes:
+                algProcess = AlgProcess(self, process)
                 try: #Checks if function trans_i(self, p) is defined
-                    self.trans_i(process)
+                    self.trans_i(algProcess)
                 except TypeError: #Otherwise, tries function trans_i(self, p, msgs)
-                    self.trans_i(process, process.get_msgs(self))
+                    self.trans_i(algProcess, algProcess.get_msgs())
 
                 trans_enabled.remove(process)
                 msg_enabled.add(process)
@@ -579,7 +597,7 @@ class Asynchronous_Algorithm(Algorithm):
 
         def msg_process(process):
             if process not in halted_processes:
-                self.msgs_i(process)
+                self.msgs_i(AlgProcess(self, process))
 
                 msg_enabled.remove(process)                
                 for nbr in process.out_nbrs:
@@ -626,13 +644,17 @@ class Compose(Synchronous_Algorithm):
 
     def msgs_i(self, p):
         self.A.r, self.B.r = self.r, self.r
-        self.A.msgs_i(p)
-        self.B.msgs_i(p)
+        A_p = AlgProcess(self.A, p.process)
+        B_p = AlgProcess(self.B, p.process)
+        self.A.msgs_i(A_p)
+        self.B.msgs_i(B_p)
 
     def trans_i(self, p, msgs):
         self.A.r, self.B.r = self.r, self.r
-        self.A.trans_i(p, p.get_msgs(self.A))
-        self.B.trans_i(p, p.get_msgs(self.B))
+        A_p = AlgProcess(self.A, p.process)
+        B_p = AlgProcess(self.B, p.process)
+        self.A.trans_i(A_p, A_p.get_msgs())
+        self.B.trans_i(B_p, B_p.get_msgs())
 
     def halt_i(self, p):
         self.message_count = self.A.message_count + self.B.message_count
@@ -643,7 +665,9 @@ class Compose(Synchronous_Algorithm):
         self.message_count = self.A.message_count + self.B.message_count
         self.A.cleanup_i(p)
         self.B.cleanup_i(p)
-        p.terminate(self)
+
+        AlgProcess(self.A, p).terminate()
+        AlgProcess(self.B, p).terminate()
 
     def run(self, network, params = {}):
         Algorithm.run(self, network, params)
