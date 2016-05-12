@@ -8,7 +8,7 @@ try:
     from datk.core.distalgs import *
     from datk.core.networks import *
     from datk.core.algs import *
-    from datk.core.tester import Tester
+    from datk.core.tester import *
 except ImportError:
     raise ImportError(
 """ Imports failed\n
@@ -38,50 +38,6 @@ def configure_ipython():
 configure_ipython()
 
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
-tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = False)
-test=tester.test
-
-@test
-def BELLMAN_FORD():
-    def assertAPSP(network):
-        weights = {}
-        for p in network:
-            for q in network:
-                if p == q:
-                    continue
-                w = p.state['SP'][q.UID]
-                weights[(p,q)] = w
-                if (q,p) in weights:
-                    if weights[(q,p)] != w:
-                        raise Exception('FAILED APSP!')
-    def add_random_undirected_edge_weights(network, lower_bound= 0, upper_bound=None):
-        #Generate random (undirected) weights for all edges.
-        import random
-        if upper_bound == None:
-            upper_bound = len(network)
-
-        weights = {}
-        for p in network:
-            for q in network:
-                if q in p.out_nbrs:
-                    if (q,p) in weights:
-                        w = weights[(q,p)]
-                    else:
-                        w = random.randint(lower_bound, upper_bound)
-                    weights[(p, q)] = w
-
-        #Apply them to the network. Updating p.state['APSP'][q.UID] with weight(p,q)
-        for process in network:
-            p.state['nbr_dist'] = {}
-        for edge, weight in weights.items():
-            p, q = edge
-            p.state['nbr_dist'][q.UID] = weight
-
-    r = Bidirectional_Line(5, lambda n: n)
-    add_random_undirected_edge_weights(r)
-    SynchBellmanFord(r)
-
-    assertAPSP(r)
 
 @test
 def LCR_UNI_RING():
@@ -108,69 +64,39 @@ def ASYNC_LCR_BI_RING():
     assertLeaderElection(r)
 
 @test
-def HS_BI_RING():
-    r = Bidirectional_Ring(6)
-    SynchHS(r)
-    assertLeaderElection(r)
-
-@test
-def TS_UNI_RING():
-    r = Unidirectional_Ring(6)
-    SynchTimeSlice(r)
-    assertLeaderElection(r)
-
-@test
-def TS_BI_RING():
-    r = Bidirectional_Ring(6)
-    SynchTimeSlice(r)
-    assertLeaderElection(r)
-
-@test
-def VS_UNI_RING():
-    r = Unidirectional_Ring(6)
-    SynchVariableSpeeds(r)
-    assertLeaderElection(r)
-
-@test
-def VS_BI_RING():
-    r = Bidirectional_Ring(6)
-    SynchVariableSpeeds(r)
-    assertLeaderElection(r)
-
-@test
 def FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
-    SynchFloodMax(r)
+    FloodMax(r)
     assertLeaderElection(r)
 
 @test
 def FLOODMAX_BI_RING():
     r = Bidirectional_Ring(4)
-    SynchFloodMax(r)
+    FloodMax(r)
     assertLeaderElection(r)
 
 @test
 def FLOODMAX_BI_LINE():
     l = Bidirectional_Line(4)
-    SynchFloodMax(l)
+    FloodMax(l)
     assertLeaderElection(l)
 
 @test
 def FLOODMAX_COMPLETE_GRAPH():
     g = Complete_Graph(10)
-    SynchFloodMax(g)
+    FloodMax(g)
     assertLeaderElection(g)
 
 @test
 def FLOODMAX_RANDOM_GRAPH():
     g = Random_Line_Network(16)
-    SynchFloodMax(g)
+    FloodMax(g)
     assertLeaderElection(g)
 
 @test
 def SYNCH_BFS():
     x = Random_Line_Network(10)
-    SynchFloodMax(x)
+    FloodMax(x)
     assertLeaderElection(x)
 
     SynchBFS(x)
@@ -180,7 +106,7 @@ def SYNCH_BFS():
 def SYNCH_BFS_ACK():
     x = Bidirectional_Line(6, lambda t:t)
 
-    SynchFloodMax(x)
+    FloodMax(x)
     assertLeaderElection(x)
 
     SynchBFSAck(x)
@@ -190,7 +116,7 @@ def SYNCH_BFS_ACK():
 def SYNCH_CONVERGE_HEIGHT():
     x = Random_Line_Network(10)
 
-    SynchFloodMax(x)
+    FloodMax(x)
     assertLeaderElection(x)
 
     SynchBFS(x)
@@ -202,7 +128,7 @@ def SYNCH_CONVERGE_HEIGHT():
 def SYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
-    SynchFloodMax(x)
+    FloodMax(x)
     assertLeaderElection(x)
 
     SynchBFSAck(x)
@@ -217,7 +143,7 @@ def SYNCH_BROADCAST_HEIGHT():
 def ASYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
-    SynchFloodMax(x)
+    FloodMax(x)
     assertLeaderElection(x)
 
     SynchBFSAck(x)
@@ -302,7 +228,7 @@ def COMPOSE_SYNCH_LCR():
 
 @test
 def CHAIN_BROADCAST_HEIGHT():
-    fm = SynchFloodMax()
+    fm = FloodMax()
     bfs = SynchBFSAck()
     converge = SynchConvergeHeight()
     broadcast = SynchBroadcast(params ={"attr":"height"})
@@ -326,4 +252,4 @@ def SYNCH_LUBY_MIS():
     SynchLubyMIS(x)
     assertLubyMIS(x)
 
-tester.summarize()
+summarize()
