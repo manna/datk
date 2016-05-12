@@ -33,7 +33,7 @@ def network_page():
 		else:
 			pass # unknown
 
-	elif request.method == 'GET':
+	# elif request.method == 'GET':
 	return render_template("network_page.html")
 
 
