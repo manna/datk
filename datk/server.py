@@ -15,28 +15,24 @@ def update_plotly_plot(i):
 
 update_plotly_plot(currentIndex)
 
+@app.route('/forward', methods=['POST'])
+def forward():
+	if currentIndex < L-1:
+		currentIndex += 1
+		update_plotly_plot(currentIndex)
+		redirect(url_for('/'))
+
+@app.route('/backward', methods=['POST'])
+def backward():
+	if currentIndex > 1:
+		currentIndex -= 1
+		update_plotly_plot(currentIndex)
+		redirect(url_for('/'))
 
 @app.route('/')
 def network_page():
-	if request.method == 'POST':
-		if request.form['submit'] == 'forward':
-			if currentIndex < L-1:
-				currentIndex += 1
-				update_plotly_plot(currentIndex)
-				redirect(url_for('/'))
-
-		elif request.form['submit'] == 'backward':
-			if currentIndex > 1:
-				currentIndex -= 1
-				update_plotly_plot(currentIndex)
-				redirect(url_for('/'))
-
-		else:
-			pass # unknown
-
-	# elif request.method == 'GET':
 	return render_template("network_page.html")
 
 
 if __name__ == '__main__':
-	app.run()
+	app.run(debug=True)
