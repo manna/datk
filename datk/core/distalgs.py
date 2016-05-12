@@ -179,7 +179,6 @@ class Network:
         the index_to_UID function
         """
         self.algs = []
-        self.snapshots = []
         if index_to_UID is None:
             proc_ids = range(n)
             shuffle(proc_ids)
@@ -192,6 +191,8 @@ class Network:
             self.uid2process = dict(zip(range(n),[index_to_UID(i) for i in range(n)]))
         for process in self:
             process.state['n'] = n
+
+        self.snapshots = [self.get_snapshot()]
     
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
