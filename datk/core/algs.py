@@ -197,6 +197,9 @@ class SynchFloodMax(Synchronous_Algorithm):
                 self.output(p,"status", "non-leader")
                 p.terminate(self)
 
+    def get_draw_args(self,network,vals):
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
 class SynchHS(Synchronous_Algorithm):
     """The Hirschberg and Sinclair ("HS") algorithm for Leader Election in a Synchronous Bidirectional Ring Network
@@ -295,6 +298,9 @@ class SynchHS(Synchronous_Algorithm):
             self.set(p, 'send+', Message(self, (p.UID, "out", 2**next_phase)))
             self.set(p, 'send-', Message(self, (p.UID, "out", 2**next_phase)))
 
+    def get_draw_args(self,network,vals):
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
 class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network
@@ -346,6 +352,9 @@ class SynchTimeSlice(Synchronous_Algorithm):
                 self.set(p,"send",None)
                 p.terminate(self)
 
+    def get_draw_args(self,network,vals):
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
     """
@@ -404,6 +413,9 @@ class SynchVariableSpeeds(Synchronous_Algorithm):
 
         self.set(p, "queue", queue)
 
+    def get_draw_args(self,network,vals):
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
 #Construct BFS Tree
 
