@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, abort, redirect, url_for
-# from core.algs import *
-# from core.networks import *
-# import plotly.plotly as py
+from core.algs import *
+from core.networks import *
+import plotly.plotly as py
 
 app = Flask(__name__)
 n = Bidirectional_Ring(6)
