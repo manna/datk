@@ -357,14 +357,21 @@ class Network:
     def clone(self):
         return deepcopy(self)
 
-    def restore_snapshot(self, snapshot):
-        i = 0
-        for process in self:
-            process.state = snapshot[i]
-            i+=1
+    def restore_snapshot(self, t):
+        if len(self.snapshots) < 0:
+            print "Run your algorithm on the network first"
+            return 
+        if t<0 or t > len(self.snapshots):
+            print "no snapshot available at that step"
+            return
+        
+        for i in range(len(self)):
+            self[i].state = self.snapshots[t][i]
+            
 
     def get_snapshot(self):
-        return deepcopy([process.state for process in self])
+#        print [process.state for process in self][:]
+        return [copy(process.state) for process in self]
 
     # @memoize
     def adjacency_matrix(self):
