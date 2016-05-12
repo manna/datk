@@ -12,13 +12,13 @@ def Colorizer(algorithm,network,vals,algorithm_type):
             edge_colors = None
             for p in network.processes:
                 if p.state['status'] == "leader":
-                    node_colors[p.UID] = ("rgb(255, 0, 0)", "leader")
+                    node_colors[p.UID] = "ro"
 
                 elif p.state['status'] == "non-leader": # non-leader
-                    node_colors[p.UID] = ("rgb(0, 0, 255)", "non-leader")
+                    node_colors[p.UID] = "bo"
 
                 else:
-                    node_colors[p.UID] = ("rgb(0, 255, 0)", "undecided")
+                    node_colors[p.UID] = "go"
 
             return node_colors, edge_colors
 
@@ -28,13 +28,13 @@ def Colorizer(algorithm,network,vals,algorithm_type):
             for p in network.processes:
                 if algorithm.has(p, "decided"):
                     if p.state['status'] == "leader":
-                        node_colors[p.UID] = ("rgb(255, 0, 0)", "leader")
+                        node_colors[p.UID] = "ro"
 
                     elif p.state['status'] == "non-leader": # non-leader
-                        node_colors[p.UID] = ("rgb(0, 0, 255)", "non-leader")
+                        node_colors[p.UID] = "bo"
 
                 else:
-                    node_colors[p.UID] = ("rgb(0, 255, 0)", "undecided")
+                    node_colors[p.UID] = "go"
 
             return node_colors, edge_colors
 
@@ -44,7 +44,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
         for p in network.processes:
             if p.state['parent']:
                 parent_UID = p.state['parent'].UID
-                edge_colors[(p.UID,parent_UID)] = ("rgb(0, 255, 0)", "BFS")
+                edge_colors[(p.UID,parent_UID)] = ("g", "BFS")
 
         return node_colors, edge_colors
 
