@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, abort, redirect, url_for
-from core.algs import *
-from core.networks import *
-import plotly.plotly as py
+# from core.algs import *
+# from core.networks import *
+# import plotly.plotly as py
 
 app = Flask(__name__)
 # n = Bidirectional_Ring(6)
@@ -15,7 +15,8 @@ app = Flask(__name__)
 
 # update_plotly_plot(currentIndex)
 
-@app.route('/', methods = ['GET','POST'])
+
+@app.route('/')
 def network_page():
 	# if request.method == 'POST':
 	# 	if request.form['submit'] == 'forward':
