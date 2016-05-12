@@ -17,17 +17,19 @@ update_plotly_plot(currentIndex)
 
 @app.route('/forward', methods=['POST'])
 def forward():
+	global currentIndex
 	if currentIndex < L-1:
 		currentIndex += 1
 		update_plotly_plot(currentIndex)
-		redirect(url_for('/'))
+		return redirect(url_for('network_page'))
 
 @app.route('/backward', methods=['POST'])
 def backward():
+	global currentIndex
 	if currentIndex > 1:
 		currentIndex -= 1
 		update_plotly_plot(currentIndex)
-		redirect(url_for('/'))
+		return redirect(url_for('nework_page'))
 
 @app.route('/')
 def network_page():
