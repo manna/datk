@@ -6,20 +6,37 @@ def Colorizer(algorithm,network,vals,algorithm_type):
     BFS
     """
     if algorithm_type == "leader_election":
-        node_colors = dict()
-        edge_colors = None
-        for p in network.processes:
-            if algorithm.has(p, "decided"):
+        # TODO:  do a visualization for undecided nodes - Taken care of on Hayley's branch.
+        if all([algorithm.halt_i(process) for process in network]):
+            node_colors = dict()
+            edge_colors = None
+            for p in network.processes:
                 if p.state['status'] == "leader":
-                    node_colors[p.UID] = 'ro'
+                    node_colors[p.UID] = ("rgb(255, 0, 0)", "leader")
 
                 elif p.state['status'] == "non-leader": # non-leader
-                    node_colors[p.UID] = 'bo'
+                    node_colors[p.UID] = ("rgb(0, 0, 255)", "non-leader")
 
-            else:
-                node_colors[p.UID] = "go"
+                else:
+                    node_colors[p.UID] = ("rgb(0, 255, 0)", "undecided")
 
-        return node_colors, edge_colors
+            return node_colors, edge_colors
+
+        else:
+            node_colors = dict()
+            edge_colors = None
+            for p in network.processes:
+                if algorithm.has(p, "decided"):
+                    if p.state['status'] == "leader":
+                        node_colors[p.UID] = ("rgb(255, 0, 0)", "leader")
+
+                    elif p.state['status'] == "non-leader": # non-leader
+                        node_colors[p.UID] = ("rgb(0, 0, 255)", "non-leader")
+
+                else:
+                    node_colors[p.UID] = ("rgb(0, 255, 0)", "undecided")
+
+            return node_colors, edge_colors
 
     elif algorithm_type == "BFS":
         node_colors = None
@@ -27,7 +44,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
         for p in network.processes:
             if p.state['parent']:
                 parent_UID = p.state['parent'].UID
-                edge_colors[(p.UID,parent_UID)] = 'r'
+                edge_colors[(p.UID,parent_UID)] = ("rgb(0, 255, 0)", "BFS")
 
         return node_colors, edge_colors
 
