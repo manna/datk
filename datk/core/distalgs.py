@@ -8,17 +8,17 @@ from copy import deepcopy,copy
 import numpy as np
 from scipy.linalg import eig
 import math
+##Additional import for simulation
+import matplotlib 
+matplotlib.use('TkAgg')
+#matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 
-##Additional import for simulation
 import Tkinter as tk
-import matplotlib 
 import matplotlib.animation as animation
-matplotlib.use('TkAgg')
+
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.backend_bases import key_press_handler
-from matplotlib.figure import Figure
-
 
 
 from helpers import memoize
@@ -184,6 +184,8 @@ class Network:
         the index_to_UID function
         """
         self.algs = []
+        self.fig = plt.figure()
+        self.ax = self.fig.add_subplot(111)
 
 
         if index_to_UID is None:
@@ -222,8 +224,7 @@ class Network:
                 - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
             - 'circular' draws graph in a circular layout
         """
-        fig = plt.figure()
-        ax1 = fig.add_subplot(111)
+        
         if style == 'spectral':
             n = len(self)
             L = self._laplacian()
@@ -243,7 +244,7 @@ class Network:
                 vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
 
         def line(v1, v2,color='k'):
-            ax1.plot( (v1[0], v2[0]), (v1[1], v2[1] ),color)
+            self.ax.plot( (v1[0], v2[0]), (v1[1], v2[1] ),color)
 
         if default_edge_coloring:
             for i in range(n):
@@ -254,14 +255,14 @@ class Network:
 #        frame.axes.get_xaxis().set_visible(False)
 #        frame.axes.get_yaxis().set_visible(False)
         if default_node_coloring:
-            ax1.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+            self.ax.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
 
         for alg in self.algs:
             node_colors, edge_colors = alg.get_draw_args(self,vals)
             if node_colors:
                 for p_UID,node_color in node_colors.iteritems():
                     v = vals[self.uid2process[p_UID]]
-                    ax1.plot( [v[0]], [v[1]], node_color)
+                    self.ax.plot( [v[0]], [v[1]], node_color)
 
             if edge_colors:
                 for (p_UID,parent_UID),edge_color in edge_colors.iteritems():
@@ -269,12 +270,12 @@ class Network:
                     v2 = vals[self.uid2process[parent_UID]]
                     line(v1,v2,color=edge_color)
         
-        self.canvas = fig
         print "canvas is set to frame"
     
     def start_simulation(self, **params):
         print "Simulation started on " + str(self)
-        
+        self.draw()
+
         self.vizApp = VizApp(self)
         self.vizApp.mainloop()
         print "GUI is set up"
@@ -302,9 +303,8 @@ class Network:
             
 
     def get_snapshot(self):
-#        print [process.state for process in self][:]
         return [copy(process.state) for process in self]
-#        return []
+        
     def state(self):
         """
         (Text print get_state)
@@ -760,7 +760,7 @@ class VizApp(tk.Tk):
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(StartPage)
+        self.show_frame(GraphPage)
 
     def show_frame(self, cont):
         frame = self.frames[cont]
@@ -788,6 +788,7 @@ class GraphPage(tk.Frame):
 
     def __init__(self, parent, controller, network):
         tk.Frame.__init__(self, parent)
+        self.network = network
         self.label = tk.Label(self, text="DATK simulation page!", font=LARGE_FONT)
         self.button_home = tk.Button(self, text="Back to Home",
                             command=lambda: controller.show_frame(StartPage))
@@ -795,26 +796,31 @@ class GraphPage(tk.Frame):
         if len(network.snapshots) > 0:
             self.n_steps = len(network.snapshots)
             
-        self.slider = tk.Scale(self, from_=0, to=self.n_steps, orient=tk.HORIZONTAL, command=self.updateValue)
-
+        self.slider = tk.Scale(self, from_=0, to=self.n_steps-1, length=300,orient=tk.HORIZONTAL, command=self.updateValue)
 
         self.label.pack(pady=10,padx=10)
         self.button_home.pack()
         self.slider.pack()
 
-#        self.entry.insert(0,"hello")
-#        self.entry.pack()
         
-        canvas = FigureCanvasTkAgg(network.canvas, self)
+        self.canvas = FigureCanvasTkAgg(network.fig, self)
+        self.ax = network.ax
 #        canvas.show()
-        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=False)
+        self.canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=False)
         
-        toolbar = NavigationToolbar2TkAgg(canvas, self)
-        toolbar.update()
-        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        self.toolbar = NavigationToolbar2TkAgg(self.canvas, self)
+        self.toolbar.update()
+        self.canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
     def updateValue(self, event):
-        print self.slider.get()
+#        print self.slider.get()
+        self.network.restore_snapshot(self.slider.get())
+#        print 'restored snapshot to the slider value'
+#        print self.network.state()
+        self.network.draw()
+        self.canvas.show()
+        
+        
 
 
 
