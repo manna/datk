@@ -340,11 +340,11 @@ class Network:
             hovermode='closest',
             plot_bgcolor='#EFECEA', #set background color            
             )
-        plot({'data': traces, 'layout': layout}, show_link=False)
-        # data = Data(traces)
+        # plot({'data': traces, 'layout': layout}, show_link=False)
+        data = Data(traces)
 
-        # fig = Figure(data=data, layout=layout)
-
+        fig = Figure(data=data, layout=layout)
+        return fig
         # plt.show()
 
 
