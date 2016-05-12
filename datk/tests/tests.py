@@ -240,22 +240,31 @@ def send_receive_msgs():
     b2 = Message(B)
 
     x = Bidirectional_Ring(4, lambda p:p)
-    assert x[0].get_msgs(A) == []
-    x[0].send_msg(a1)
-    x[0].send_msg(a2)
+
+    x0 = AlgProcess(A, x[0])
+    x1 = AlgProcess(A, x[1])
+    x2 = AlgProcess(A, x[2])
+
+    x0_b = AlgProcess(B, x[0])
+    x1_b = AlgProcess(B, x[1])
+    x2_b = AlgProcess(B, x[2])
+
+    assert x0.get_msgs() == []
+    x0.send_msg(a1)
+    x0.send_msg(a2)
     assert a1.author == x[0] and a2.author == x[0]
-    x[2].send_msg(a3)
+    x2.send_msg(a3)
     assert a3.author == x[2]
-    x[0].send_msg(b1)
+    x0_b.send_msg(b1)
     assert b1.author == x[0]
-    x[2].send_msg(b2)
+    x2_b.send_msg(b2)
     assert b2.author == x[2]
 
-    assert x[1].get_msgs(B) == [b1,b2]
-    assert x[1].get_msgs(A, x[0]) == [a1, a2]
-    assert x[1].get_msgs(A, x[0]) == []
-    assert x[1].get_msgs(A) == [a3]
-    assert x[1].get_msgs(A) == []
+    assert x1_b.get_msgs() == [b1,b2]
+    assert x1.get_msgs(x[0]) == [a1, a2]
+    assert x1.get_msgs(x[0]) == []
+    assert x1.get_msgs() == [a3]
+    assert x1.get_msgs() == []
 
 @test
 def SYNCH_DO_NOTHING():
