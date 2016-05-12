@@ -615,7 +615,7 @@ class Synchronous_Algorithm(Algorithm):
         """Executes a single round of the Synchronous Algorithm"""
         self.msgs()
         self.trans()
-        self.network.snapshots.append([process.state for process in self.network]) 
+        self.network.snapshots.append(self.network.get_snapshot()) 
     
     def msgs(self):
         for process in self.network:
