@@ -18,7 +18,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
                     node_colors[p.UID] = "bo"
 
                 else:
-                    node_colors[p.UID] = "go"
+                    node_colors[p.UID] = "yo"
 
             return node_colors, edge_colors
 
@@ -34,7 +34,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
                         node_colors[p.UID] = "bo"
 
                 else:
-                    node_colors[p.UID] = "go"
+                    node_colors[p.UID] = "yo"
 
             return node_colors, edge_colors
 
@@ -44,7 +44,7 @@ def Colorizer(algorithm,network,vals,algorithm_type):
         for p in network.processes:
             if p.state['parent']:
                 parent_UID = p.state['parent'].UID
-                edge_colors[(p.UID,parent_UID)] = ("g", "BFS")
+                edge_colors[(p.UID,parent_UID)] = "g"
 
         return node_colors, edge_colors
 
@@ -195,6 +195,9 @@ class SynchFloodMax(Synchronous_Algorithm):
             else:
                 self.output(p,"status", "non-leader")
                 p.terminate(self)
+    def get_draw_args(self,network,vals):
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
 
 class SynchHS(Synchronous_Algorithm):
@@ -351,6 +354,9 @@ class SynchHS(Synchronous_Algorithm):
 
         if total_phases == max_num_phases:
             p.terminate(self)
+    def get_draw_args(self,network,vals):
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
 class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network """
@@ -383,6 +389,9 @@ class SynchTimeSlice(Synchronous_Algorithm):
             else:
                 self.set(p,"send",None)
                 p.terminate(self)
+    def get_draw_args(self,network,vals):
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
 
 
