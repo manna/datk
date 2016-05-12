@@ -4,7 +4,7 @@ from time import sleep
 import pdb
 import collections
 from collections import defaultdict
-from copy import deepcopy
+from copy import deepcopy, copy
 import numpy as np
 from scipy.linalg import eig
 import math
@@ -371,7 +371,8 @@ class Network:
 
     def get_snapshot(self):
 #        print [process.state for process in self][:]
-        return [copy(process.state) for process in self]
+        # return [copy(process.state) for process in self]
+        return self.clone()
 
     # @memoize
     def adjacency_matrix(self):

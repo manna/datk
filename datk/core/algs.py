@@ -8,17 +8,36 @@ def Colorizer(algorithm,network,vals,algorithm_type):
     """
     if algorithm_type == "leader_election":
         # TODO:  do a visualization for undecided nodes - Taken care of on Hayley's branch.
-        node_colors = dict()
-        edge_colors = None
-        for p in network.processes:
-            # if self.has(p, "decided"):
-            if p.state['status'] == "leader":
-                node_colors[p.UID] = ("rgb(255, 0, 0)", "leader")
+        if all([algorithm.halt_i(process) for process in network]):
+            node_colors = dict()
+            edge_colors = None
+            for p in network.processes:
+                if p.state['status'] == "leader":
+                    node_colors[p.UID] = ("rgb(255, 0, 0)", "leader")
 
-            elif p.state['status'] == "non-leader": # non-leader
-                node_colors[p.UID] = ("rgb(0, 0, 255)", "non-leader")
+                elif p.state['status'] == "non-leader": # non-leader
+                    node_colors[p.UID] = ("rgb(0, 0, 255)", "non-leader")
 
-        return node_colors, edge_colors
+                else:
+                    node_colors[p.UID] = ("rgb(0, 255, 0)", "undecided")
+
+            return node_colors, edge_colors
+
+        else:
+            node_colors = dict()
+            edge_colors = None
+            for p in network.processes:
+                if algorithm.has(p, "decided"):
+                    if p.state['status'] == "leader":
+                        node_colors[p.UID] = ("rgb(255, 0, 0)", "leader")
+
+                    elif p.state['status'] == "non-leader": # non-leader
+                        node_colors[p.UID] = ("rgb(0, 0, 255)", "non-leader")
+
+                else:
+                    node_colors[p.UID] = ("rgb(0, 255, 0)", "undecided")
+
+            return node_colors, edge_colors
 
     elif algorithm_type == "BFS":
         node_colors = None
