@@ -41,47 +41,6 @@ Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
 tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = False)
 test=tester.test
 
-@test
-def BELLMAN_FORD():
-    def assertAPSP(network):
-        weights = {}
-        for p in network:
-            for q in network:
-                if p == q:
-                    continue
-                w = p.state['SP'][q.UID]
-                weights[(p,q)] = w
-                if (q,p) in weights:
-                    if weights[(q,p)] != w:
-                        raise Exception('FAILED APSP!')
-    def add_random_undirected_edge_weights(network, lower_bound= 0, upper_bound=None):
-        #Generate random (undirected) weights for all edges.
-        import random
-        if upper_bound == None:
-            upper_bound = len(network)
-
-        weights = {}
-        for p in network:
-            for q in network:
-                if q in p.out_nbrs:
-                    if (q,p) in weights:
-                        w = weights[(q,p)]
-                    else:
-                        w = random.randint(lower_bound, upper_bound)
-                    weights[(p, q)] = w
-
-        #Apply them to the network. Updating p.state['APSP'][q.UID] with weight(p,q)
-        for process in network:
-            p.state['nbr_dist'] = {}
-        for edge, weight in weights.items():
-            p, q = edge
-            p.state['nbr_dist'][q.UID] = weight
-
-    r = Bidirectional_Line(5, lambda n: n)
-    add_random_undirected_edge_weights(r)
-    SynchBellmanFord(r)
-
-    assertAPSP(r)
 
 @test
 def LCR_UNI_RING():
@@ -227,6 +186,48 @@ def ASYNCH_BROADCAST_HEIGHT():
 
     SynchBroadcast(x, {"attr":"height", "draw":False, "verbosity" : Algorithm.QUIET})
     assertBroadcast(x, 'height')
+
+@test
+def BELLMAN_FORD():
+    def assertAPSP(network):
+        weights = {}
+        for p in network:
+            for q in network:
+                if p == q:
+                    continue
+                w = p.state['SP'][q.UID]
+                weights[(p,q)] = w
+                if (q,p) in weights:
+                    if weights[(q,p)] != w:
+                        raise Exception('FAILED APSP!')
+    def add_random_undirected_edge_weights(network, lower_bound= 0, upper_bound=None):
+        #Generate random (undirected) weights for all edges.
+        import random
+        if upper_bound == None:
+            upper_bound = len(network)
+
+        weights = {}
+        for p in network:
+            for q in network:
+                if q in p.out_nbrs:
+                    if (q,p) in weights:
+                        w = weights[(q,p)]
+                    else:
+                        w = random.randint(lower_bound, upper_bound)
+                    weights[(p, q)] = w
+
+        #Apply them to the network. Updating p.state['APSP'][q.UID] with weight(p,q)
+        for process in network:
+            p.state['nbr_dist'] = {}
+        for edge, weight in weights.items():
+            p, q = edge
+            p.state['nbr_dist'][q.UID] = weight
+
+    r = Bidirectional_Line(5, lambda n: n)
+    add_random_undirected_edge_weights(r)
+    SynchBellmanFord(r)
+
+    assertAPSP(r)
 
 @test
 def send_receive_msgs():
