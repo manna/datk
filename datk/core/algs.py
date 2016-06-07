@@ -1,5 +1,6 @@
 from distalgs import *
 
+
 def Colorizer(algorithm,network,vals,algorithm_type):
     """
     algorithm_type can have following values thus far:
@@ -7,18 +8,18 @@ def Colorizer(algorithm,network,vals,algorithm_type):
     BFS
     """
     if algorithm_type == "leader_election":
-        #TODO: do visualization for undecided nodes
-        node_colors = dict()
+        print "LE"
+        node_colors = {}
         edge_colors = None
         for p in network.processes:
-            # if self.has(p, "decided"):
             if p.state['status'] == "leader":
-                node_colors[p.UID] = 'bo'
+                node_colors[p.UID] = 'ro'
 
             elif p.state['status'] == "non-leader": # non-leader
                 node_colors[p.UID] = 'bo'
+            else:
+                node_colors[p.UID] = 'yo'
 
-        # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
         return node_colors, edge_colors
 
     elif algorithm_type == "BFS":
@@ -27,10 +28,10 @@ def Colorizer(algorithm,network,vals,algorithm_type):
         for p in network.processes:
             if p.state['parent']:
                 parent_UID = p.state['parent'].UID
-                edge_colors[(p.UID,parent_UID)] = 'g'
+
+                edge_colors[(p.UID,parent_UID)] = "g"
 
         return node_colors, edge_colors
-
 
 # class LeaderElectionAlgorithm(Synchronous_Algorithm):
 #     def get_draw_args(self,network,vals):
@@ -48,7 +49,6 @@ def Colorizer(algorithm,network,vals,algorithm_type):
 
 #         # algoDrawArgs = AlgorithmDrawArgs(node_colors = node_colors, edge_colors = edge_colors)
 #         return node_colors, edge_colors
-
 
 
 #Leader Election Algorithms for Ring networks:
@@ -93,6 +93,7 @@ class LCR(Synchronous_Algorithm):
             else:
                 self.set(p, "send",  None)
         if self.r == p.state['n']: p.terminate(self)
+
 
     def get_draw_args(self,network,vals):
         algorithm_type = "leader_election"
@@ -196,6 +197,9 @@ class SynchFloodMax(Synchronous_Algorithm):
             else:
                 self.output(p,"status", "non-leader")
                 p.terminate(self)
+    def get_draw_args(self,network,vals):
+        algorithm_type = "leader_election"
+        return Colorizer(self,network,vals,algorithm_type)
 
     def get_draw_args(self,network,vals):
         algorithm_type = "leader_election"
@@ -324,6 +328,7 @@ class SynchTimeSlice(Synchronous_Algorithm):
         - Every process has state['status'] is 'leader' or 'non-leader'.
         - Exactly one process has state['status'] is 'leader'
     """
+
     def msgs_i(self, p):
         msg = self.get(p, "send")
         if msg:
@@ -342,19 +347,21 @@ class SynchTimeSlice(Synchronous_Algorithm):
 
     def trans_i(self, p, msgs):
         if len(msgs) > 0:
+
             msg = msgs[0] # modify this
             if (self.r - 1)/p.state['n'] == msg.content-1 and not self.has(p,"decided"):
                 self.set(p, 'decided', None)
                 self.output(p,"status", "non-leader")
+                
                 self.set(p,"send", msg)
 
             else:
                 self.set(p,"send",None)
                 p.terminate(self)
-
     def get_draw_args(self,network,vals):
         algorithm_type = "leader_election"
         return Colorizer(self,network,vals,algorithm_type)
+
 
 class SynchVariableSpeeds(Synchronous_Algorithm):
     """
@@ -421,7 +428,6 @@ class SynchVariableSpeeds(Synchronous_Algorithm):
 
 class SynchBFS(Synchronous_Algorithm):
     """Constructs a BFS tree with the 'leader' Process at its root
-
     At any point during execution, there is some set of processes that is
     "marked," initially just i0. Process i0 sends out a search message at
     round 1, to all of its outgoing neighbors. At any round, if an unmarked
@@ -429,7 +435,6 @@ class SynchBFS(Synchronous_Algorithm):
     processes from which the search has arrived as its parent. At the first
     round after a process gets marked, it sends a search message to all of its
     outgoing neighbors.
-
     Requires:
         - assertLeaderElection
     Effects:
@@ -467,7 +472,6 @@ class SynchBFS(Synchronous_Algorithm):
 
 class SynchBFSAck(Synchronous_Algorithm):
     """Constructs a BFS tree with children pointers and the 'leader' Process at its root
-
     Algorithm (Informal):
     At any point during execution, there is some set of processes that is
     "marked," initially just i0. Process i0 sends out a search message at
@@ -477,7 +481,6 @@ class SynchBFSAck(Synchronous_Algorithm):
     round after a process gets marked, it sends a search message to all of its
     outgoing neighbors, and an acknowledgement to its parent, so that nodes
     will also know their children.
-
     Requires:
         - assertLeaderElection
     Effects: 

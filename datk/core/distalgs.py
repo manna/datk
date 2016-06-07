@@ -4,13 +4,16 @@ from time import sleep
 import pdb
 import collections
 from collections import defaultdict
-from copy import deepcopy
+from copy import deepcopy,copy
 import numpy as np
 from scipy.linalg import eig
 import math
+import matplotlib 
+matplotlib.use('TkAgg')
 from matplotlib import pyplot as plt
 
 from helpers import memoize
+from simulator_gui import VizApp
 
 class Message:
     """
@@ -40,8 +43,10 @@ class Process:
     Processes are identical except for their UID"""
     def __init__(self, UID, state = None, in_nbrs = [], out_nbrs = []):
         self.UID = UID
-        self.state = defaultdict(dict) # algorithm : state dict
-        
+        if state is None:
+            self.state = defaultdict(dict) # algorithm : state dict
+        else:
+            self.state = state    
         self.in_nbrs = in_nbrs or []   # Don't remove or []
         self.out_nbrs = out_nbrs or [] # Don't remove or []
 
@@ -163,31 +168,41 @@ class Process:
 
 class Network:
     """ A collection of Processes that know n, the # of processes in the network."""
-    
-    def __init__(self, processes):
-        self.processes = processes
-        self.algs = []
 
-    def __init__(self, n, index_to_UID = None):
+    def __init__(self, n = None, index_to_UID = None):
         """
         Creates a network of n disconnected Processes,
         with random distinct UIDs, or as specified by
         the index_to_UID function
         """
         self.algs = []
-        if index_to_UID is None:
-            proc_ids = range(n)
-            shuffle(proc_ids)
-            process2uid = dict(zip(range(n),proc_ids))
-            self.processes = [Process(process2uid[i]) for i in range(n)]
-            self.uid2process = dict(zip(proc_ids,range(n)))
-            # shuffle(self.processes)
-        else:
+
+        self.ax, self.fig = None, None
+
+        if index_to_UID is not None:
             self.processes = [Process(index_to_UID(i)) for i in range(n)]
-            self.uid2process = dict(zip(range(n),[index_to_UID(i) for i in range(n)]))
+        else:
+            self.processes = [Process(i) for i in range(n)]
+            shuffle(self.processes)
+
+        self.uid2process = {p.UID: p for p in self.processes}
+
         for process in self:
             process.state['n'] = n
-    
+        
+        self._snapshots = []
+        self.save_snapshot()
+
+    def setup_canvas(self, new_fig=False):
+        if new_fig or self.fig is None or self.ax is None:
+            self.fig = plt.figure()
+            self.ax = self.fig.add_subplot(111)
+
+            self.ax.get_xaxis().set_visible(False)
+            self.ax.get_yaxis().set_visible(False)
+            return True
+        return False
+
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
         self.algs.append(algorithm)
@@ -197,8 +212,9 @@ class Network:
     def run(self, algorithm):
         """Runs algorithm on the Network"""
         algorithm(self)
-    
-    def draw(self, style='spectral', default_node_coloring = True, default_edge_coloring = True):
+
+        
+    def draw(self, style='spectral', new_fig=True):
         """
         Draws the network
 
@@ -208,6 +224,7 @@ class Network:
                 - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
             - 'circular' draws graph in a circular layout
         """
+        
         if style == 'spectral':
             n = len(self)
             L = self._laplacian()
@@ -226,47 +243,72 @@ class Network:
             for k in range(n):
                 vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
 
-        
+        def line(v1, v2, color='k'):
+            self.ax.plot( (v1[0], v2[0]), (v1[1], v2[1]), color)
 
-        def line(v1, v2,color='k'):
-            plt.plot( (v1[0], v2[0]), (v1[1], v2[1] ),color)
+        self.setup_canvas(new_fig=new_fig)
 
-        if default_edge_coloring:
-            for i in range(n):
-                for nbr in self[i].out_nbrs:
-                    line(vals[i], vals[self.index(nbr)])
+        #Simple Edges.
+        for i in range(n):
+            for nbr in self[i].out_nbrs:
+                line(vals[i], vals[self.index(nbr)])
 
-        frame = plt.gca()
-        frame.axes.get_xaxis().set_visible(False)
-        frame.axes.get_yaxis().set_visible(False)
-        if default_node_coloring:
-            plt.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+        #Simple Vertices.
+        self.ax.plot( [v[0] for v in vals], [v[1] for v in vals], 'ko' )
 
+        #Algorithm Specific coloring.
         for alg in self.algs:
             node_colors, edge_colors = alg.get_draw_args(self,vals)
             if node_colors:
                 for p_UID,node_color in node_colors.iteritems():
-                    v = vals[self.uid2process[p_UID]]
-                    plt.plot( [v[0]], [v[1]], node_color)
+                    v = vals[self.index(self.uid2process[p_UID])]
+                    self.ax.plot( [v[0]], [v[1]], node_color)
 
             if edge_colors:
                 for (p_UID,parent_UID),edge_color in edge_colors.iteritems():
-                    v1 = vals[self.uid2process[p_UID]]
-                    v2 = vals[self.uid2process[parent_UID]]
-                    line(v1,v2,color=edge_color)
+                    v1 = vals[self.index(self.uid2process[p_UID])]
+                    v2 = vals[self.index(self.uid2process[parent_UID])]
+                    line(v1,v2, color=edge_color)
+            
+    def start_simulation(self, **params):
+        print "Simulation started on " + str(self)
+        self.setup_canvas()
+        self.restore_snapshot(0)
 
-        plt.show()
+        self.vizApp = VizApp(self)
+        self.vizApp.mainloop()
+        print "GUI is set up"
 
+    def stop_simulation(self):
+        try: 
+            self.vizApp.terminate()
+        except TclError:
+            pass
+        finally:
+            self.vizApp = None
+            print 'here'
+        print "GUI destroyed"
+
+    def restore_snapshot(self, t):
+        if t<0 or t >= len(self._snapshots):
+            raise IndexError("No snapshot at time "+str(t))
+        
+        for i in range(len(self)):
+            self[i].state = self._snapshots[t][i]
+
+    def get_snapshot(self):
+        return [copy(process.state) for process in self]
+        
+    def save_snapshot(self):
+        self._snapshots.append(self.get_snapshot())
 
     def state(self):
         """
+        (Text print get_state)
         @return: A text representation of the state of all the Processes in the Network 
         """
         return [(str(process), dict(process.state)) for process in self]
     
-    def clone(self):
-        return deepcopy(self)
-
     # @memoize
     def adjacency_matrix(self):
         """
@@ -453,7 +495,7 @@ class Algorithm:
         msg_complexity = "Message Complexity: " + str(self.message_count)
         print msg_complexity
         print "-"*len(msg_complexity)
-
+                
     def count_msg(self, message_count):
         self.message_count += message_count
 
@@ -501,7 +543,7 @@ class Synchronous_Algorithm(Algorithm):
         while not self.halted:
             self.r+=1
             if self.params['verbosity'] >= Algorithm.DEFAULT:
-                print "Round",self.r
+                print "Round",self.r#TODO
             self.round()
             self.halt()
 
@@ -509,6 +551,7 @@ class Synchronous_Algorithm(Algorithm):
         """Executes a single round of the Synchronous Algorithm"""
         self.msgs()
         self.trans()
+        self.network.save_snapshot()
     
     def msgs(self):
         for process in self.network:
@@ -620,7 +663,7 @@ class Compose(Synchronous_Algorithm):
         self.A=A
         self.B=B
         self.message_count = 0
-        self.params = params or deepcopy(Algorithm.DEFAULT_PARAMS)
+        self.params = params or copy(Algorithm.DEFAULT_PARAMS)
         if name is None:
             name = self.name="Compose("+self.A.name+","+self.B.name+")"
 
@@ -668,7 +711,7 @@ class Chain(Algorithm):
         """
         assert isinstance(A,Algorithm), "Not an Algorithm"
         assert isinstance(B,Algorithm), "Not an Algorithm"
-        self.params = params or deepcopy(Algorithm.DEFAULT_PARAMS)
+        self.params = params or copy(Algorithm.DEFAULT_PARAMS)
         self.A = A
         self.B = B
         
@@ -683,3 +726,4 @@ class Chain(Algorithm):
         Algorithm.cleanup(self)
 
     def __repr__(self): return self.name
+        
