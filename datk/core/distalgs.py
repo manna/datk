@@ -8,20 +8,12 @@ from copy import deepcopy,copy
 import numpy as np
 from scipy.linalg import eig
 import math
-##Additional import for simulation
 import matplotlib 
 matplotlib.use('TkAgg')
-#matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 
-import Tkinter as tk
-import matplotlib.animation as animation
-
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-from matplotlib.backend_bases import key_press_handler
-
-
 from helpers import memoize
+from simulator_gui import VizApp
 
 class Message:
     """
@@ -51,8 +43,10 @@ class Process:
     Processes are identical except for their UID"""
     def __init__(self, UID, state = None, in_nbrs = [], out_nbrs = []):
         self.UID = UID
-        self.state = defaultdict(dict) # algorithm : state dict
-        
+        if state is None:
+            self.state = defaultdict(dict) # algorithm : state dict
+        else:
+            self.state = state    
         self.in_nbrs = in_nbrs or []   # Don't remove or []
         self.out_nbrs = out_nbrs or [] # Don't remove or []
 
@@ -172,38 +166,41 @@ class Process:
 
 class Network:
     """ A collection of Processes that know n, the # of processes in the network."""
-    
-    def __init__(self, processes):
-        self.processes = processes
-        self.algs=[]
-        self.canvas = None
-    def __init__(self, n, index_to_UID = None):
+
+    def __init__(self, n = None, index_to_UID = None):
         """
         Creates a network of n disconnected Processes,
         with random distinct UIDs, or as specified by
         the index_to_UID function
         """
         self.algs = []
-        self.fig = plt.figure()
-        self.ax = self.fig.add_subplot(111)
 
+        self.ax, self.fig = None, None
 
-        if index_to_UID is None:
-            proc_ids = range(n)
-            shuffle(proc_ids)
-            process2uid = dict(zip(range(n),proc_ids))
-            self.processes = [Process(process2uid[i]) for i in range(n)]
-            self.uid2process = dict(zip(proc_ids,range(n)))
-            # shuffle(self.processes)
-        else:
+        if index_to_UID is not None:
             self.processes = [Process(index_to_UID(i)) for i in range(n)]
-            self.uid2process = dict(zip(range(n),[index_to_UID(i) for i in range(n)]))
+        else:
+            self.processes = [Process(i) for i in range(n)]
+            shuffle(self.processes)
+
+        self.uid2process = {p.UID: p for p in self.processes}
+
         for process in self:
             process.state['n'] = n
         
-        self.snapshots = [self.get_snapshot()]
+        self._snapshots = []
+        self.save_snapshot()
         
-    
+    def setup_canvas(self, new_fig=False):
+        if new_fig or self.fig is None or self.ax is None:
+            self.fig = plt.figure()
+            self.ax = self.fig.add_subplot(111)
+
+            self.ax.get_xaxis().set_visible(False)
+            self.ax.get_yaxis().set_visible(False)
+            return True
+        return False
+
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
         self.algs.append(algorithm)
@@ -214,7 +211,7 @@ class Network:
         """Runs algorithm on the Network"""
         algorithm(self)
         
-    def draw(self, style='spectral', default_node_coloring = True, default_edge_coloring = True):
+    def draw(self, style='spectral', new_fig=True):
         """
         Draws the network
 
@@ -243,38 +240,36 @@ class Network:
             for k in range(n):
                 vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
 
-        def line(v1, v2,color='k'):
-            self.ax.plot( (v1[0], v2[0]), (v1[1], v2[1] ),color)
+        def line(v1, v2, color='k'):
+            self.ax.plot( (v1[0], v2[0]), (v1[1], v2[1]), color)
 
-        if default_edge_coloring:
-            for i in range(n):
-                for nbr in self[i].out_nbrs:
-                    line(vals[i], vals[self.index(nbr)])
+        print self.setup_canvas(new_fig=new_fig)
 
-#        frame = plt.gca()
-#        frame.axes.get_xaxis().set_visible(False)
-#        frame.axes.get_yaxis().set_visible(False)
-        if default_node_coloring:
-            self.ax.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+        #Simple Edges.
+        for i in range(n):
+            for nbr in self[i].out_nbrs:
+                line(vals[i], vals[self.index(nbr)])
 
+        #Simple Vertices.
+        self.ax.plot( [v[0] for v in vals], [v[1] for v in vals], 'ro' )
+
+        #Algorithm Specific coloring.
         for alg in self.algs:
             node_colors, edge_colors = alg.get_draw_args(self,vals)
             if node_colors:
                 for p_UID,node_color in node_colors.iteritems():
-                    v = vals[self.uid2process[p_UID]]
+                    v = vals[self.index(self.uid2process[p_UID])]
                     self.ax.plot( [v[0]], [v[1]], node_color)
 
             if edge_colors:
                 for (p_UID,parent_UID),edge_color in edge_colors.iteritems():
-                    v1 = vals[self.uid2process[p_UID]]
-                    v2 = vals[self.uid2process[parent_UID]]
-                    line(v1,v2,color=edge_color)
-        
-        print "canvas is set to frame"
-    
+                    v1 = vals[self.index(self.uid2process[p_UID])]
+                    v2 = vals[self.index(self.uid2process[parent_UID])]
+                    line(v1,v2, color=edge_color)
+            
     def start_simulation(self, **params):
         print "Simulation started on " + str(self)
-        self.draw()
+        self.setup_canvas()
 
         self.vizApp = VizApp(self)
         self.vizApp.mainloop()
@@ -291,20 +286,18 @@ class Network:
         print "GUI destroyed"
 
     def restore_snapshot(self, t):
-        if len(self.snapshots) < 0:
-            print "Run your algorithm on the network first"
-            return 
-        if t<0 or t > len(self.snapshots):
-            print "no snapshot available at that step"
-            return
+        if t<0 or t >= len(self._snapshots):
+            raise IndexError("No snapshot at time "+str(t))
         
         for i in range(len(self)):
-            self[i].state = self.snapshots[t][i]
-            
+            self[i].state = self._snapshots[t][i]
 
     def get_snapshot(self):
         return [copy(process.state) for process in self]
         
+    def save_snapshot(self):
+        self._snapshots.append(self.get_snapshot())
+
     def state(self):
         """
         (Text print get_state)
@@ -312,9 +305,6 @@ class Network:
         """
         return [(str(process), dict(process.state)) for process in self]
     
-    def clone(self):
-        return deepcopy(self)
-
     # @memoize
     def adjacency_matrix(self):
         """
@@ -557,7 +547,7 @@ class Synchronous_Algorithm(Algorithm):
         """Executes a single round of the Synchronous Algorithm"""
         self.msgs()
         self.trans()
-        self.network.snapshots.append(self.network.get_snapshot()) 
+        self.network.save_snapshot()
     
     def msgs(self):
         for process in self.network:
@@ -674,7 +664,7 @@ class Compose(Synchronous_Algorithm):
         self.A=A
         self.B=B
         self.message_count = 0
-        self.params = params or deepcopy(Algorithm.DEFAULT_PARAMS)
+        self.params = params or copy(Algorithm.DEFAULT_PARAMS)
         if name is None:
             name = self.name="Compose("+self.A.name+","+self.B.name+")"
 
@@ -722,7 +712,7 @@ class Chain(Algorithm):
         """
         assert isinstance(A,Algorithm), "Not an Algorithm"
         assert isinstance(B,Algorithm), "Not an Algorithm"
-        self.params = params or deepcopy(Algorithm.DEFAULT_PARAMS)
+        self.params = params or copy(Algorithm.DEFAULT_PARAMS)
         self.A = A
         self.B = B
         
@@ -738,89 +728,3 @@ class Chain(Algorithm):
 
     def __repr__(self): return self.name
         
-        
-LARGE_FONT=('Verdana',12)
-class VizApp(tk.Tk):
-
-    def __init__(self, network):
-        
-        tk.Tk.__init__(self)
-#        tk.Tk.iconbitmap(self, default="clienticon.ico")
-        tk.Tk.wm_title(self, "DATK Visualization")     
-        
-        self.frames = {}
-        
-        container = tk.Frame(self)
-        container.pack(side="top", fill="both", expand = False)
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
-
-        for F in (StartPage, GraphPage):
-            frame = F(container, self, network)
-            self.frames[F] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame(GraphPage)
-
-    def show_frame(self, cont):
-        frame = self.frames[cont]
-        frame.tkraise()
-        
-    def terminate(self):
-        self.quit()
-        self.destroy()
-        print "VizApp terminated"
-
-        
-class StartPage(tk.Frame):
-
-    def __init__(self, parent, controller,network):
-        tk.Frame.__init__(self,parent)
-        label = tk.Label(self, text="Start Page", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
-
-        button = tk.Button(self, text="Graph Page",
-                            command=lambda: controller.show_frame(GraphPage))
-        button.pack()
-        
-        
-class GraphPage(tk.Frame):
-
-    def __init__(self, parent, controller, network):
-        tk.Frame.__init__(self, parent)
-        self.network = network
-        self.label = tk.Label(self, text="DATK simulation page!", font=LARGE_FONT)
-        self.button_home = tk.Button(self, text="Back to Home",
-                            command=lambda: controller.show_frame(StartPage))
-        self.n_steps = 100
-        if len(network.snapshots) > 0:
-            self.n_steps = len(network.snapshots)
-            
-        self.slider = tk.Scale(self, from_=0, to=self.n_steps-1, length=300,orient=tk.HORIZONTAL, command=self.updateValue)
-
-        self.label.pack(pady=10,padx=10)
-        self.button_home.pack()
-        self.slider.pack()
-
-        
-        self.canvas = FigureCanvasTkAgg(network.fig, self)
-        self.ax = network.ax
-#        canvas.show()
-        self.canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=False)
-        
-        self.toolbar = NavigationToolbar2TkAgg(self.canvas, self)
-        self.toolbar.update()
-        self.canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-
-    def updateValue(self, event):
-#        print self.slider.get()
-        self.network.restore_snapshot(self.slider.get())
-#        print 'restored snapshot to the slider value'
-#        print self.network.state()
-        self.network.draw()
-        self.canvas.show()
-        
-        
-
-
-

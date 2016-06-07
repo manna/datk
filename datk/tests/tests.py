@@ -38,7 +38,7 @@ def configure_ipython():
 configure_ipython()
 
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
-tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = False)
+tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = True)
 test=tester.test
 
 @test
@@ -65,7 +65,7 @@ def ASYNC_LCR_BI_RING():
     AsyncLCR(r)
     assertLeaderElection(r)
 
-@test
+@test(test=False)
 def HS_BI_RING():
     r = Bidirectional_Ring(6)
     SynchHS(r)
@@ -83,13 +83,13 @@ def TS_BI_RING():
     SynchTimeSlice(r)
     assertLeaderElection(r)
 
-@test
+@test(test=False)
 def VS_UNI_RING():
     r = Unidirectional_Ring(6)
     SynchVariableSpeeds(r)
     assertLeaderElection(r)
 
-@test
+@test(test=False)
 def VS_BI_RING():
     r = Bidirectional_Ring(6)
     SynchVariableSpeeds(r)
@@ -216,6 +216,22 @@ def send_receive_msgs():
     assert x[1].get_msgs(A) == []
 
 @test
+def network_snapshots():
+    x = Unidirectional_Ring(5)
+
+    assert len(x._snapshots) == 1, "Network initial snapshot not saved"
+
+    snap_0 = x.get_snapshot()
+    lcr = LCR(x)
+    snap_1 = x.get_snapshot()
+    assert len(x._snapshots) == lcr.r+1, "Algorithm doesn't append 1 snapshot per round"
+    assert snap_0 != snap_1, "Current snapshot unchanged after algo"
+
+    snapshots_before_restore = x._snapshots[:]
+    x.restore_snapshot(0)
+    assert snapshots_before_restore == x._snapshots, "restore_snapshots modified self.snapshots"
+
+@test
 def SYNCH_DO_NOTHING():
     x = Random_Line_Network(5)
     state = x.state()
@@ -225,35 +241,38 @@ def SYNCH_DO_NOTHING():
 @test
 def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
     x = Unidirectional_Ring(5)
-    x1 = x.clone()
 
     A = LCR()
     A(x)
     assertLeaderElection(x)
 
+    x.restore_snapshot(0)
+
     C = Compose(LCR(), Do_Nothing())
-    C(x1)
-    assertLeaderElection(x1)
+    C(x)
+    assertLeaderElection(x)
 
     assert C.message_count == A.message_count, "Wrong message count"
 
 @test
 def COMPOSE_SYNCH_LCR():
     x = Unidirectional_Ring(10)
-    x1 = x.clone()
-    x2 = x.clone()
 
     A = LCR()
     A(x)
     assertLeaderElection(x)
 
+    x.restore_snapshot(0)
+
     B = Compose(LCR(name="B1"), LCR(name="B2"))
-    B(x1)
-    assertLeaderElection(x1)
+    B(x)
+    assertLeaderElection(x)
+
+    x.restore_snapshot(0)
 
     C = Compose(Compose(LCR(), LCR()), LCR())
-    C(x2)
-    assertLeaderElection(x2)
+    C(x)
+    assertLeaderElection(x)
 
     assert B.message_count == 2*A.message_count, "Compose LCR LCR wrong message count"
     assert C.message_count == 3*A.message_count, "Compose LCR LCR LCR wrong message count"
