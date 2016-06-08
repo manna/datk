@@ -1,7 +1,12 @@
 """
 Algorithm Test Suite
 
-Tests algorithms defined in algs.py
+Tests algorithms defined in algs.py.
+
+From project root, can run:
+$ nosetests datk.tests.tests
+OR
+$ python -m datk.tests.tests
 """
 
 try:
@@ -43,91 +48,91 @@ test=tester.test
 
 
 @test
-def LCR_UNI_RING():
+def test_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     LCR(r)
     assertLeaderElection(r)
 
 @test
-def LCR_BI_RING():
+def test_LCR_BI_RING():
     r = Bidirectional_Ring(6)
     LCR(r)
     assertLeaderElection(r)
 
 @test
-def ASYNC_LCR_UNI_RING():
+def test_ASYNC_LCR_UNI_RING():
     r = Unidirectional_Ring(6)
     AsyncLCR(r)
     assertLeaderElection(r)
 
 @test
-def ASYNC_LCR_BI_RING():
+def test_ASYNC_LCR_BI_RING():
     r = Bidirectional_Ring(6)
     AsyncLCR(r)
     assertLeaderElection(r)
 
 @test
-def HS_BI_RING():
+def test_HS_BI_RING():
     r = Bidirectional_Ring(6)
     SynchHS(r)
     assertLeaderElection(r)
 
 @test
-def TS_UNI_RING():
+def test_TS_UNI_RING():
     r = Unidirectional_Ring(6)
     SynchTimeSlice(r)
     assertLeaderElection(r)
 
 @test
-def TS_BI_RING():
+def test_TS_BI_RING():
     r = Bidirectional_Ring(6)
     SynchTimeSlice(r)
     assertLeaderElection(r)
 
 @test
-def VS_UNI_RING():
+def test_VS_UNI_RING():
     r = Unidirectional_Ring(6)
     SynchVariableSpeeds(r)
     assertLeaderElection(r)
 
 @test
-def VS_BI_RING():
+def test_VS_BI_RING():
     r = Bidirectional_Ring(6)
     SynchVariableSpeeds(r)
     assertLeaderElection(r)
 
 @test
-def FLOODMAX_UNI_RING():
+def test_FLOODMAX_UNI_RING():
     r = Unidirectional_Ring(4)
     SynchFloodMax(r)
     assertLeaderElection(r)
 
 @test
-def FLOODMAX_BI_RING():
+def test_FLOODMAX_BI_RING():
     r = Bidirectional_Ring(4)
     SynchFloodMax(r)
     assertLeaderElection(r)
 
 @test
-def FLOODMAX_BI_LINE():
+def test_FLOODMAX_BI_LINE():
     l = Bidirectional_Line(4)
     SynchFloodMax(l)
     assertLeaderElection(l)
 
 @test
-def FLOODMAX_COMPLETE_GRAPH():
+def test_FLOODMAX_COMPLETE_GRAPH():
     g = Complete_Graph(10)
     SynchFloodMax(g)
     assertLeaderElection(g)
 
 @test
-def FLOODMAX_RANDOM_GRAPH():
+def test_FLOODMAX_RANDOM_GRAPH():
     g = Random_Line_Network(16)
     SynchFloodMax(g)
     assertLeaderElection(g)
 
 @test
-def SYNCH_BFS():
+def test_SYNCH_BFS():
     x = Random_Line_Network(10)
     SynchFloodMax(x)
     assertLeaderElection(x)
@@ -136,7 +141,7 @@ def SYNCH_BFS():
     assertBFS(x)
 
 @test
-def SYNCH_BFS_ACK():
+def test_SYNCH_BFS_ACK():
     x = Bidirectional_Line(6, lambda t:t)
 
     SynchFloodMax(x)
@@ -146,7 +151,7 @@ def SYNCH_BFS_ACK():
     assertBFSWithChildren(x)
 
 @test
-def SYNCH_CONVERGE_HEIGHT():
+def test_SYNCH_CONVERGE_HEIGHT():
     x = Random_Line_Network(10)
 
     SynchFloodMax(x)
@@ -158,7 +163,7 @@ def SYNCH_CONVERGE_HEIGHT():
     SynchConvergeHeight(x)
 
 @test
-def SYNCH_BROADCAST_HEIGHT():
+def test_SYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
     SynchFloodMax(x)
@@ -173,7 +178,7 @@ def SYNCH_BROADCAST_HEIGHT():
     assertBroadcast(x, 'height')
 
 @test
-def ASYNCH_BROADCAST_HEIGHT():
+def test_ASYNCH_BROADCAST_HEIGHT():
     x = Random_Line_Network(10)
 
     SynchFloodMax(x)
@@ -188,7 +193,7 @@ def ASYNCH_BROADCAST_HEIGHT():
     assertBroadcast(x, 'height')
 
 @test
-def BELLMAN_FORD():
+def test_BELLMAN_FORD():
     def assertAPSP(network):
         weights = {}
         for p in network:
@@ -230,7 +235,7 @@ def BELLMAN_FORD():
     assertAPSP(r)
 
 @test
-def send_receive_msgs():
+def test_send_receive_msgs():
     A = LCR()
     a1 = Message(A)
     a2 = Message(A)
@@ -259,7 +264,7 @@ def send_receive_msgs():
     assert x[1].get_msgs(A) == []
 
 @test
-def network_snapshots():
+def test_network_snapshots():
     x = Unidirectional_Ring(5)
 
     assert len(x._snapshots) == 1, "Network initial snapshot not saved"
@@ -275,14 +280,14 @@ def network_snapshots():
     assert snapshots_before_restore == x._snapshots, "restore_snapshots modified self.snapshots"
 
 @test
-def SYNCH_DO_NOTHING():
+def test_SYNCH_DO_NOTHING():
     x = Random_Line_Network(5)
     state = x.state()
     assert Do_Nothing(x).message_count == 0
     assert state == x.state()
 
 @test
-def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
+def test_COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
     x = Unidirectional_Ring(5)
 
     A = LCR()
@@ -298,7 +303,7 @@ def COMPOSE_SYNCH_LCR_AND_DO_NOTHING():
     assert C.message_count == A.message_count, "Wrong message count"
 
 @test
-def COMPOSE_SYNCH_LCR():
+def test_COMPOSE_SYNCH_LCR():
     x = Unidirectional_Ring(10)
 
     A = LCR()
@@ -321,7 +326,7 @@ def COMPOSE_SYNCH_LCR():
     assert C.message_count == 3*A.message_count, "Compose LCR LCR LCR wrong message count"
 
 @test
-def CHAIN_BROADCAST_HEIGHT():
+def test_CHAIN_BROADCAST_HEIGHT():
     fm = SynchFloodMax()
     bfs = SynchBFSAck()
     converge = SynchConvergeHeight()
@@ -335,13 +340,13 @@ def CHAIN_BROADCAST_HEIGHT():
     assertBroadcast(x, 'height')
 
 @test
-def SYNCH_LUBY_MIS_BI_RING():
+def test_SYNCH_LUBY_MIS_BI_RING():
     x = Bidirectional_Ring(10, lambda t:t)
     SynchLubyMIS(x)
     assertLubyMIS(x)
 
 @test
-def SYNCH_LUBY_MIS():
+def test_SYNCH_LUBY_MIS():
     x = Random_Line_Network(10)
     SynchLubyMIS(x)
     assertLubyMIS(x)
