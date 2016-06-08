@@ -205,6 +205,7 @@ class SynchFloodMax(Synchronous_Algorithm):
         algorithm_type = "leader_election"
         return Colorizer(self,network,vals,algorithm_type)
 
+
 class SynchHS(Synchronous_Algorithm):
     """The Hirschberg and Sinclair ("HS") algorithm for Leader Election in a Synchronous Bidirectional Ring Network
 
@@ -305,6 +306,7 @@ class SynchHS(Synchronous_Algorithm):
     def get_draw_args(self,network,vals):
         algorithm_type = "leader_election"
         return Colorizer(self,network,vals,algorithm_type)
+
 
 class SynchTimeSlice(Synchronous_Algorithm):
     """The TimeSlice algorithm in a Synchronous Ring Network
