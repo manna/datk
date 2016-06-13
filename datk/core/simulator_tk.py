@@ -86,9 +86,6 @@ class GraphPage(tk.Frame):
         self.canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
     def updateValue(self, event):
-        print self.slider.get()
         self.network.restore_snapshot(self.slider.get())
-        # print 'restored snapshot to the slider value'
-        # print self.network.state()
         self.network.draw(new_fig=False)
         self.canvas.show()

@@ -1,3 +1,4 @@
+import sys
 import random
 from random import shuffle
 from time import sleep
@@ -11,9 +12,18 @@ import math
 import matplotlib 
 matplotlib.use('TkAgg')
 from matplotlib import pyplot as plt
-
+from colorizer import *
 from helpers import memoize
-from simulator_gui import VizApp
+
+IS_QT, IS_TK = True, True
+try:
+    from simulator_tk import VizApp
+except Exception:
+    IS_TK = False
+try:
+    from simulator_qt import simulate
+except Exception:
+    IS_QT = False
 
 class Message:
     """
@@ -213,18 +223,14 @@ class Network:
         """Runs algorithm on the Network"""
         algorithm(self)
 
-        
-    def draw(self, style='spectral', new_fig=True):
+    def get_vertex_coords(self, style):
         """
-        Draws the network
-
         @param style:
             - 'spectral' draws graph in a spectral graph layout
                 - http://www.math.ucsd.edu/~fan/research/cb/ch1.pdf
                 - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
             - 'circular' draws graph in a circular layout
         """
-        
         if style == 'spectral':
             n = len(self)
             L = self._laplacian()
@@ -242,42 +248,82 @@ class Network:
             vals = []
             for k in range(n):
                 vals.append( [math.cos(2*k*math.pi/n), math.sin(2*k*math.pi/n) ] )
+        return vals        
 
-        def line(v1, v2, color='k'):
-            self.ax.plot( (v1[0], v2[0]), (v1[1], v2[1]), color)
+    def get_edge_coords(self, vertex_coords):
+        edges = []
+        for i, p in enumerate(self):
+            for nbr in p.out_nbrs:
+                edges.append((vertex_coords[i], vertex_coords[self.index(nbr)]))
+        return edges
 
-        self.setup_canvas(new_fig=new_fig)
+    def draw(self, new_fig=True):
+        """
+        Draws the network
+        """
+        def setup(network):
+            network.setup_canvas(new_fig=new_fig)
 
-        #Simple Edges.
-        for i in range(n):
-            for nbr in self[i].out_nbrs:
-                line(vals[i], vals[self.index(nbr)])
+        def e_draw(network, edge, color=Color.black):
+            color = color.toTk()
+            start, end = edge
+            network.ax.plot( (start[0], end[0]), (start[1], end[1]), color)
+            
+        def v_draw(network, vertex, color=Color.black):
+            color = color.toTk()+'o'
+            x,y = vertex
+            network.ax.plot( [x], [y], color)
 
-        #Simple Vertices.
-        self.ax.plot( [v[0] for v in vals], [v[1] for v in vals], 'ko' )
+        self.general_draw(v_draw, e_draw, setup=setup)
 
-        #Algorithm Specific coloring.
+    def general_draw(self, v_draw, e_draw, setup=None, show=None, style='spectral'):
+        """
+        @param style:
+            - 'spectral' draws graph in a spectral graph layout
+                - http://www.math.ucsd.edu/~fan/research/cb/ch1.pdf
+                - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
+            - 'circular' draws graph in a circular layout
+        """
+        vertices = self.get_vertex_coords(style)
+        edges = self.get_edge_coords(vertices)
+
+        if setup is not None:
+            setup(self)
+
+        for edge in edges:
+            e_draw(self, edge)
+
+        for vertex in vertices:
+            v_draw(self, vertex)
+
         for alg in self.algs:
-            node_colors, edge_colors = alg.get_draw_args(self,vals)
-            if node_colors:
-                for p_UID,node_color in node_colors.iteritems():
-                    v = vals[self.index(self.uid2process[p_UID])]
-                    self.ax.plot( [v[0]], [v[1]], node_color)
+            node_colors, edge_colors = alg.get_draw_args(self)
 
             if edge_colors:
-                for (p_UID,parent_UID),edge_color in edge_colors.iteritems():
-                    v1 = vals[self.index(self.uid2process[p_UID])]
-                    v2 = vals[self.index(self.uid2process[parent_UID])]
-                    line(v1,v2, color=edge_color)
-            
-    def start_simulation(self, **params):
-        print "Simulation started on " + str(self)
-        self.setup_canvas()
-        self.restore_snapshot(0)
+                for (p_UID,parent_UID), edge_color in edge_colors.iteritems():
+                    v1 = vertices[self.index(self.uid2process[p_UID])]
+                    v2 = vertices[self.index(self.uid2process[parent_UID])]
+                    e_draw(self, (v1, v2), edge_color)
 
-        self.vizApp = VizApp(self)
-        self.vizApp.mainloop()
-        print "GUI is set up"
+            if node_colors:
+                for p_UID,node_color in node_colors.iteritems():
+                    v = vertices[self.index(self.uid2process[p_UID])]
+                    v_draw(self, v, node_color)
+
+        if show is not None:
+            show(self)
+
+    def start_simulation(self, Qt=IS_QT):
+        if Qt:
+            simulate(self)
+        elif IS_TK:
+            self.setup_canvas()
+            self.restore_snapshot(0)
+
+            self.vizApp = VizApp(self)
+            self.vizApp.mainloop()
+        else:
+            raise Exception("Neither Tk nor Qt is installed")
 
     def stop_simulation(self):
         try: 
@@ -290,17 +336,20 @@ class Network:
         print "GUI destroyed"
 
     def restore_snapshot(self, t):
-        if t<0 or t >= len(self._snapshots):
+        if t<0 or t >= self.count_snapshots():
             raise IndexError("No snapshot at time "+str(t))
         
-        for i in range(len(self)):
-            self[i].state = self._snapshots[t][i]
+        for i, p in enumerate(self):
+            p.state = self._snapshots[t][i]
 
     def get_snapshot(self):
         return [copy(process.state) for process in self]
         
     def save_snapshot(self):
         self._snapshots.append(self.get_snapshot())
+
+    def count_snapshots(self):
+        return len(self._snapshots)
 
     def state(self):
         """
