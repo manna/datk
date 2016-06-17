@@ -3,89 +3,85 @@ Algorithm step by step visualizer
 
 Tk based GUI. Used by Network.start_simulation
 """
-import matplotlib 
-matplotlib.use('TkAgg')
-#matplotlib.use('Agg')
-from matplotlib import pyplot as plt
-import Tkinter as tk
-import matplotlib.animation as animation
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-from matplotlib.backend_bases import key_press_handler
+from Tkinter import Tk, Scale, ALL, HORIZONTAL
+from colorizer import Color
 
-LARGE_FONT=('Verdana',12)
-class VizApp(tk.Tk):
-
+class Simulator(Tk):
     def __init__(self, network):
-        
-        tk.Tk.__init__(self)
-        #tk.Tk.iconbitmap(self, default="clienticon.ico")
-        tk.Tk.wm_title(self, "DATK Visualization")     
-        
-        self.frames = {}
-        
-        container = tk.Frame(self)
-        container.pack(side="top", fill="both", expand = False)
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
+        Tk.__init__(self)
+        self.title("DATK")
 
-        for F in (StartPage, GraphPage):
-            frame = F(container, self, network)
-            self.frames[F] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame(GraphPage)
-
-    def show_frame(self, cont):
-        frame = self.frames[cont]
-        frame.tkraise()
-        
-    def terminate(self):
-        self.quit()
-        self.destroy()
-        print "VizApp terminated"
-
-        
-class StartPage(tk.Frame):
-
-    def __init__(self, parent, controller,network):
-        tk.Frame.__init__(self,parent)
-        label = tk.Label(self, text="Start Page", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
-
-        button = tk.Button(self, text="Graph Page",
-                            command=lambda: controller.show_frame(GraphPage))
-        button.pack()
-        
-        
-class GraphPage(tk.Frame):
-
-    def __init__(self, parent, controller, network):
-        tk.Frame.__init__(self, parent)
         self.network = network
-        self.label = tk.Label(self, text="DATK simulation page!", font=LARGE_FONT)
-        self.button_home = tk.Button(self, text="Back to Home",
-                            command=lambda: controller.show_frame(StartPage))
-        self.n_steps = 100
-        if len(network._snapshots) > 0:
-            self.n_steps = len(network._snapshots)
-            
-        self.slider = tk.Scale(self, from_=0, to=self.n_steps-1, length=300,orient=tk.HORIZONTAL, command=self.updateValue)
+        self.n_steps = network.count_snapshots()
+        self.network.restore_snapshot(0)
+        self.canvas = Canvas(self, width=800, height=500)
+        self.canvas.draw(self.network)
+        self.canvas.pack()
 
-        self.label.pack(pady=10,padx=10)
-        self.button_home.pack()
-        self.slider.pack()
-
+        self.slider = Scale(self, from_=0, to=self.n_steps-1, length=300,
+            orient=HORIZONTAL, command=self.updateValue)
+        self.slider.pack(padx=10, pady=10)
+    
+    def updateValue(self, val):
+        self.network.restore_snapshot(val)
+        self.canvas.draw(self.network)
         
-        self.canvas = FigureCanvasTkAgg(network.fig, self)
-        self.ax = network.ax
-        #canvas.show()
-        self.canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=False)
-        
-        self.toolbar = NavigationToolbar2TkAgg(self.canvas, self)
-        self.toolbar.update()
-        self.canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+class Canvas(tk.Canvas):
+    def __init__(self, root, width=300, height=300):
+        tk.Canvas.__init__(self, root, width=width, height=height)
+        self.width = width
+        self.height = height
+        self.pack()
 
-    def updateValue(self, event):
-        self.network.restore_snapshot(self.slider.get())
-        self.network.draw(new_fig=False)
-        self.canvas.show()
+    def draw(self, network):
+
+        SCALE = 150
+
+        def scale(v):
+            x, y = v
+            x *= SCALE
+            y *= SCALE
+            x += self.width/2
+            y += self.height/2
+            return x, y
+
+        def v_draw(network, vertex, color=Color.black, radius=5):
+            x,y = scale(vertex)
+            color = color.toRealTk()
+            self.create_oval(
+                x-radius,
+                y-radius,
+                x+radius,
+                y+radius,
+                fill=color
+            )
+
+        def e_draw(network, edge, color=Color.black):
+            start, end = edge
+            start, end = scale(start), scale(end)
+            x1,y1 = start
+            x2,y2 = end
+            color = color.toRealTk()
+            self.create_line(x1, y1, x2, y2, fill=color)
+
+        self.delete(ALL)
+        network.general_draw(v_draw, e_draw)
+
+def simulate(network):
+    root = Simulator(network)
+    root.mainloop()
+
+def draw(network):
+    master = Tk()
+    master.title(str(len(network))+"-process "+network.__class__.__name__)
+    c = Canvas(master)
+    c.draw(network)
+    master.mainloop()
+
+if __name__=='__main__':
+    from networks import Bidirectional_Ring
+    from algs import LCR
+    
+    x = Bidirectional_Ring(5)
+    LCR(x)
+    simulate(x)

@@ -773,7 +773,7 @@ class SynchBellmanFord(Synchronous_Algorithm):
         self.set(p, 'send', False)
 
         SP = self.get(p, 'SP')
-        updated_SP = deepcopy(SP)
+        updated_SP = copy(SP)
         for msg in msgs:
             u = msg.author.UID
             for v, weight in msg.content.items():

@@ -1,34 +1,27 @@
 from PyQt4 import QtGui, QtCore
 from PyQt4.QtGui import (QMainWindow, QWidget, QApplication, QVBoxLayout,
-   QSlider, QHBoxLayout, QPushButton, QGraphicsLineItem, QGraphicsEllipseItem, 
-   QGraphicsScene, QGraphicsView, QBrush, QColor, QPen)
+     QSlider, QHBoxLayout, QPushButton, QGraphicsLineItem, QGraphicsScene, 
+     QGraphicsEllipseItem, QGraphicsView, QBrush, QColor, QPen)
 from PyQt4.QtCore import QPointF, Qt, SIGNAL
 from colorizer import Color
 
 class Canvas(QGraphicsView):
-   patterns = [Qt.BDiagPattern,
-      Qt.ConicalGradientPattern, Qt.CrossPattern, Qt.Dense1Pattern,
-      Qt.Dense2Pattern, Qt.Dense3Pattern, Qt.Dense4Pattern, Qt.Dense5Pattern,
-      Qt.Dense6Pattern, Qt.Dense7Pattern, Qt.DiagCrossPattern, Qt.FDiagPattern,
-      Qt.HorPattern, Qt.LinearGradientPattern, Qt.NoBrush,
-      Qt.RadialGradientPattern, Qt.SolidPattern, Qt.VerPattern]
+   patterns = [ Qt.BDiagPattern, Qt.ConicalGradientPattern, Qt.CrossPattern,
+      Qt.Dense1Pattern, Qt.Dense2Pattern, Qt.Dense3Pattern, Qt.Dense4Pattern,
+      Qt.Dense5Pattern, Qt.Dense6Pattern, Qt.Dense7Pattern, Qt.DiagCrossPattern,
+      Qt.FDiagPattern, Qt.HorPattern, Qt.LinearGradientPattern, Qt.NoBrush,
+      Qt.RadialGradientPattern, Qt.SolidPattern, Qt.VerPattern ]
 
    def __init__(self):
       super(Canvas, self).__init__()
    
    @staticmethod
    def setLineColor(qGraphicsItem, color):
-      """
-      @param color
-      """
       pen = QPen(QColor(color))
       qGraphicsItem.setPen(pen)
 
    @staticmethod
    def setFill(qGraphicsItem, color, style=Qt.SolidPattern):
-      """
-      @param color
-      """
       brush = QBrush(QColor(color), style=style)
       qGraphicsItem.setBrush(brush)
 
@@ -128,6 +121,7 @@ class Simulator(QMainWindow):
       self.network.restore_snapshot(self.network.count_snapshots()-1)
       self.deleteLater() 
 
+
 def simulate(network):
    import sys
 
@@ -142,14 +136,24 @@ def simulate(network):
       print "A pyqt application alraedy exists. Please close it first."
 
 
-if __name__ == '__main__':
+def draw(network):
    import sys
    app = QtGui.QApplication.instance()
    if not app:
       app = QtGui.QApplication(sys.argv)
       app.aboutToQuit.connect(app.deleteLater)
-      x = Canvas()
-      x.show()      
+
+      c = Canvas()
+      c.draw(network)
+      c.show()
+
       app.exec_()
 
-   # simulate(None)
+
+if __name__ == '__main__':
+   from networks import *
+   from algs import *
+   x = Bidirectional_Ring(6)
+   LCR(x)
+   
+   draw(x)

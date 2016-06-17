@@ -5,7 +5,7 @@ from time import sleep
 import pdb
 import collections
 from collections import defaultdict
-from copy import deepcopy,copy
+from copy import copy
 import numpy as np
 from scipy.linalg import eig
 import math
@@ -14,16 +14,6 @@ matplotlib.use('TkAgg')
 from matplotlib import pyplot as plt
 from colorizer import *
 from helpers import memoize
-
-IS_QT, IS_TK = True, True
-try:
-    from simulator_tk import VizApp
-except Exception:
-    IS_TK = False
-try:
-    from simulator_qt import simulate
-except Exception:
-    IS_QT = False
 
 class Message:
     """
@@ -203,16 +193,6 @@ class Network:
         self._snapshots = []
         self.save_snapshot()
 
-    def setup_canvas(self, new_fig=False):
-        if new_fig or self.fig is None or self.ax is None:
-            self.fig = plt.figure()
-            self.ax = self.fig.add_subplot(111)
-
-            self.ax.get_xaxis().set_visible(False)
-            self.ax.get_yaxis().set_visible(False)
-            return True
-        return False
-
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
         self.algs.append(algorithm)
@@ -257,6 +237,16 @@ class Network:
                 edges.append((vertex_coords[i], vertex_coords[self.index(nbr)]))
         return edges
 
+    def setup_canvas(self, new_fig=False):
+        if new_fig or self.fig is None or self.ax is None:
+            self.fig = plt.figure()
+            self.ax = self.fig.add_subplot(111)
+
+            self.ax.get_xaxis().set_visible(False)
+            self.ax.get_yaxis().set_visible(False)
+            return True
+        return False
+
     def draw(self, new_fig=True):
         """
         Draws the network
@@ -266,8 +256,8 @@ class Network:
 
         def e_draw(network, edge, color=Color.black):
             color = color.toTk()
-            start, end = edge
-            network.ax.plot( (start[0], end[0]), (start[1], end[1]), color)
+            (start_x, start_y), (end_x, end_y) = edge
+            network.ax.plot((start_x, end_x), (start_y, end_y), color)
             
         def v_draw(network, vertex, color=Color.black):
             color = color.toTk()+'o'
@@ -313,30 +303,20 @@ class Network:
         if show is not None:
             show(self)
 
-    def start_simulation(self, Qt=IS_QT):
-        if Qt:
-            simulate(self)
-        elif IS_TK:
-            self.setup_canvas()
-            self.restore_snapshot(0)
-
-            self.vizApp = VizApp(self)
-            self.vizApp.mainloop()
-        else:
-            raise Exception("Neither Tk nor Qt is installed")
-
-    def stop_simulation(self):
-        try: 
-            self.vizApp.terminate()
-        except TclError:
-            pass
-        finally:
-            self.vizApp = None
-            print 'here'
-        print "GUI destroyed"
+    def start_simulation(self):
+        try:
+            from simulator_qt import simulate
+        except Exception:
+            try:
+                from simulator_tk import simulate
+            except Exception:
+                raise Exception("You must install PyQt or Tkinter for this feature")
+        simulate(self)
 
     def restore_snapshot(self, t):
-        if t<0 or t >= self.count_snapshots():
+        try:
+            snapshot = self._snapshots[t]
+        except IndexError:
             raise IndexError("No snapshot at time "+str(t))
         
         for i, p in enumerate(self):
@@ -353,8 +333,8 @@ class Network:
 
     def state(self):
         """
-        (Text print get_state)
-        @return: A text representation of the state of all the Processes in the Network 
+        @return: A human-readable representation of the state of all the
+                 Processes in the Network 
         """
         return [(str(process), dict(process.state)) for process in self]
     
@@ -471,7 +451,7 @@ class Algorithm:
         @param params: [Optional] runtime parameters.
         @param name: [Optional] name of the Algorithm instance. Defaults to class name.
         """
-        self.params = deepcopy(Algorithm.DEFAULT_PARAMS)
+        self.params = copy(Algorithm.DEFAULT_PARAMS)
         self.params.update(params)
         self.message_count = 0
 
