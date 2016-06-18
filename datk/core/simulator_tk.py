@@ -47,7 +47,7 @@ class Canvas(tk.Canvas):
 
         def v_draw(network, vertex, color=Color.black, radius=5):
             x,y = scale(vertex)
-            color = color.toRealTk()
+            color = color.toTk()
             self.create_oval(
                 x-radius,
                 y-radius,
@@ -61,7 +61,7 @@ class Canvas(tk.Canvas):
             start, end = scale(start), scale(end)
             x1,y1 = start
             x2,y2 = end
-            color = color.toRealTk()
+            color = color.toTk()
             self.create_line(x1, y1, x2, y2, fill=color)
 
         self.delete(ALL)

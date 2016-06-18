@@ -29,12 +29,12 @@ class Canvas():
             self.setup_fig()
 
         def e_draw(network, edge, color=Color.black):
-            color = color.toTk()
+            color = color.toMpl()
             start, end = edge
             self.ax.plot( (start[0], end[0]), (start[1], end[1]), color)
             
         def v_draw(network, vertex, color=Color.black):
-            color = color.toTk()+'o'
+            color = color.toMpl()+'o'
             x,y = vertex
             self.ax.plot( [x], [y], color)
 

@@ -255,12 +255,12 @@ class Network:
             network.setup_canvas(new_fig=new_fig)
 
         def e_draw(network, edge, color=Color.black):
-            color = color.toTk()
+            color = color.toMpl()
             (start_x, start_y), (end_x, end_y) = edge
             network.ax.plot((start_x, end_x), (start_y, end_y), color)
             
         def v_draw(network, vertex, color=Color.black):
-            color = color.toTk()+'o'
+            color = color.toMpl()+'o'
             x,y = vertex
             network.ax.plot( [x], [y], color)
 

@@ -11,17 +11,17 @@ class Color(Enum):
     def toQt(self):
         return self.value
 
-    def toTk(self):
-        tk = {
+    def toMpl(self):
+        mpl = {
             'red': 'r',
             'blue': 'b',
             'green': 'g',
             'black': 'k',
             'yellow': 'y'
         }
-        return tk[self.value]
+        return mpl[self.value]
 
-    def toRealTk(self):
+    def toTk(self):
         return self.value
 
 def Colorizer(algorithm, network, algorithm_type):
