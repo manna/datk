@@ -24,6 +24,7 @@ class Color(Enum):
     def toTk(self):
         return self.value
 
+
 def Colorizer(algorithm, network, algorithm_type):
     """
     algorithm_type can have following values thus far:

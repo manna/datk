@@ -3,6 +3,7 @@ Algorithm step by step visualizer
 
 Tk based GUI. Used by Network.start_simulation
 """
+import Tkinter as tk
 from Tkinter import Tk, Scale, ALL, HORIZONTAL
 from colorizer import Color
 
@@ -23,7 +24,7 @@ class Simulator(Tk):
         self.slider.pack(padx=10, pady=10)
     
     def updateValue(self, val):
-        self.network.restore_snapshot(val)
+        self.network.restore_snapshot(int(val))
         self.canvas.draw(self.network)
         
 class Canvas(tk.Canvas):
@@ -45,7 +46,7 @@ class Canvas(tk.Canvas):
             y += self.height/2
             return x, y
 
-        def v_draw(network, vertex, color=Color.black, radius=5):
+        def v_draw(vertex, color=Color.black, radius=5):
             x,y = scale(vertex)
             color = color.toTk()
             self.create_oval(
@@ -56,7 +57,7 @@ class Canvas(tk.Canvas):
                 fill=color
             )
 
-        def e_draw(network, edge, color=Color.black):
+        def e_draw(edge, color=Color.black):
             start, end = edge
             start, end = scale(start), scale(end)
             x1,y1 = start

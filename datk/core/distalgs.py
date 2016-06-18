@@ -177,8 +177,6 @@ class Network:
         """
         self.algs = []
 
-        self.ax, self.fig = None, None
-
         if index_to_UID is not None:
             self.processes = [Process(index_to_UID(i)) for i in range(n)]
         else:
@@ -235,34 +233,27 @@ class Network:
         for i, p in enumerate(self):
             for nbr in p.out_nbrs:
                 edges.append((vertex_coords[i], vertex_coords[self.index(nbr)]))
-        return edges
+        return edges        
 
-    def setup_canvas(self, new_fig=False):
-        if new_fig or self.fig is None or self.ax is None:
-            self.fig = plt.figure()
-            self.ax = self.fig.add_subplot(111)
-
-            self.ax.get_xaxis().set_visible(False)
-            self.ax.get_yaxis().set_visible(False)
-            return True
-        return False
-
-    def draw(self, new_fig=True):
+    def draw(self):
         """
         Draws the network
         """
-        def setup(network):
-            network.setup_canvas(new_fig=new_fig)
+        def setup():
+            self.fig = plt.figure()
+            self.ax = self.fig.add_subplot(111)
+            self.ax.get_xaxis().set_visible(False)
+            self.ax.get_yaxis().set_visible(False)
 
-        def e_draw(network, edge, color=Color.black):
+        def e_draw(edge, color=Color.black):
             color = color.toMpl()
-            (start_x, start_y), (end_x, end_y) = edge
-            network.ax.plot((start_x, end_x), (start_y, end_y), color)
+            x_vals, y_vals = zip(*edge)
+            self.ax.plot(x_vals, y_vals, color)
             
-        def v_draw(network, vertex, color=Color.black):
+        def v_draw(vertex, color=Color.black):
             color = color.toMpl()+'o'
-            x,y = vertex
-            network.ax.plot( [x], [y], color)
+            x, y = vertex
+            self.ax.plot( [x], [y], color)
 
         self.general_draw(v_draw, e_draw, setup=setup)
 
@@ -278,13 +269,13 @@ class Network:
         edges = self.get_edge_coords(vertices)
 
         if setup is not None:
-            setup(self)
+            setup()
 
         for edge in edges:
-            e_draw(self, edge)
+            e_draw(edge)
 
         for vertex in vertices:
-            v_draw(self, vertex)
+            v_draw(vertex)
 
         for alg in self.algs:
             node_colors, edge_colors = alg.get_draw_args(self)
@@ -293,15 +284,15 @@ class Network:
                 for (p_UID,parent_UID), edge_color in edge_colors.iteritems():
                     v1 = vertices[self.index(self.uid2process[p_UID])]
                     v2 = vertices[self.index(self.uid2process[parent_UID])]
-                    e_draw(self, (v1, v2), edge_color)
+                    e_draw((v1, v2), edge_color)
 
             if node_colors:
                 for p_UID,node_color in node_colors.iteritems():
                     v = vertices[self.index(self.uid2process[p_UID])]
-                    v_draw(self, v, node_color)
+                    v_draw(v, node_color)
 
         if show is not None:
-            show(self)
+            show()
 
     def start_simulation(self):
         try:

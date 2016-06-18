@@ -32,9 +32,11 @@ class Canvas(QGraphicsView):
       scene.addItem(item)
 
    @staticmethod
-   def point(scene, x, y, color='black', fill='black', diam=5):
+   def point(scene, x, y, color='black', fill='black', diam=5, toolTip=None):
       item = QGraphicsEllipseItem(x-diam/2, y-diam/2, diam, diam)
       Canvas.setFill(item, fill)
+      if toolTip:
+         item.setToolTip(toolTip)
       scene.addItem(item)
 
    def draw(self, network):
@@ -42,12 +44,12 @@ class Canvas(QGraphicsView):
 
       SCALE = 150 #TODO set scale intelligently
 
-      def v_draw(network, vertex, color=Color.black):
+      def v_draw(vertex, color=Color.black):
          x, y = vertex
          color = color.toQt()
-         Canvas.point(scene, x*SCALE, y*SCALE, color=color, fill=color)
+         Canvas.point(scene, x*SCALE, y*SCALE, color=color, fill=color, toolTip="Tool tip yay")
 
-      def e_draw(network, edge, color=Color.black):
+      def e_draw(edge, color=Color.black):
          start, end = edge
          color = color.toQt()
          x1,y1 = start
@@ -156,4 +158,4 @@ if __name__ == '__main__':
    x = Bidirectional_Ring(6)
    LCR(x)
    
-   draw(x)
+   simulate(x)
