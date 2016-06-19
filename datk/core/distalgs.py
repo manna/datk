@@ -250,7 +250,7 @@ class Network:
             x_vals, y_vals = zip(*edge)
             self.ax.plot(x_vals, y_vals, color)
             
-        def v_draw(vertex, color=Color.black):
+        def v_draw(vertex, process, color=Color.black):
             color = color.toMpl()+'o'
             x, y = vertex
             self.ax.plot( [x], [y], color)
@@ -274,22 +274,23 @@ class Network:
         for edge in edges:
             e_draw(edge)
 
-        for vertex in vertices:
-            v_draw(vertex)
+        for vertex, process in zip(vertices, self):
+            v_draw(vertex, process)
 
         for alg in self.algs:
             node_colors, edge_colors = alg.get_draw_args(self)
 
             if edge_colors:
-                for (p_UID,parent_UID), edge_color in edge_colors.iteritems():
+                for (p_UID, parent_UID), edge_color in edge_colors.iteritems():
                     v1 = vertices[self.index(self.uid2process[p_UID])]
                     v2 = vertices[self.index(self.uid2process[parent_UID])]
-                    e_draw((v1, v2), edge_color)
+                    e_draw((v1, v2), color=edge_color)
 
             if node_colors:
                 for p_UID,node_color in node_colors.iteritems():
-                    v = vertices[self.index(self.uid2process[p_UID])]
-                    v_draw(v, node_color)
+                    p = self.uid2process[p_UID]
+                    v = vertices[self.index(p)]
+                    v_draw(v, process, color=node_color)
 
         if show is not None:
             show()

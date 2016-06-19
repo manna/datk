@@ -46,7 +46,7 @@ class Canvas(tk.Canvas):
             y += self.height/2
             return x, y
 
-        def v_draw(vertex, color=Color.black, radius=5):
+        def v_draw(vertex, process, color=Color.black, radius=5):
             x,y = scale(vertex)
             color = color.toTk()
             self.create_oval(

@@ -44,7 +44,7 @@ class Canvas(QGraphicsView):
 
       SCALE = 150 #TODO set scale intelligently
 
-      def v_draw(vertex, color=Color.black):
+      def v_draw(vertex, process, color=Color.black):
          x, y = vertex
          color = color.toQt()
          Canvas.point(scene, x*SCALE, y*SCALE, color=color, fill=color, toolTip="Tool tip yay")

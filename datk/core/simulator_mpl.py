@@ -33,7 +33,7 @@ class Canvas():
             start, end = edge
             self.ax.plot( (start[0], end[0]), (start[1], end[1]), color)
             
-        def v_draw(vertex, color=Color.black):
+        def v_draw(vertex, process, color=Color.black):
             color = color.toMpl()+'o'
             x,y = vertex
             self.ax.plot( [x], [y], color)
