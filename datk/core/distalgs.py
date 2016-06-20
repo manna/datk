@@ -290,7 +290,7 @@ class Network:
                 for p_UID,node_color in node_colors.iteritems():
                     p = self.uid2process[p_UID]
                     v = vertices[self.index(p)]
-                    v_draw(v, process, color=node_color)
+                    v_draw(v, p, color=node_color)
 
         if show is not None:
             show()
@@ -547,6 +547,9 @@ class Algorithm:
         @param val: The value to assign to it
         """
         process.output(key, val, self.params['verbosity'] >= Algorithm.DEFAULT)
+
+    def __repr__(self):
+        return self.name
 
 
 class Synchronous_Algorithm(Algorithm):

@@ -4,6 +4,8 @@ from PyQt4.QtGui import (QMainWindow, QWidget, QApplication, QVBoxLayout,
      QGraphicsEllipseItem, QGraphicsView, QBrush, QColor, QPen)
 from PyQt4.QtCore import QPointF, Qt, SIGNAL
 from colorizer import Color
+from distalgs import Algorithm
+
 
 class Canvas(QGraphicsView):
    patterns = [ Qt.BDiagPattern, Qt.ConicalGradientPattern, Qt.CrossPattern,
@@ -14,27 +16,28 @@ class Canvas(QGraphicsView):
 
    def __init__(self):
       super(Canvas, self).__init__()
+      app = QtGui.QApplication.instance()
+
+      app.setStyleSheet("""
+      QToolTip {
+       padding: 5px;
+       border-radius: 3px;
+      }
+      """)
    
    @staticmethod
-   def setLineColor(qGraphicsItem, color):
-      pen = QPen(QColor(color))
-      qGraphicsItem.setPen(pen)
-
-   @staticmethod
-   def setFill(qGraphicsItem, color, style=Qt.SolidPattern):
-      brush = QBrush(QColor(color), style=style)
-      qGraphicsItem.setBrush(brush)
-
-   @staticmethod
-   def line(scene, x1, y1, x2, y2, color="blue"):
+   def line(scene, x1, y1, x2, y2, color="blue", width=5):
       item = QGraphicsLineItem(x1, y1, x2, y2)
-      Canvas.setLineColor(item, color)
+      pen = QPen(QColor(color))
+      pen.setWidth(width)
+      item.setPen(pen)
       scene.addItem(item)
 
    @staticmethod
-   def point(scene, x, y, color='black', fill='black', diam=5, toolTip=None):
+   def point(scene, x, y, color='black', fill='black', diam=10, toolTip=None):
       item = QGraphicsEllipseItem(x-diam/2, y-diam/2, diam, diam)
-      Canvas.setFill(item, fill)
+      brush = QBrush(QColor(color), style=Qt.SolidPattern)
+      item.setBrush(brush)
       if toolTip:
          item.setToolTip(toolTip)
       scene.addItem(item)
@@ -47,7 +50,27 @@ class Canvas(QGraphicsView):
       def v_draw(vertex, process, color=Color.black):
          x, y = vertex
          color = color.toQt()
-         Canvas.point(scene, x*SCALE, y*SCALE, color=color, fill=color, toolTip="Tool tip yay")
+
+         tr = lambda col1,col2:'<tr><td>'+str(col1)+'</td><td>'+str(col2)+'</td></tr>'
+         table_open = '<table border="1" cellspacing="0" cellpadding="5" style="border-color:black; border-style:solid; padding:0;">'
+         table_close = '</table>'
+
+         toolTip = '<b>' + str(process) + ':</b>'
+         toolTip+=table_open
+         for key, val in process.state.items():
+            if not isinstance(key, Algorithm):
+               toolTip+=tr(key, val)
+         toolTip+=table_close
+
+         for key, val in process.state.items():
+            if isinstance(key, Algorithm):
+               toolTip+='<p><i>'+str(key)+'</i></p>'
+               toolTip+=table_open
+               for k, v in val.items():
+                  toolTip+=tr(k, v)
+               toolTip+=table_close
+
+         Canvas.point(scene, x*SCALE, y*SCALE, color=color, fill=color, toolTip=toolTip)
 
       def e_draw(edge, color=Color.black):
          start, end = edge
@@ -155,7 +178,7 @@ def draw(network):
 if __name__ == '__main__':
    from networks import *
    from algs import *
-   x = Bidirectional_Ring(6)
+   x = Bidirectional_Ring(12)
    LCR(x)
-   
+   SynchBFS(x)
    simulate(x)
