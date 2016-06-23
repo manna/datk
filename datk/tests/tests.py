@@ -43,9 +43,8 @@ def configure_ipython():
 configure_ipython()
 
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
-tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = True)
+tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = False)
 test=tester.test
-
 
 @test
 def test_LCR_UNI_RING():
@@ -272,7 +271,7 @@ def test_network_snapshots():
     snap_0 = x.get_snapshot()
     lcr = LCR(x)
     snap_1 = x.get_snapshot()
-    assert len(x._snapshots) == lcr.r+1, "Algorithm doesn't append 1 snapshot per round"
+    assert len(x._snapshots) == lcr.r+2, "Algorithm doesn't append 1 snapshot per round"
     assert snap_0 != snap_1, "Current snapshot unchanged after algo"
 
     snapshots_before_restore = x._snapshots[:]
@@ -350,5 +349,5 @@ def test_SYNCH_LUBY_MIS():
     x = Random_Line_Network(10)
     SynchLubyMIS(x)
     assertLubyMIS(x)
-
+    
 tester.summarize()

@@ -17,7 +17,6 @@ class Canvas(QGraphicsView):
    def __init__(self):
       super(Canvas, self).__init__()
       app = QtGui.QApplication.instance()
-
       app.setStyleSheet("""
       QToolTip {
        padding: 5px;
@@ -44,8 +43,7 @@ class Canvas(QGraphicsView):
 
    def draw(self, network):
       scene = QGraphicsScene(self)
-
-      SCALE = 150 #TODO set scale intelligently
+      SCALE = min(self.size().width(), self.size().height())
 
       def v_draw(vertex, process, color=Color.black):
          x, y = vertex
@@ -86,7 +84,7 @@ class Canvas(QGraphicsView):
 
 class Simulator(QMainWindow):
 
-   def __init__(self, network=None):
+   def __init__(self, network):
       super(Simulator, self).__init__()
       x, y, w, h = 100, 100, 800, 500
       self.setGeometry(x, y, w, h)
@@ -143,7 +141,7 @@ class Simulator(QMainWindow):
          self.slider.setValue(v+1)
 
    def closeEvent(self, event): 
-      self.network.restore_snapshot(self.network.count_snapshots()-1)
+      self.network.restore_snapshot(-1)
       self.deleteLater() 
 
 
@@ -154,7 +152,7 @@ def simulate(network):
    if not app:
       app = QtGui.QApplication(sys.argv)
       app.aboutToQuit.connect(app.deleteLater)
-      form = Simulator(network=network)
+      form = Simulator(network)
       form.show()
       app.exec_()
    else:
@@ -178,7 +176,7 @@ def draw(network):
 if __name__ == '__main__':
    from networks import *
    from algs import *
-   x = Bidirectional_Ring(12)
+   x = Bidirectional_Ring(20)
    LCR(x)
    SynchBFS(x)
    simulate(x)

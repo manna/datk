@@ -26,7 +26,11 @@ class Simulator(Tk):
     def updateValue(self, val):
         self.network.restore_snapshot(int(val))
         self.canvas.draw(self.network)
-        
+    
+    def destroy(self):
+        self.network.restore_snapshot(-1)
+        Tk.destroy(self)
+
 class Canvas(tk.Canvas):
     def __init__(self, root, width=300, height=300):
         tk.Canvas.__init__(self, root, width=width, height=height)
@@ -72,12 +76,15 @@ def simulate(network):
     root = Simulator(network)
     root.mainloop()
 
+
 def draw(network):
     master = Tk()
     master.title(str(len(network))+"-process "+network.__class__.__name__)
     c = Canvas(master)
     c.draw(network)
     master.mainloop()
+    import datetime
+    print "Hi", datetime.datetime.now()
 
 if __name__=='__main__':
     from networks import Bidirectional_Ring
@@ -85,4 +92,6 @@ if __name__=='__main__':
     
     x = Bidirectional_Ring(5)
     LCR(x)
+    print x.state()
     simulate(x)
+    print x.state()

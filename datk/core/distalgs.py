@@ -328,7 +328,7 @@ class Network:
         @return: A human-readable representation of the state of all the
                  Processes in the Network 
         """
-        return [(str(process), dict(process.state)) for process in self]
+        return [str(process)+" => "+str(dict(process.state)) for process in self]
     
     # @memoize
     def adjacency_matrix(self):
@@ -510,6 +510,7 @@ class Algorithm:
             self.cleanup()
             if self.params['verbosity'] >= Algorithm.QUIET:
                 self.print_algorithm_terminated()
+            self.network.save_snapshot()
 
     def print_algorithm_terminated(self):
         print self.name+" Terminated"

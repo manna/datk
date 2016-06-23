@@ -30,7 +30,7 @@ install:
 # Run test
 script:
     - nosetests --with-cov datk.tests.tests --logging-level=INFO
-
+    - nosetests --with-cov datk.tests.import_tests --logging-level=INFO
 # Calculate coverage
 after_success:
   - coveralls
