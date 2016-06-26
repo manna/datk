@@ -81,13 +81,6 @@ class Process:
             else: 
                 print str(self)+"."+str(key),"is", val
 
-    def send_to_all_neighbors(self, msg):
-        """Sends a message to all out_nbrs
-
-        @param msg: the message to send
-        """
-        self.send_msg(msg)
-
     def send_msg(self, msg, out_nbrs=None):
         """
         Sends a Message from Process to some subset of out_nbrs

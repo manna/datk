@@ -161,17 +161,17 @@ def simulate(network):
 
 def draw(network):
    import sys
+
    app = QtGui.QApplication.instance()
    if not app:
       app = QtGui.QApplication(sys.argv)
       app.aboutToQuit.connect(app.deleteLater)
-
       c = Canvas()
       c.draw(network)
       c.show()
-
       app.exec_()
-
+   else:
+      print "A pyqt application alraedy exists. Please close it first."
 
 if __name__ == '__main__':
    from networks import *
@@ -179,4 +179,4 @@ if __name__ == '__main__':
    x = Bidirectional_Ring(20)
    LCR(x)
    SynchBFS(x)
-   simulate(x)
+   draw(x)

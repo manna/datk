@@ -2,6 +2,7 @@
 Helper functions for tests in tests.py
 """
 from datk.core.distalgs import Process
+from datk.core.networks import Random_Line_Network
 
 def assertLeaderElection(
     network,
@@ -58,3 +59,10 @@ def assertLubyMIS(network):
             assert not any([nbr.state['MIS'] for nbr in process.out_nbrs]), 'MIS not independent'
         if process.state['MIS'] == False:
             assert any([nbr.state['MIS'] for nbr in process.out_nbrs]), 'MIS not maximal'
+
+def Artificial_LE_Network(n):
+    x = Random_Line_Network(n)
+    for p in x:
+        if p.UID == n-1:
+            p.state['status'] = 'leader'
+    return x

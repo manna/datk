@@ -22,26 +22,6 @@ $ cd ../..
 $ python -m datk.tests.tests """)
 from helpers import *
 
-def configure_ipython():
-  """
-  Convenient helper function to determine if environment is IPython.
-
-  Sets matplotlib inline, if indeed in IPython
-  Note that drawing is only safe in IPython qtconsole with matplotlib inline
-  
-  @return: True iff environment is IPython
-  """
-  try:
-    __IPYTHON__
-    ip = get_ipython()
-    ip.magic("%matplotlib inline") 
-  except NameError:
-    return False
-  else:
-    return True
-
-configure_ipython()
-
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
 tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = False)
 test=tester.test
@@ -266,17 +246,41 @@ def test_send_receive_msgs():
 def test_network_snapshots():
     x = Unidirectional_Ring(5)
 
-    assert len(x._snapshots) == 1, "Network initial snapshot not saved"
+    assert x.count_snapshots() == 1, "Network initial snapshot not saved"
 
     snap_0 = x.get_snapshot()
     lcr = LCR(x)
     snap_1 = x.get_snapshot()
-    assert len(x._snapshots) == lcr.r+2, "Algorithm doesn't append 1 snapshot per round"
+    assert x.count_snapshots() == lcr.r+2, "Algorithm doesn't append 1 snapshot per round"
     assert snap_0 != snap_1, "Current snapshot unchanged after algo"
 
     snapshots_before_restore = x._snapshots[:]
     x.restore_snapshot(0)
     assert snapshots_before_restore == x._snapshots, "restore_snapshots modified self.snapshots"
+
+@test
+def test_network_adjacency():
+    n = Random_Line_Network(10)
+    A_n = n.adjacency_matrix()
+    for i in range(len(n)):
+        for j in range(i+1, len(n)):
+            assert A_n[i][j] == (n[j] in n[i].out_nbrs + n[i].in_nbrs), "Incorrect Adjacency matrix"
+            assert A_n[i][j] == n.adjacent(i, j), "Network.adjacent failed"
+
+@test
+def test_network_degrees():
+    for d in Unidirectional_Ring(10).degrees():
+        assert d == 2
+    for d in Bidirectional_Ring(10).degrees():
+        assert d == 2
+
+
+@test
+def test_network_degree():
+    x = Unidirectional_Ring(10)
+    for i, p in enumerate(x):
+        assert x.degree(p) == 2
+        assert x.degree(i) == 2
 
 @test
 def test_SYNCH_DO_NOTHING():
