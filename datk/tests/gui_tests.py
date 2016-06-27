@@ -1,5 +1,5 @@
-import matplotlib 
-matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+plt.switch_backend('Agg')
 
 try:
     from datk.core.distalgs import *
