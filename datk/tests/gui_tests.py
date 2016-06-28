@@ -14,7 +14,7 @@ $ cd ../..
 $ python -m datk.tests.gui_tests """)
 
 from helpers import Artificial_LE_Network
-from mock import patch
+# from mock import patch
 
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
 
