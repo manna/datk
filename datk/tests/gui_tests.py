@@ -39,20 +39,25 @@ def test_BFS_network_draw():
     x.draw()
 
 def test_network_draw_qt():
-    from datk.core.simulator_qt import draw
+    x = Unidirectional_Ring(6)
+    LCR(x)
+
+    from datk.core.simulator_qt import Canvas
     from PyQt4.QtGui import QApplication
-    with patch.object(QApplication, 'exec_', return_value=0):
-        x = Unidirectional_Ring(6)
-        LCR(x)
-        draw(x)
+
+    app = QApplication([])
+    c = Canvas()
+    c.draw(x)
 
 def test_network_simulate_qt():
-    from datk.core.simulator_qt import simulate
+    x = Unidirectional_Ring(6)
+    LCR(x)
+
+    from datk.core.simulator_qt import Simulator
     from PyQt4.QtGui import QApplication
-    with patch.object(QApplication, 'exec_', return_value=0):
-        x = Unidirectional_Ring(6)
-        LCR(x)
-        simulate(x)
+
+    app = QApplication([])
+    c = Simulator(x)
         
 #TODO figure out how to correctly mock Tkinter
 # def test_network_draw_tk():

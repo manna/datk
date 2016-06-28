@@ -146,11 +146,9 @@ class Simulator(QMainWindow):
 
 
 def simulate(network):
-   import sys
-
-   app = QtGui.QApplication.instance() # checks if QApplication already exists 
+   app = QApplication.instance() # checks if QApplication already exists 
    if not app:
-      app = QtGui.QApplication(sys.argv)
+      app = QApplication([])
       app.aboutToQuit.connect(app.deleteLater)
       form = Simulator(network)
       form.show()
@@ -160,11 +158,9 @@ def simulate(network):
 
 
 def draw(network):
-   import sys
-
-   app = QtGui.QApplication.instance()
+   app = QApplication.instance()
    if not app:
-      app = QtGui.QApplication(sys.argv)
+      app = QApplication([])
       app.aboutToQuit.connect(app.deleteLater)
       c = Canvas()
       c.draw(network)
