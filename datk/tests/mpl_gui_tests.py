@@ -13,7 +13,7 @@ To run tests, execute the following commands:
 $ cd ../..
 $ python -m datk.tests.gui_tests """)
 
-from helpers import Artificial_LE_Network
+from helpers import Artificial_LE_Network, assertLeaderElection
 
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
 
@@ -36,3 +36,7 @@ def test_BFS_network_draw():
     assert node_colors is None
     assert edge_colors is not None
     x.draw()
+
+def test_benchmark_LCR_Unidirectional_Ring():
+    from datk.core.tester import benchmark
+    benchmark(LCR, Unidirectional_Ring, assertLeaderElection)
