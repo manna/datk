@@ -36,7 +36,9 @@ before_script:
 script:
     - nosetests --with-cov datk.tests.tests --logging-level=INFO
     - nosetests --with-cov datk.tests.import_tests --logging-level=INFO
-    - nosetests --with-cov datk.tests.gui_tests --logging-level=INFO
+    - nosetests --with-cov datk.tests.mpl_gui_tests --logging-level=INFO
+    - nosetests --with-cov datk.tests.qt_gui_tests --logging-level=INFO
+    - nosetests --with-cov datk.tests.tk_gui_tests --logging-level=INFO
 
 # Calculate coverage
 after_success:
