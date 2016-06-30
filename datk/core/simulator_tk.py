@@ -129,11 +129,3 @@ def draw(network):
     c = Canvas(master)
     c.draw(network)
     master.mainloop()
-
-if __name__=='__main__':
-    from networks import Bidirectional_Ring
-    from algs import LCR, SynchBFS
-    
-    x = Bidirectional_Ring(5)
-    LCR(x)
-    simulate(x)

@@ -168,11 +168,3 @@ def draw(network):
       app.exec_()
    else:
       print "A pyqt application alraedy exists. Please close it first."
-
-if __name__ == '__main__':
-   from networks import *
-   from algs import *
-   x = Bidirectional_Ring(20)
-   LCR(x)
-   SynchBFS(x)
-   draw(x)

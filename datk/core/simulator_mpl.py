@@ -1,5 +1,3 @@
-#WORK IN PROGRESS
-
 import matplotlib 
 from matplotlib import pyplot as plt
 from colorizer import Color
@@ -43,12 +41,5 @@ class Canvas():
 
         self.network.general_draw(v_draw, e_draw, setup=setup, show=show)
 
-
-if __name__ == '__main__':
-    from networks import Bidirectional_Ring
-    from algs import LCR
-    
-    x = Bidirectional_Ring(5)
-    LCR(x)
-
-    Canvas(x)
+def draw(network):
+    Canvas(network)
