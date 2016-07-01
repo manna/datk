@@ -1,7 +1,7 @@
 # DATK: Distributed Algorithms Toolkit for Python
 
-[![Build Status](https://travis-ci.org/amin10/datk.svg?branch=qt_simulator)](https://travis-ci.org/amin10/datk)
-[![Coverage Status](https://coveralls.io/repos/github/amin10/datk/badge.svg?branch=qt_simulator)](https://coveralls.io/github/amin10/datk?branch=qt_simulator)
+[![Build Status](https://travis-ci.org/amin10/datk.svg?branch=master)](https://travis-ci.org/amin10/datk)
+[![Coverage Status](https://coveralls.io/repos/github/amin10/datk/badge.svg?branch=master)](https://coveralls.io/github/amin10/datk?branch=master)
 
 ## Documentation
 
