@@ -1,6 +1,6 @@
-from datk.core.distalgs import *
-from datk.core.networks import *
-from datk.core.algs import *
+from datk.core.distalgs import Algorithm
+from datk.core.networks import Unidirectional_Ring
+from datk.core.algs import LCR
 
 from helpers import Artificial_LE_Network
 from mock import patch
