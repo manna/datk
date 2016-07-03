@@ -44,7 +44,6 @@ class LCR(Synchronous_Algorithm):
                 self.set(p, "send",  None)
         if self.r == p.state['n']: p.terminate(self)
 
-
     def get_draw_args(self,network):
         algorithm_type = "leader_election"
         return Colorizer(self,network,algorithm_type)

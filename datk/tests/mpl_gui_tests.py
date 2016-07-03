@@ -1,10 +1,17 @@
 import matplotlib.pyplot as plt
 plt.switch_backend('Agg')
 
+from datk.core.distalgs import Do_Nothing
 from datk.core.networks import Unidirectional_Ring, Bidirectional_Ring
 from datk.core.algs import LCR, SynchBFS
 
 from helpers import Artificial_LE_Network, assertLeaderElection
+
+def test_no_draw_args_alg_network_draw():
+    x = Bidirectional_Ring(8)
+    A = Do_Nothing(x)
+    assert not hasattr(A, 'get_draw_args')
+    x.draw()
 
 def test_LE_network_draw():
     x = Bidirectional_Ring(8)

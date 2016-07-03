@@ -277,7 +277,10 @@ class Network:
             v_draw(vertex, process)
 
         for alg in self.algs:
-            node_colors, edge_colors = alg.get_draw_args(self)
+            try:
+                node_colors, edge_colors = alg.get_draw_args(self)
+            except AttributeError:
+                continue # this alg has no alg-specific drawing arguments
 
             if edge_colors:
                 for (p_UID, parent_UID), edge_color in edge_colors.iteritems():
