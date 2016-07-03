@@ -35,7 +35,7 @@ before_script:
 # Run test
 script:
     - nosetests --with-cov datk.tests.tests --logging-level=INFO
-    - nosetests --with-cov datk.tests.import_tests --logging-level=INFO
+    - nosetests --with-cov datk.tests.networks_tests --logging-level=INFO
     - nosetests --with-cov datk.tests.mpl_gui_tests --logging-level=INFO
     - nosetests --with-cov datk.tests.qt_gui_tests --logging-level=INFO
     - nosetests --with-cov datk.tests.tk_gui_tests --logging-level=INFO

@@ -3,53 +3,28 @@ Network Test Suite
 
 Tests Netwoks defined in networks.py by visual inspection
 """
+import matplotlib.pyplot as plt
+plt.switch_backend('Agg')
 
-try:
-    from datk.core.networks import *
-    from datk.core.tester import Tester
-except ImportError:
-    raise ImportError(
-""" Imports failed\n
-To run tests, execute the following commands:
-$ cd ../..
-$ python -m datk.tests.networks_tests """)
+from datk.core.networks import *
 
-try:
-    __IPYTHON__
-    ip = get_ipython()
-    ip.magic("%matplotlib inline") 
-except NameError:
-    pass
-
-tester = Tester(DEFAULT_TIMEOUT = 10, TEST_BY_DEFAULT = True, MAIN_THREAD_BY_DEFAULT = True)
-test=tester.test
-
-@test
-def DRAW_RANDOM():
+def test_draw_random():
     Random_Line_Network(25).draw()
 
-@test
-def DRAW_HUGE_RANDOM():
-    Random_Line_Network(100, sparsity=0.2).draw()
+# def test_draw_huge_random():
+#     Random_Line_Network(100, sparsity=0.2).draw()
 
-@test
-def DRAW_UNI_RING():
+def test_draw_uni_ring():
     Unidirectional_Ring(4).draw()
 
-@test
-def DRAW_BI_RING():
+def test_draw_bi_ring():
     Bidirectional_Ring(7).draw()
 
-@test
-def DRAW_COMPLETE_GRAPH():
+def test_draw_complete_graph():
     Complete_Graph(10).draw()
 
-@test
-def DRAW_UNI_LINE():
+def test_draw_uni_line():
     Unidirectional_Line(4).draw()
 
-@test
-def DRAW_BI_LINE():
+def test_draw_bi_line():
     Bidirectional_Line(5).draw()
-
-tester.summarize()

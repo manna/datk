@@ -184,6 +184,8 @@ class Network:
         self._snapshots = []
         self.save_snapshot()
 
+        self.arrange_nodes='spectral'
+
     def add(self, algorithm):
         """Awakens all Processes in the Network with respect to algorithm"""
         self.algs.append(algorithm)
@@ -194,15 +196,18 @@ class Network:
         """Runs algorithm on the Network"""
         algorithm(self)
 
-    def get_vertex_coords(self, style):
+    def get_vertex_coords(self, arrange_nodes=None):
         """
-        @param style:
+        @param arrange_nodes:
             - 'spectral' draws graph in a spectral graph layout
                 - http://www.math.ucsd.edu/~fan/research/cb/ch1.pdf
                 - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
             - 'circular' draws graph in a circular layout
+            - default None uses self.arrange_nodes
         """
-        if style == 'spectral':
+        if arrange_nodes is None:
+            arrange_nodes = self.arrange_nodes
+        if arrange_nodes == 'spectral':
             n = len(self)
             L = self._laplacian()
             D = np.diag(self.degrees())
@@ -214,7 +219,7 @@ class Network:
             x_vals, y_vals = v[1], v[2]
             vals = zip(x_vals, y_vals)
 
-        if style == 'circular':
+        if arrange_nodes == 'circular':
             n = len(self)
             vals = []
             for k in range(n):
@@ -250,15 +255,16 @@ class Network:
 
         self.general_draw(v_draw, e_draw, setup=setup)
 
-    def general_draw(self, v_draw, e_draw, setup=None, show=None, style='spectral'):
+    def general_draw(self, v_draw, e_draw, setup=None, show=None, arrange_nodes=None):
         """
-        @param style:
+        @param arrange_nodes:
             - 'spectral' draws graph in a spectral graph layout
                 - http://www.math.ucsd.edu/~fan/research/cb/ch1.pdf
                 - http://www.research.att.com/export/sites/att_labs/groups/infovis/res/legacy_papers/DBLP-journals-camwa-Koren05.pdf
             - 'circular' draws graph in a circular layout
+            - default None uses self.arrange_nodes
         """
-        vertices = self.get_vertex_coords(style)
+        vertices = self.get_vertex_coords(arrange_nodes)
         edges = self.get_edge_coords(vertices)
 
         if setup is not None:
