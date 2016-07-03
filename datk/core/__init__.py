@@ -10,4 +10,4 @@ Authors:
 from distalgs import *
 from algs import *
 from networks import *
-from tester import *
+from benchmark import *
