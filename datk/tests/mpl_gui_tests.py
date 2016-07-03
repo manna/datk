@@ -23,7 +23,7 @@ def test_BFS_network_draw():
     x.draw()
 
 def test_benchmark_LCR_Unidirectional_Ring():
-    from datk.core.tester import benchmark
+    from datk.core.benchmark import benchmark
     benchmark(LCR, Unidirectional_Ring, assertLeaderElection)
 
 def test_network_draw_mpl():

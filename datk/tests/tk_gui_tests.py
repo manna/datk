@@ -1,14 +1,6 @@
-try:
-    from datk.core.distalgs import *
-    from datk.core.networks import *
-    from datk.core.algs import *
-    from datk.core.tester import Tester
-except ImportError:
-    raise ImportError(
-""" Imports failed\n
-To run tests, execute the following commands:
-$ cd ../..
-$ python -m datk.tests.gui_tests """)
+from datk.core.distalgs import *
+from datk.core.networks import *
+from datk.core.algs import *
 
 from helpers import Artificial_LE_Network
 from mock import patch
