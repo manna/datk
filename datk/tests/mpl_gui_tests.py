@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 plt.switch_backend('Agg')
+from nose.tools import timed
 
 from datk.core.distalgs import Do_Nothing
 from datk.core.networks import Unidirectional_Ring, Bidirectional_Ring
@@ -29,6 +30,7 @@ def test_BFS_network_draw():
     assert edge_colors is not None
     x.draw()
 
+@timed(20)
 def test_benchmark_LCR_Unidirectional_Ring():
     from datk.core.benchmark import benchmark
     benchmark(LCR, Unidirectional_Ring, assertLeaderElection)

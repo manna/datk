@@ -1,11 +1,12 @@
 from datk.core.distalgs import Algorithm
-from datk.core.networks import Unidirectional_Ring
+from datk.core.networks import Unidirectional_Ring, Random_Line_Network
 from datk.core.algs import LCR
 
 from helpers import Artificial_LE_Network
 from mock import patch
 from Tkinter import Tk
 from datk.core.simulator_tk import draw, simulate, ToolTip
+from nose.tools import timed
 
 Algorithm.DEFAULT_PARAMS = {"draw":False, "verbosity" : Algorithm.QUIET}
 
@@ -26,3 +27,9 @@ def test_tooltip_tk():
     LCR(x)
     x.restore_snapshot(1) #First snapshot after LCR start
     tt = ToolTip(None, x[0], 0, 0)
+
+@timed(18)
+def test_draw_huge_random():
+    with patch.object(Tk, 'mainloop'):
+        x = Random_Line_Network(50, sparsity=0.2)
+        draw(x)
