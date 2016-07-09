@@ -26,6 +26,7 @@ install:
   - source activate test-environment
   - pip install coveralls
   - pip install enum34
+  - pip install nose-timer
 
 before_script:
   - "export DISPLAY=:99.0"
@@ -34,11 +35,11 @@ before_script:
 
 # Run test
 script:
-    - nosetests --with-cov datk.tests.tests --logging-level=INFO
-    - nosetests --with-cov datk.tests.networks_tests --logging-level=INFO
-    - nosetests --with-cov datk.tests.mpl_gui_tests --logging-level=INFO
-    - nosetests --with-cov datk.tests.qt_gui_tests --logging-level=INFO
-    - nosetests --with-cov datk.tests.tk_gui_tests --logging-level=INFO
+    - nosetests --with-cov datk.tests.tests --logging-level=INFO --with-timer
+    - nosetests --with-cov datk.tests.networks_tests --logging-level=INFO --with-timer
+    - nosetests --with-cov datk.tests.mpl_gui_tests --logging-level=INFO --with-timer
+    - nosetests --with-cov datk.tests.qt_gui_tests --logging-level=INFO --with-timer
+    - nosetests --with-cov datk.tests.tk_gui_tests --logging-level=INFO --with-timer
 
 # Calculate coverage
 after_success:
