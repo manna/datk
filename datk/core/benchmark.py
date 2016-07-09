@@ -1,6 +1,61 @@
 from distalgs import Algorithm, Synchronous_Algorithm
 
 import matplotlib.pyplot as plt
+
+def sample(Algorithm_, Network_, test):
+    """
+    Runs the Algorithm on Networks of the given type, varying n.
+    After every execution, runs test on the resultant Network_.
+
+    @param Algorithm_: a subclass of Synchronous_Algorithm, the algorithm to test.
+    @param Network_: a subclass of Network, the network on which to benchmark the algorithm.
+    @param test: a function that may throw an assertion error 
+    @return: (size, time, comm) where size is a list of values of network size,
+    and time and comm are lists of corresponding values of time and communication complexities.
+    """
+    size = []
+    time = []
+    comm = []
+    n, lgn = 2, 1
+    max_time = 0
+    max_comm = 0
+    print "Sampling n = ...",
+    while max(max_time, max_comm) < 10000 and n < 500:
+
+        #Progress
+        if n == 2:
+            print "\b\b\b\b"+str(n)+"...",
+        else:
+            print "\b\b\b\b, "+str(n)+"...",
+
+        cur_times = []
+        cur_comms = []
+        for i in xrange( max(4, 2+lgn) ):
+            A = Algorithm_(params={'draw': False, 'verbosity': Algorithm.SILENT})
+            x = Network_(n)
+            A(x)
+            try:
+                test(x)
+            except AssertionError, e:
+                print "Algorithm Failed"
+                return None
+            else:
+                size.append(n)
+                cur_comms.append(A.message_count)
+                comm.append(A.message_count)
+
+                if issubclass(Algorithm_, Synchronous_Algorithm):
+                    cur_times.append(A.r)
+                    time.append(A.r)
+                    max_time = max(max_time, A.r)
+                max_comm = max(max_comm, A.message_count)
+
+        #TODO here, decide whether need more samples for this n, based on cur_times and cur_comms variance
+        n*=2
+        lgn += 1
+    print " DONE"
+    return size, comm, time
+
 def benchmark(Algorithm_, Network_, test):
     """
     Benchmarks the Algorithm on a given class of Networks. Samples variable network size, and plots results.
@@ -9,60 +64,6 @@ def benchmark(Algorithm_, Network_, test):
     @param Network_: a subclass of Network, the network on which to benchmark the algorithm.
     @param test: a function that may throw an assertion error 
     """                     
-    
-    def sample(Algorithm_, Network_, test):
-        """
-        Runs the Algorithm on Networks of the given type, varying n.
-        After every execution, runs test on the resultant Network_.
-
-        @param Algorithm_: a subclass of Synchronous_Algorithm, the algorithm to test.
-        @param Network_: a subclass of Network, the network on which to benchmark the algorithm.
-        @param test: a function that may throw an assertion error 
-        @return: (size, time, comm) where size is a list of values of network size,
-        and time and comm are lists of corresponding values of time and communication complexities.
-        """
-        size = []
-        time = []
-        comm = []
-        n, lgn = 2, 1
-        max_time = 0
-        max_comm = 0
-        print "Sampling n = ...",
-        while max(max_time, max_comm) < 10000 and n < 500:
-
-            #Progress
-            if n == 2:
-                print "\b\b\b\b"+str(n)+"...",
-            else:
-                print "\b\b\b\b, "+str(n)+"...",
-
-            cur_times = []
-            cur_comms = []
-            for i in xrange( max(4, 2+lgn) ):
-                A = Algorithm_(params={'draw': False, 'verbosity': Algorithm.SILENT})
-                x = Network_(n)
-                A(x)
-                try:
-                    test(x)
-                except AssertionError, e:
-                    print "Algorithm Failed"
-                    return None
-                else:
-                    size.append(n)
-                    cur_comms.append(A.message_count)
-                    comm.append(A.message_count)
-
-                    if issubclass(Algorithm_, Synchronous_Algorithm):
-                        cur_times.append(A.r)
-                        time.append(A.r)
-                        max_time = max(max_time, A.r)
-                    max_comm = max(max_comm, A.message_count)
-
-            #TODO here, decide whether need more samples for this n, based on cur_times and cur_comms variance
-            n*=2
-            lgn += 1
-        print " DONE"
-        return size, comm, time
 
     def averages(x,y):
         """
@@ -109,7 +110,7 @@ def benchmark(Algorithm_, Network_, test):
         ax.set_xlabel(Network_.__name__ +' size')
 
     data = sample(Algorithm_, Network_, test)
-    if data == None: return
+    if data is None: return
     size, comm, time = data
     
     if issubclass(Algorithm_, Synchronous_Algorithm):

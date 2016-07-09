@@ -28,7 +28,7 @@ def test_tooltip_tk():
     x.restore_snapshot(1) #First snapshot after LCR start
     tt = ToolTip(None, x[0], 0, 0)
 
-@timed(18)
+@timed(25)
 def test_draw_huge_random():
     with patch.object(Tk, 'mainloop'):
         x = Random_Line_Network(50, sparsity=0.2)

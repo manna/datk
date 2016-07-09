@@ -33,7 +33,7 @@ def test_draw_uni_line():
 def test_draw_bi_line():
     Bidirectional_Line(25).draw()
 
-@timed(20)
+@timed(25)
 def test_draw_huge_random():
     x = Random_Line_Network(50, sparsity=0.2)
     x.draw()

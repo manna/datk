@@ -30,7 +30,7 @@ def test_BFS_network_draw():
     assert edge_colors is not None
     x.draw()
 
-@timed(20)
+@timed(25)
 def test_benchmark_LCR_Unidirectional_Ring():
     from datk.core.benchmark import benchmark
     benchmark(LCR, Unidirectional_Ring, assertLeaderElection)

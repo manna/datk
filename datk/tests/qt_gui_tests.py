@@ -24,7 +24,7 @@ def test_network_simulate_qt():
         LCR(x)
         simulate(x)
 
-@timed(18)
+@timed(22)
 def test_draw_huge_random():
     from datk.core.simulator_qt import draw
     from PyQt4.QtGui import QApplication
