@@ -319,7 +319,7 @@ Amin Manna ([amin10][amin_gh], [manna@mit.edu][amin_email])
 
 Mayuri Sridhar ([mayuri95][mayuri_gh], [mayuri@mit.edu][mayuri_email])
 
-[amin_email]:mailto:manna@mit.edu
+[amin_email]:mailto:amin@alum.mit.edu
 [amin_gh]:http://github.com/amin10
-[mayuri_email]:mailto:mayuri@mit.edu
+[mayuri_email]:mailto:mayuris@alum.mit.edu
 [mayuri_gh]:http://github.com/mayuri95
