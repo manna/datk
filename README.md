@@ -5,7 +5,7 @@
 
 ## Documentation
 
-Visit [amin10.github.com/datk](http://amin10.github.io/datk/) for documentation
+Visit [manna.github.com/datk](http://manna.github.io/datk/) for documentation
 
 
 ## Testing
@@ -315,11 +315,11 @@ Sampling n = 2, 4, 8, 16, 32, 64, 128, 256...  DONE
 
 ## Made with love by:
 
-Amin Manna ([amin10][amin_gh], [manna@mit.edu][amin_email])
+Amin Manna ([manna][amin_gh], [manna@mit.edu][amin_email])
 
 Mayuri Sridhar ([mayuri95][mayuri_gh], [mayuri@mit.edu][mayuri_email])
 
 [amin_email]:mailto:amin@alum.mit.edu
-[amin_gh]:http://github.com/amin10
+[amin_gh]:http://github.com/manna
 [mayuri_email]:mailto:mayuris@alum.mit.edu
 [mayuri_gh]:http://github.com/mayuri95
